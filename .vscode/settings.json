@@ -1,0 +1,11 @@
+{
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": ".nim",
+                "isAsync": true,
+                "cmd": "nimpretty --indent:2 ${file}"
+            }
+        ]
+    }
+}
