@@ -1,0 +1,1 @@
+nim c -d:release -o:./dist/main.exe ./src/main.nim
