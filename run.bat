@@ -1,1 +1,1 @@
-nim cpp -r -o:./tmp/main.exe ./src/main.nim
+nim c -r -o:./tmp/main.exe ./src/main.nim

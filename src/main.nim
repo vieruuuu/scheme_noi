@@ -1,6 +1,8 @@
 import asyncdispatch
 import functions/getWindowName
-import os
+import functions/screenshot
+
+screenshot()
 
 proc main() {.async.} =
   echo getWindowName()
