@@ -13,3 +13,5 @@ proc decode*(encoded: string): ImageData =
   result.width = int32 parseint data[0]
   result.height = int32 parseInt data[1]
   result.data = Base64.decode data[2]
+
+export ImageData
