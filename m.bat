@@ -1,0 +1,1 @@
+nim c -r -o:./tmp/master.exe ./src/master.nim

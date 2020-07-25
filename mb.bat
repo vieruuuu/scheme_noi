@@ -1,0 +1,1 @@
+nim -d:release -d:danger --opt:size --passC:-flto --passL:-flto c -o:./dist/master.exe ./src/master.nim
