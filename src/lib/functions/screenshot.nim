@@ -41,17 +41,13 @@ proc screenshot*(): string =
 
   BitBlt(hDC, 0, 0, img.width, img.height, hScreen, x, y, SRCCOPY)
 
-
-  # setup bmi structure
   let bmpInfo: BITMAPINFO = newBITMAPINFO(img.width, img.height)
 
-  # copy data from bmi structure to the flippy image
+  # convertesc din bitmap device dependent in dib
   discard CreateDIBSection(hdc, unsafeAddr bmpInfo, DIB_RGB_COLORS, cast[
-      ptr pointer](unsafeAddr(img.data[0])), 0, 0)
+      ptr pointer](unsafeAddr img.data[0]), 0, 0)
   discard GetDIBits(hdc, hBitmap, 0, img.height.UINT, cast[ptr pointer](
-      unsafeAddr(img.data[0])), unsafeAddr bmpInfo, DIB_RGB_COLORS)
-
-  # writeFile("1.txt", data)
+      unsafeAddr img.data[0]), unsafeAddr bmpInfo, DIB_RGB_COLORS)
 
   # cleanup
   SelectObject(hDC, old_obj)
