@@ -1,1 +1,0 @@
-const BUFFER_LENGTH* = 2048

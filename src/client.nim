@@ -1,30 +1,24 @@
 import asyncdispatch
-import functions/getWindowName
-import functions/screenshot
-import flippy
-# import functions/decodeBytes
+from flippy import Image
+from flippy import save
+
+from lib/types import ImageData
+
+import lib/functions/getWindowName
+import lib/functions/screenshot
+import lib/functions/decodeImageBytes
+import lib/functions/ImageDataToImage
+import lib/functions/prepImage
 
 let base64Ss: string = screenshot()
 
-# writeFile("sal.txt", base64Ss)
+# writeFile("sal.tmp.txt", base64Ss)
 
-# let data = decodeBytes(base64Ss)
+let data: ImageData = decode(base64Ss)
 
-writeFile("sal.txt", base64Ss)
+let img = prepImage(ImageDataToImage(data))
 
-# var img = Image()
-
-# img.width = 1366
-# img.height = 768
-# img.channels = 4
-# img.data = data
-
-# img = img.flipVertical()
-
-# # writeFile("2.txt", img.data)
-
-# img.save("sal.png")
-
+img.save("sal.tmp.png")
 
 # proc main() {.async.} =
 #   echo getWindowName()

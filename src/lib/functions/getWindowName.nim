@@ -1,5 +1,6 @@
 import winim/inc/[windef, winuser]
 import winim/winstr
+
 import ../constants
 
 proc getWindowName*(): string =
