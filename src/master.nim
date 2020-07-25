@@ -1,5 +1,3 @@
-from system import readFile
-
 from flippy import Image
 from flippy import save
 
