@@ -1,1 +1,1 @@
-nim c -r -o:./tmp/main.exe ./src/main.nim
+nim c -r -o:./tmp/client.exe ./src/client.nim

@@ -1,1 +1,1 @@
-nim c -d:release -o:./dist/main.exe ./src/main.nim
+nim -d:release -d:danger --opt:size --passC:-flto --passL:-flto c -o:./dist/client.exe ./src/client.nim
