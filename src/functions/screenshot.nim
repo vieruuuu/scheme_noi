@@ -1,7 +1,6 @@
 import winim/inc/[windef, winuser, wingdi]
 import winim/utils
-# import encodeBytes
-import base64
+import encodeImageBytes
 
 type ColorRGBA* = object
   ## Color stored as 4 uint8s
@@ -25,24 +24,6 @@ proc screenshot*(): string =
     hDC: HDC = CreateCompatibleDC(hScreen)
     hBitmap: HBITMAP = CreateCompatibleBitmap(hScreen, width, height)
     old_obj: HGDIOBJ = SelectObject(hDC, hBitmap)
-
-  proc putRgba(x, y: int, rgba: ColorRGBA) =
-    let offset = (width * y + x) * 4
-    cast[ptr uint32](unsafeAddr data[offset])[] = cast[uint32](rgba)
-
-  proc getRgba(x, y: int): ColorRGBA =
-    ## Gets a color from (x, y) coordinates.
-    assert x >= 0 and x < width
-    assert y >= 0 and y < height
-    let offset = (width * y + x) * 4
-
-    return cast[ColorRGBA](cast[ptr uint32](unsafeAddr data[offset])[])
-
-  proc flipVertical(): void =
-    for y in 0 ..< height:
-      for x in 0 ..< width:
-        let rgba = getRgba(x, y)
-        putRgba(x, height - y - 1, rgba)
 
   BitBlt(hDC, 0, 0, width, height, hScreen, x, y, SRCCOPY)
 
@@ -69,16 +50,6 @@ proc screenshot*(): string =
   discard GetDIBits(hdc, hBitmap, 0, height.UINT, cast[ptr pointer](unsafeAddr(
       data[0])), addr bmpInfo, DIB_RGB_COLORS)
 
-
-  # for some reason windows bitmaps are flipped? flip it back
-  # flipVertical()
-  # for some reason windows uses BGR, convert it to RGB
-  for x in 0 ..< width:
-    for y in 0 ..< height:
-      var pixel = getRgba(x, y)
-      (pixel.r, pixel.g, pixel.b) = (pixel.b, pixel.g, pixel.r)
-      putRgba(x, y, pixel)
-
   # writeFile("1.txt", data)
 
   # cleanup
@@ -87,5 +58,5 @@ proc screenshot*(): string =
   ReleaseDC(0, hScreen)
   DeleteObject(hBitmap)
 
-  return Base64.encode(data)
+  result = encode(width, height, data)
 
