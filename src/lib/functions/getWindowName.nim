@@ -1,7 +1,7 @@
 import winim/inc/[windef, winuser]
 import winim/winstr
 
-import ../constants
+from ../constants import BUFFER_LENGTH
 
 proc getWindowName*(): string =
   var

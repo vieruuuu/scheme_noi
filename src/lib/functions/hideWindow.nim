@@ -1,6 +1,6 @@
-import winim/inc/[wincon, windef, winuser]
+from winim/inc/winuser import ShowWindow
+from winim/inc/wincon import GetConsoleWindow
+
 
 proc hideWindow*(): void =
-  AllocConsole()
-  let Stealth: HWND = FindWindowA("ConsoleWindowClass", NULL)
-  ShowWindow(Stealth, 0)
+  ShowWindow(GetConsoleWindow(), 0)
