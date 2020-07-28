@@ -1,4 +1,31 @@
-import winim/inc/[windef, winuser, wingdi]
+from winim/inc/windef import DWORD
+from winim/inc/windef import HDC
+from winim/inc/windef import HBITMAP
+from winim/inc/windef import HGDIOBJ
+from winim/inc/windef import UINT
+
+from winim/inc/winuser import GetSystemMetrics
+from winim/inc/winuser import SM_XVIRTUALSCREEN
+from winim/inc/winuser import SM_YVIRTUALSCREEN
+from winim/inc/winuser import SM_CXVIRTUALSCREEN
+from winim/inc/winuser import SM_CYVIRTUALSCREEN
+from winim/inc/winuser import GetDC
+from winim/inc/winuser import ReleaseDC
+
+from winim/inc/wingdi import BITMAPINFO
+from winim/inc/wingdi import BITMAPINFOHEADER
+from winim/inc/wingdi import CreateCompatibleDC
+from winim/inc/wingdi import CreateCompatibleBitmap
+from winim/inc/wingdi import SelectObject
+from winim/inc/wingdi import BitBlt
+from winim/inc/wingdi import CreateDIBSection
+from winim/inc/wingdi import SRCCOPY
+from winim/inc/wingdi import DIB_RGB_COLORS
+from winim/inc/wingdi import GetDIBits
+from winim/inc/wingdi import SelectObject
+from winim/inc/wingdi import DeleteDC
+from winim/inc/wingdi import DeleteObject
+from winim/inc/wingdi import BI_RGB
 
 import encodeImageBytes
 
