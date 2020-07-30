@@ -1,14 +1,5 @@
 multe comenzi pt extragerea informatiilor, doar salvezi output-ul si gata (probabil nu o sa folosesti multe dintre ele)
 
-# Windows general
-
-```batch
-systeminfo | findstr /B /C:"OS Name" /C:"OS Version" # versiune os
-wmic qfe get Caption,Description,HotFixID,InstalledOn # patch-uri
-driverquery # drivere
-hostname
-```
-
 # enumerare
 ```
 set # env vars
