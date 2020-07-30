@@ -75,7 +75,7 @@ let keysReadable: keys = @[
     0xDB: "[OEM_4 ({ [)]", # VK_OEM_4
     0xDC: "[OEM_5 (| \)]", # VK_OEM_5
     0xDD: "[OEM_6 (} ])]", # VK_OEM_6
-    0xDE: "[OEM_7 (" ')]", # VK_OEM_7
+    0xDE: "[OEM_7 (\" ')]", # VK_OEM_7
     0xDF: "[OEM_8 (Â§ !)]", # VK_OEM_8
     0xF0: "[OEM ATTN]", # VK_OEM_ATTN
     0xF3: "[AUTO]", # VK_OEM_AUTO
