@@ -1,0 +1,1 @@
+var mainThread*: Channel[string]
