@@ -1,8 +1,6 @@
 type keys = seq[(int, string)]
 
-## trebuie sa scapuiesti linkul asta
-## http://www.kbdedit.com/manual/low_level_vk_list.html
-## ambele tabele
+## sursa: http://www.kbdedit.com/manual/low_level_vk_list.html
 
 let keysReadable: keys = @[
   (0xC1, "[ABNT C1]"), # VK_ABNT_C1
@@ -113,6 +111,3 @@ let keysReadable: keys = @[
   (0x09, "[TAB]"), # VK_TAB
   (0xFB, "[ZOOM]") # VK_ZOOM
 ]
-
-## poti scrie un python script sa iei datele din tabel sau cv js
-## ideea ii sa le pui asa cum le am pus eu
