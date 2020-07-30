@@ -2,7 +2,7 @@ type keys = seq[(int, string)]
 
 ## sursa: http://www.kbdedit.com/manual/low_level_vk_list.html
 
-let keysReadable: keys = @[
+let keys = {
     # "Mappable" codes
     0xC1: "[ABNT C1]", # VK_ABNT_C1
     0xC2: "[ABNT C2]", # VK_ABNT_C2
@@ -197,4 +197,4 @@ let keysReadable: keys = @[
     0xAF: "[VOLUME UP]", # VK_VOLUME_UP
     0x05: "[X BUTTON 1]", # VK_XBUTTON1
     0x06: "[X BUTTON 2]" # VK_XBUTTON2
-]
+}.toTable
