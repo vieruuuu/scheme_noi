@@ -2,6 +2,9 @@
 
 Folosind MAC-ul descoperi firma folosind o baza de date OUI
 
+![imagine cu comanda](https://cdn.discordapp.com/attachments/727071434530357251/738343923763904582/unknown.png)
+(arp -a, arata pe fiecare interfata, 192.168.0.106 e pc-ul)
+
 Wireshark: https://www.wireshark.org/tools/oui-lookup.html 
 
 http://standards-oui.ieee.org/oui.txt
@@ -13,7 +16,7 @@ parser facut de mn pt ^^^ in python:
 import sys
 
 def lookup(what):
-    lookFor = what.replace(":","-")
+    lookFor = what.replace(":","-").upper()
     with open("oui copy.txt", "r", encoding="utf8") as file:
         a = file.read().split("\n")
         for b in a:
@@ -39,3 +42,13 @@ else:
 (nu e foarte bun dar isi face treaba)
 
 verifica daca ai bagat argument cu MAC-ul, daca nu iti baga un prompt cu ``input()`` si foloseste `lookup` sa il caute in .txt
+
+folosind adresa mac din imagine, folosesti scriptul:
+
+![imagine cu routerul](https://cdn.discordapp.com/attachments/727071434530357251/738345071216164914/unknown.png)
+(routerul meu, 192.168.0.1 adresa mac luata din prima imagine)
+
+![imagine cu pc](https://cdn.discordapp.com/attachments/727071434530357251/738345276305047562/unknown.png)
+(pcul meu, 192.168.0.106, adresa mac luata din prima imagine)
+
+note: ai nevoie doar de primi 3 octeti
