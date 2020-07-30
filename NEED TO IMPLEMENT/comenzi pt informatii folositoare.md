@@ -2,8 +2,6 @@ multe comenzi pt extragerea informatiilor, doar salvezi output-ul si gata (proba
 
 # enumerare
 ```
-set # env vars
-dir env: # tot env vars dar in powershell
 reg query "HKLM\Software\Policies\Microsoft Services\AdmPwd" /v AdmPwdEnabled # laps, probabil neinterestant
 WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List | more  # antivirusi
 ```
