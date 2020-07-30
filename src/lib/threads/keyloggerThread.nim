@@ -1,6 +1,40 @@
 from tables import `[]`
 
-import winim
+from winim/inc/windef import WPARAM
+from winim/inc/windef import LPARAM
+from winim/inc/windef import LRESULT
+from winim/inc/windef import DWORD
+from winim/inc/windef import HHOOK
+
+
+from winim/inc/winuser import PKBDLLHOOKSTRUCT
+from winim/inc/winuser import KBDLLHOOKSTRUCT
+from winim/inc/winuser import WM_KEYDOWN
+from winim/inc/winuser import WM_SYSKEYDOWN
+from winim/inc/winuser import WM_KEYUP
+from winim/inc/winuser import WM_SYSKEYUP
+from winim/inc/winuser import VK_CONTROL
+from winim/inc/winuser import VK_LCONTROL
+from winim/inc/winuser import VK_RCONTROL
+from winim/inc/winuser import VK_SHIFT
+from winim/inc/winuser import VK_RSHIFT
+from winim/inc/winuser import VK_LSHIFT
+from winim/inc/winuser import VK_MENU
+from winim/inc/winuser import VK_LMENU
+from winim/inc/winuser import VK_RMENU
+from winim/inc/winuser import VK_CAPITAL
+from winim/inc/winuser import VK_NUMLOCK
+from winim/inc/winuser import VK_LWIN
+from winim/inc/winuser import VK_RWIN
+from winim/inc/winuser import CallNextHookEx
+from winim/inc/winuser import SetWindowsHookEx
+from winim/inc/winuser import WH_KEYBOARD_LL
+from winim/inc/winuser import HOOKPROC
+from winim/inc/winuser import MSG
+from winim/inc/winuser import GetMessage
+
+from winim/utils import winimConverterBOOLToBoolean
+
 import ../channels
 from ../constants import keys
 
@@ -24,7 +58,7 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
           key == VK_MENU or key == VK_LMENU or key == VK_RMENU or
           key == VK_CAPITAL or key == VK_NUMLOCK or key == VK_LWIN or
           key == VK_RWIN:
-        var KeyName: string = keyText # Keys::KEYS[kbs->vkCode].Name # translate key to human friendly name
+        var KeyName: string = keyText
         KeyName.insert("/", 1) # insert like [SHIFT] [a] [b] [/SHIFT]
         mainThread.send KeyName
 
