@@ -5,7 +5,7 @@ from ../types import ImageData
 
 from ../more/base64 import b64decode
 
-proc decode*(encoded: string): ImageData =
+proc decodeImageBytes*(encoded: string): ImageData =
   let data: seq[string] = encoded.split(";")
 
   result = ImageData()

@@ -71,9 +71,9 @@ proc screenshot*(): string =
   let bmpInfo: BITMAPINFO = newBITMAPINFO(img.width, img.height)
 
   # convertesc din bitmap device dependent in dib
-  discard CreateDIBSection(hdc, unsafeAddr bmpInfo, DIB_RGB_COLORS, cast[
-      ptr pointer](unsafeAddr img.data[0]), 0, 0)
-  discard GetDIBits(hdc, hBitmap, 0, img.height.UINT, cast[ptr pointer](
+  CreateDIBSection(hdc, unsafeAddr bmpInfo, DIB_RGB_COLORS, cast[ptr pointer](
+      unsafeAddr img.data[0]), 0, 0)
+  GetDIBits(hdc, hBitmap, 0, img.height.UINT, cast[ptr pointer](
       unsafeAddr img.data[0]), unsafeAddr bmpInfo, DIB_RGB_COLORS)
 
   # cleanup
@@ -82,5 +82,5 @@ proc screenshot*(): string =
   ReleaseDC(0, hScreen)
   DeleteObject(hBitmap)
 
-  result = encode(img)
+  result = encodeImageBytes(img)
 

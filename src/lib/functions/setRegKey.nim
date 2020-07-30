@@ -8,13 +8,12 @@ from winim/inc/winreg import RegOpenKeyExW
 from winim/inc/winreg import HKEY_LOCAL_MACHINE
 from winim/inc/winreg import RegSetValueExW
 from winim/inc/winreg import RegCloseKey
-from winim/inc/winreg import RegDeleteValueW
 
 from winim/winstr import winstrConverterStringToLPWSTR
 from winim/winstr import `&`
 from winim/winstr import `+$`
 
-proc setKey*(key: string, name: string, value: string): void =
+proc setRegKey*(key: string, name: string, value: string): void =
   var hKey: HKEY
 
   RegOpenKeyExW(HKEY_LOCAL_MACHINE, key, 0, KEY_SET_VALUE, addr hKey)
@@ -23,10 +22,3 @@ proc setKey*(key: string, name: string, value: string): void =
       MAX_PATH)
 
   RegCloseKey(hKey)
-
-proc delKey*(key: string, name: string): void =
-  var hKey: HKEY
-
-  RegOpenKeyExW(HKEY_LOCAL_MACHINE, key, 0, KEY_SET_VALUE, addr hKey)
-
-  RegDeleteValueW(hKey, name)
