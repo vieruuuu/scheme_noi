@@ -1,4 +1,4 @@
-multe comenzi pt extragerea informatiilor, doar salvezi output-ul si gata
+multe comenzi pt extragerea informatiilor, doar salvezi output-ul si gata (probabil nu o sa folosesti multe dintre ele)
 
 # Windows general
 
