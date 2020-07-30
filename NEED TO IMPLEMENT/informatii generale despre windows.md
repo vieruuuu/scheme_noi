@@ -1,3 +1,5 @@
+# versiune, hostname, etc
+
 in batch
 ```batch
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version" # versiune os
@@ -28,3 +30,19 @@ void print_os_info()
     printf("Windows version: %u.%u\n", info.dwMajorVersion, info.dwMinorVersion);
 }
 ```
+
+# env vars
+
+**trb sa vad cum sa fac sa filtrez env ca sa nu le vad pe toate alea nefolositoare gen path**
+
+in batch / powershell:
+```
+set # env vars
+dir env: # tot env vars dar in powershell
+```
+
+in C:
+```c
+// to do
+```
+
