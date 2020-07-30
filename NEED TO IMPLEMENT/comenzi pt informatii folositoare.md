@@ -8,15 +8,6 @@ reg query "HKLM\Software\Policies\Microsoft Services\AdmPwd" /v AdmPwdEnabled # 
 WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List | more  # antivirusi
 ```
 
-# utilizatori
-```
-net users %username% # eu
-net users # toti utilizatorii
-net localgroup # grupuri
-net localgroup Administrators # administrator
-whoami /all # privilegii
-```
-
 # mai multe fisiere interesante cu parole
 ```
 $env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history
