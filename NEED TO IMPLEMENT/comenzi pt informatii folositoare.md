@@ -26,11 +26,6 @@ net localgroup Administrators # administrator
 whoami /all # privilegii
 ```
 
-# clipboard
-```
-powershell -command "Get-Clipboard" # merge in cmd, ruleaza powershell
-```
-
 # programe
 ```
 dir /a "C:\Program Files"
@@ -41,14 +36,6 @@ reg query HKEY_LOCAL_MACHINE\SOFTWARE
 # servici
 ```
 net start # vezi toate serviciile
-```
-
-# wifi
-```
-# vezi ce wifi-uri sunt salvate
-netsh wlan show profile
-# vezi ce parola e salvata
-netsh wlan show profile <SSID> key=clear
 ```
 
 # fisiere interesante cu parole
