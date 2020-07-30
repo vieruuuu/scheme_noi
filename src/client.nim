@@ -21,7 +21,6 @@ let base64Ss: string = screenshot()
 # writeFile("base64.tmp.txt", base64Ss)
 
 ## TODO: terimina asta
-## nu merge momentan si nu inteleg dc
 install()
 
 

