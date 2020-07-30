@@ -1,11 +1,3 @@
-multe comenzi pt extragerea informatiilor, doar salvezi output-ul si gata (probabil nu o sa folosesti multe dintre ele)
-
-# enumerare
-```
-reg query "HKLM\Software\Policies\Microsoft Services\AdmPwd" /v AdmPwdEnabled # laps, probabil neinterestant
-WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List | more  # antivirusi
-```
-
 # mai multe fisiere interesante cu parole
 ```
 $env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history
