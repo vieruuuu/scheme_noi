@@ -17,18 +17,6 @@ net localgroup Administrators # administrator
 whoami /all # privilegii
 ```
 
-# programe
-```
-dir /a "C:\Program Files"
-dir /a "C:\Program Files (x86)"
-reg query HKEY_LOCAL_MACHINE\SOFTWARE
-```
-
-# servici
-```
-net start # vezi toate serviciile
-```
-
 # mai multe fisiere interesante cu parole
 ```
 $env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history
