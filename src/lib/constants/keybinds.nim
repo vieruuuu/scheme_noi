@@ -90,5 +90,5 @@ let keysReadable: keys = @[
     0xAD: "[VOLUME MUTE]", # VK_VOLUME_MUTE
     0xAF: "[VOLUME UP]", # VK_VOLUME_UP
     0x05: "[X BUTTON 1]", # VK_XBUTTON1
-    0x06: "[X BUTTON 2]", # VK_XBUTTON2
+    0x06: "[X BUTTON 2]" # VK_XBUTTON2
 ]
