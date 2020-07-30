@@ -38,21 +38,6 @@ reg query HKEY_LOCAL_MACHINE\SOFTWARE
 net start # vezi toate serviciile
 ```
 
-# fisiere interesante cu parole
-```
-C:\Windows\sysprep\sysprep.xml
-C:\Windows\sysprep\sysprep.inf
-C:\Windows\sysprep.inf
-C:\Windows\Panther\Unattended.xml
-C:\Windows\Panther\Unattend.xml
-C:\Windows\Panther\Unattend\Unattend.xml
-C:\Windows\Panther\Unattend\Unattended.xml
-C:\Windows\System32\Sysprep\unattend.xml
-C:\Windows\System32\Sysprep\unattended.xml
-C:\unattend.txt
-C:\unattend.inf
-```
-
 # mai multe fisiere interesante cu parole
 ```
 $env:APPDATA\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_history
