@@ -47,12 +47,10 @@ in C:
 ```
 
 # AVs
-in batch:
-~~
+in batch (veche):
 ```batch
 WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List | more  # antivirusi
 ```
-~~
 asta e mai bun: (le pune pe fiecare pe o linie separata):
 ```batch
 for /f "usebackq skip=1 tokens=*" %i in (`WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName ^| findstr /r /v "^$"`) do @echo %i 
