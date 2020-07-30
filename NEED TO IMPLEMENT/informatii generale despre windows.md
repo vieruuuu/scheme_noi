@@ -46,3 +46,13 @@ in C:
 // to do
 ```
 
+# AVs
+in batch:
+```batch
+WMIC /Node:localhost /Namespace:\\root\SecurityCenter2 Path AntiVirusProduct Get displayName /Format:List | more  # antivirusi
+```
+
+in c:
+```c
+// to do
+```
