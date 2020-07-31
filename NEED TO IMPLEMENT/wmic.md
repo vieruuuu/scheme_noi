@@ -28,3 +28,4 @@ OpenVPN Technologies               3.2.0
 
 ## resurse
 - https://www.computerhope.com/wmic.htm
+- https://stackoverflow.com/questions/13449322/call-wmic-commands-in-c-code
