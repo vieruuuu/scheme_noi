@@ -11,7 +11,7 @@ from lib/channels import mainThread
 # import lib/functions/infect
 # infect()
 
-# hide the console window
+# dezactiveaza functiile de care nu am nev cand developez
 const isProd {.booldefine.}: bool = false
 
 when isProd:
