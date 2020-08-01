@@ -1,6 +1,4 @@
 from os import sleep
-from os import tryRemoveFile
-from os import moveFile
 from os import `/`
 from os import getEnv
 from os import walkDir
@@ -10,6 +8,11 @@ from os import existsDir
 from strutils import startsWith
 
 from ../flags import BROWSER_THREAD_REMOVE_FILE
+
+when BROWSER_THREAD_REMOVE_FILE:
+  from os import tryRemoveFile
+else:
+  from os import moveFile
 
 type
   BROWSER_TYPES = enum
@@ -32,14 +35,13 @@ proc removeFileOrSleep(src: string, doSleep: bool = false): void =
       # rename file from `x` to `x_`
       moveFile(src, src & "_")
     except OSError:
-      # try to remove file every `sleepTime` secs
-      # am nev de asta pt ca daca browserul este deschis
-      # nu pot sterge fisierul
       removeFileOrSleep(src, true)
   # chit ca nu exista fisierul
   # worked va fi true
   if not worked:
-    # same as above
+    # try to remove file every `sleepTime` secs
+    # am nev de asta pt ca daca browserul este deschis
+    # nu pot sterge fisierul
     removeFileOrSleep(src, true)
 
 proc initBrowserThread*(): void {.thread.} =
