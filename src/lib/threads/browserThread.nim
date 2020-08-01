@@ -1,9 +1,10 @@
 from os import sleep
-from os import getEnv
-from os import `/`
-from ../flags import BROWSER_THREAD_REMOVE_FILE
 from os import tryRemoveFile
 from os import moveFile
+from os import `/`
+from os import getEnv
+
+from ../flags import BROWSER_THREAD_REMOVE_FILE
 
 type
   BROWSER_TYPES = enum
