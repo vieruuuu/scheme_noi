@@ -31,8 +31,8 @@ type
   ]
   browserThreadType = Thread[browserThreadArgs]
 
-
-const browsers: seq[browserType] = @[
+# mai bn array decat seq ca ii mai performant asa
+const browsers: array[3, browserType] = [
   (
     CHROME_BASED,
     @[
