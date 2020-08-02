@@ -11,5 +11,12 @@
     "files.associations": {
         "string": "cpp",
         "*.txt": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "HBITMAP",
+        "Kometa",
+        "Orbitum",
+        "Yandex",
+        "pecxstudios"
+    ]
 }

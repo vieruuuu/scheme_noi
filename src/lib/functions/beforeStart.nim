@@ -47,6 +47,3 @@ proc run*(): void =
   #     "client bl2", dest)
   # delRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
   #     "client bla")
-
-
-
