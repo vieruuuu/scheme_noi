@@ -6,6 +6,8 @@ import lib/functions/screenshot
 
 from lib/channels import mainThread
 
+from lib/constants import isProd
+
 from lib/flags import USE_BROWSER_THREAD
 from lib/flags import USE_KEYLOGGER_THREAD
 
@@ -13,8 +15,6 @@ from lib/flags import USE_KEYLOGGER_THREAD
 # import lib/functions/infect
 # infect()
 
-# dezactiveaza functiile de care nu am nev cand developez
-const isProd {.booldefine.}: bool = false
 
 when isProd:
   from lib/functions/beforeStart import run

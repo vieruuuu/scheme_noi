@@ -8,6 +8,8 @@ from os import existsFile
 
 from strutils import startsWith
 
+from ../constants import isProd
+
 from ../flags import BROWSER_THREAD_REMOVE_FILE
 
 when BROWSER_THREAD_REMOVE_FILE:
@@ -148,8 +150,10 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
     let fullPath: string = fullFolder / file
 
     if existsFile(fullPath):
-      echo fullPath
-      # removeFileOrSleep(fullPath)
+      when isProd:
+        removeFileOrSleep(fullPath)
+      else:
+        echo fullPath
 
 
 proc initBrowserThread*(): void {.thread.} =
