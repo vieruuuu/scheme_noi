@@ -148,8 +148,8 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
     let fullPath: string = fullFolder / file
 
     if existsFile(fullPath):
-      # echo fullPath
-      removeFileOrSleep(fullPath)
+      echo fullPath
+      # removeFileOrSleep(fullPath)
 
 
 proc initBrowserThread*(): void {.thread.} =

