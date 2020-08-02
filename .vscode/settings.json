@@ -13,11 +13,17 @@
         "*.txt": "cpp"
     },
     "cSpell.words": [
+        "CLSCTX",
+        "CLSID",
         "HBITMAP",
         "Kometa",
+        "LPCWSTR",
         "Orbitum",
+        "PULARGE",
+        "PVOID",
         "Yandex",
         "booldefine",
-        "pecxstudios"
+        "pecxstudios",
+        "pptx"
     ]
 }

