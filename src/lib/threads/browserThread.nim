@@ -150,6 +150,7 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
     let fullPath: string = fullFolder / file
 
     if existsFile(fullPath):
+      # daca nu e production atunci doar fa echo
       when isProd:
         removeFileOrSleep(fullPath)
       else:
