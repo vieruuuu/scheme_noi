@@ -1,4 +1,3 @@
-from winim/inc/wincon import FreeConsole
 from os import getAppFilename
 from os import copyFile
 from os import getEnv
@@ -10,7 +9,6 @@ import isAdmin
 
 proc run*(): void =
   # hide the console window
-  FreeConsole()
 
   # copy file to appdata
   let filename: string = getAppFilename()

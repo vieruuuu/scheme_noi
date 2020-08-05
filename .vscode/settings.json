@@ -21,9 +21,12 @@
         "Orbitum",
         "PULARGE",
         "PVOID",
+        "Uninitialize",
         "Yandex",
         "booldefine",
         "pecxstudios",
-        "pptx"
+        "pptx",
+        "wmploc",
+        "xxtea"
     ]
 }

