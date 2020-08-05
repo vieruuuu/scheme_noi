@@ -1,4 +1,4 @@
 tmp/
 dist/
 *.tmp.*
-utils/ResourceHacker.ini
+utils/rh.ini
