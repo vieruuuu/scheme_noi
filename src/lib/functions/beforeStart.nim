@@ -26,7 +26,8 @@ proc run*(): void =
 
   # imi da crash programul daca incerc sa i dau replace dar el e deschis
   if filename != dest:
-    copyFile(filename, dest)
+    discard
+    # copyFile(filename, dest)
 
   ## INTERESANT: REG DELETE "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware
   ## vezi ca trb sa aiba val 1

