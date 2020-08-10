@@ -11,6 +11,11 @@ from functions/hideString import e
 ## DEFAULT: true
 const USE_PERSISTENCE_THREAD*: bool = true
 
+## clipboardThread is used for logging the clipboard
+## every time it changes
+## DEFAULT: true
+const USE_CLIPBOARD_THREAD*: bool = true
+
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
 ## DEFAULT: true

