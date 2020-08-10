@@ -3,7 +3,7 @@ echo COMPILING IN PRODUCTION MODE
 echo DOUBLE CHECK FLAGS.NIM 
 echo !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-# sleep 10
+sleep 10
 
 nim c -f -d:isProd=true -d:release -d:danger --opt:size --passC:-flto -o:./dist/client.exe ./src/client.nim
 strip -s ./dist/client.exe
