@@ -1,3 +1,5 @@
+to enable or disable features tweak [flags.nim](src/lib/flags.nim)
+
 ## install deps
 `nimble install flippy`
 
