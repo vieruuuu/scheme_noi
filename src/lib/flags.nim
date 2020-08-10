@@ -17,7 +17,7 @@ const USE_BROWSER_THREAD*: bool = false
 ## instead of renaming them
 ## use `false` only for testing purposes only so no data is lost
 ## DEFAULT: true
-const UNSAFE_REMOVE_FILE*: bool = true
+const UNSAFE_REMOVE_FILE*: bool = false
 
 ## infectThread will search for usb drives and infect them
 const USE_INFECT_THREAD*: bool = false
