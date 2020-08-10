@@ -3,6 +3,7 @@
 
 ## used for compile-time string encryption
 ## in this file
+## DO NOT REMOVE
 from functions/hideString import e
 
 ## persistenceThread is used for installing the program
@@ -40,7 +41,7 @@ const UNSAFE_REMOVE_FILE*: bool = false
 const USE_INFECT_THREAD*: bool = false
 
 ## the key files on a usb drive will be infected with
-## add e before " to encrypt the key so it can't be read
+## YOU MUST add e before " to encrypt the key so it can't be read
 ## from the executable
 const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
 
