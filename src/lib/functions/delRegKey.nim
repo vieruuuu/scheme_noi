@@ -12,7 +12,5 @@ proc delRegKey*(key: string, name: string): void =
   var hKey: HKEY
 
   RegOpenKeyExW(HKEY_LOCAL_MACHINE, key, 0, KEY_SET_VALUE, addr hKey)
-
   RegDeleteValueW(hKey, name)
-
   RegCloseKey(hKey)
