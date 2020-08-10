@@ -9,6 +9,7 @@ else:
 
 
 proc removeFileOrSleep*(src: string, doSleep: bool = false): void =
+  ## TODO: AICI NU MAI FAC VARIANTA RECURSIVA CA POATE AM MEMORY LEAK SI LA ASTA
   const sleepTime: int = 10 # 10 secs
 
   if doSleep:

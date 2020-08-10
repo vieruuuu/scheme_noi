@@ -85,7 +85,6 @@ proc getNoOfThreads(): int =
 
 const noOfThreads: int = getNoOfThreads()
 
-
 proc initSearchThread(args: browserThreadArgs): void {.thread.} =
   let (based, folder, appdata, localappdata) = args
 

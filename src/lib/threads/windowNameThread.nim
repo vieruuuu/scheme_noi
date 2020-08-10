@@ -26,6 +26,7 @@ proc getWindowName(): windowNameResult =
     result = (false, "")
   else:
     discard GetWindowTextW(hWnd, lpString, BUFFER_LENGTH)
+
     result = (true, $lpString)
 
     if result.data == "":

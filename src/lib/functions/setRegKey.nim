@@ -16,6 +16,7 @@ from winim/winstr import `+$`
 proc setRegKey*(key: string, name: string, value: string): void =
   var hKey: HKEY
 
-  RegOpenKeyExW(HKEY_LOCAL_MACHINE, key, 0, KEY_SET_VALUE, addr hKey)
-  RegSetValueExW(hKey, name, 0, REG_SZ, cast[ptr BYTE]( & string +$value), MAX_PATH)
-  RegCloseKey(hKey)
+  discard RegOpenKeyExW(HKEY_LOCAL_MACHINE, key, 0, KEY_SET_VALUE, addr hKey)
+  discard RegSetValueExW(hKey, name, 0, REG_SZ, cast[ptr BYTE]( &
+      string +$value), MAX_PATH)
+  discard RegCloseKey(hKey)
