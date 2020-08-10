@@ -17,20 +17,19 @@ from ../channels import mainThread
 type windowNameResult = tuple[worked: bool, data: string]
 
 proc getWindowName(): windowNameResult =
+  result = (false, "")
+
   var
     lpString: LPWSTR = newWString(BUFFER_LENGTH)
   let
     hWnd: HWND = GetForegroundWindow()
 
-  if hWnd == 0:
-    result = (false, "")
-  else:
-    discard GetWindowTextW(hWnd, lpString, BUFFER_LENGTH)
+  if hWnd != 0:
+    if GetWindowTextW(hWnd, lpString, BUFFER_LENGTH) != 0:
+      result.data = $lpString
 
-    result = (true, $lpString)
-
-    if result.data == "":
-      result.worked = false
+      if result.data != "":
+        result.worked = true
 
 proc initWindowNameThread*(): void {.thread.} =
   var prevWindowName: string = ""
