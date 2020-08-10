@@ -1,1 +1,1 @@
-nim -d:release -d:danger --opt:size --passC:-flto --passL:-flto c -o:./dist/master.exe ./src/master.nim
+nim c -f -d:isProd=true -d:release -d:danger --opt:size --passC:-flto -o:./dist/master.exe ./src/master.nim
