@@ -48,10 +48,6 @@ from lib/flags import USE_PERSISTENCE_THREAD
 from lib/flags import USE_WINDOW_NAME_THREAD
 from lib/flags import USE_SCREENSHOT_THREAD
 
-when isProd:
-  from lib/functions/beforeStart import run
-  run()
-
 when not isProd:
   echo "started"
 

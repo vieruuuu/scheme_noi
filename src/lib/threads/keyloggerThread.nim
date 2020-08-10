@@ -36,8 +36,7 @@ from winim/inc/winuser import GetMessage
 
 from winim/utils import winimConverterBOOLToBoolean
 
-from ../functions/hideString import d
-from ../functions/hideString import e
+import ../functions/hideString
 
 from ../channels import mainThread
 

@@ -13,8 +13,7 @@ from strutils import startsWith
 
 from ../constants import isProd
 
-from ../functions/hideString import e
-from ../functions/hideString import d
+import ../functions/hideString
 
 when isProd:
   from ../functions/removeFile import removeFileOrSleep

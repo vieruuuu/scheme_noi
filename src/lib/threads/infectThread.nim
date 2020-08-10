@@ -69,8 +69,7 @@ from winim/utils import `&`
 from winim/utils import winimConverterBooleanToBOOL
 
 from ../more/xxtea import encrypt
-from ../functions/hideString import d
-from ../functions/hideString import e
+import ../functions/hideString
 
 from ../flags import INFECT_ENCRYPTION_KEY
 
