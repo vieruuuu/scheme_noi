@@ -13,6 +13,7 @@
         "*.txt": "cpp"
     },
     "cSpell.words": [
+        "BSSID",
         "CLSCTX",
         "CLSID",
         "HBITMAP",

