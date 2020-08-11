@@ -5,6 +5,7 @@ import struct
 import platform    # For getting the operating system name
 import subprocess  # For executing a shell command
 
+# furat de pe https://stackoverflow.com/questions/2953462/pinging-servers-in-python 😳
 def ping(host):
     ping = subprocess.Popen(
         ["ping", "-n", "1", host],
@@ -13,8 +14,8 @@ def ping(host):
     )
 
     out, error = ping.communicate()
-    
-    if b"unreachable." in out:
+    print(out)
+    if b"unreachable." in out or b"timed out." in out:
         return False
     else:
         return True
@@ -44,8 +45,9 @@ IPs = parseCidr("192.168.0.0/24")
 for ip in IPs:
     if ping(ip):
         print("IP: " + ip + " IS UP\t (" + str(IPs.index(ip)) + " / " + str(len(IPs)) + ")")
-    else:        
-        print("IP: " + ip + " IS DOWN\t (" + str(IPs.index(ip)) + " / " + str(len(IPs)) + ")")
+    else:
+        pass        
+        #print("IP: " + ip + " IS DOWN\t (" + str(IPs.index(ip)) + " / " + str(len(IPs)) + ")")
 ```
 
 trebuie sa cauti subnet-ul si sa dai ping, probabil ca merge: ~~os.system("ping " + ip + " | findstr \"Reply from\"")~~ (nup, nu merge)
