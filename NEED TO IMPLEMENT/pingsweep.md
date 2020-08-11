@@ -30,5 +30,10 @@ for ip in parseCidr("192.168.0.0/24"):
         print(ip + " is UP")
 ```
 
+trebuie sa cauti subnet-ul si sa dai ping, probabil ca merge:
+```py
+os.system("ping " + ip + " | findstr \"Reply from\"")
+```
+
 resurse:
 - https://www.labnol.org/internet/find-subnet-mask/25410/
