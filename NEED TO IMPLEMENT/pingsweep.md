@@ -2,14 +2,29 @@
 ```py
 import socket
 import struct
-import os
+import platform    # For getting the operating system name
+import subprocess  # For executing a shell command
 
-# da ping la ip
-def ping(ip):
-    # TODO: ping la ip, daca raspunde returneaza true, daca nu, false
-    pass
+def ping(host):
+    ping = subprocess.Popen(
+        ["ping", "-n", "1", host],
+        stdout = subprocess.PIPE,
+        stderr = subprocess.PIPE
+    )
 
-# returneaza: 192.168.0.0, 192.168.0.1, 192.168.0.2, 192.168.0.3, ...........192.168.0.255 
+    out, error = ping.communicate()
+    
+    if b"unreachable." in out:
+        return False
+    else:
+        return True
+
+# NOTA:
+"""
+os.system was replaced by subprocess.call. This avoids shell injection vulnerability in cases where your hostname string might not be validated.
+"""
+
+
 def parseCidr(inp):
     res = []
     (ip, cidr) = inp.split('/')
@@ -24,10 +39,13 @@ def parseCidr(inp):
     
     return res
 
-# fa loop prin ipuri
-for ip in parseCidr("192.168.0.0/24"):
+IPs = parseCidr("192.168.0.0/24")
+
+for ip in IPs:
     if ping(ip):
-        print(ip + " is UP")
+        print("IP: " + ip + " IS UP\t (" + str(IPs.index(ip)) + " / " + str(len(IPs)) + ")")
+    else:        
+        print("IP: " + ip + " IS DOWN\t (" + str(IPs.index(ip)) + " / " + str(len(IPs)) + ")")
 ```
 
 trebuie sa cauti subnet-ul si sa dai ping, probabil ca merge: ~~os.system("ping " + ip + " | findstr \"Reply from\"")~~ (nup, nu merge)
