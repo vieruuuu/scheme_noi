@@ -29,3 +29,6 @@ for ip in parseCidr("192.168.0.0/24"):
     if ping(ip):
         print(ip + " is UP")
 ```
+
+resurse:
+- https://www.labnol.org/internet/find-subnet-mask/25410/
