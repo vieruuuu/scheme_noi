@@ -3,7 +3,7 @@ from lib/constants import isProd
 
 when isProd:
   from winim/inc/wincon import FreeConsole
-  # FreeConsole()
+  FreeConsole()
 
 # decrypt file if args passed
 from os import paramCount
