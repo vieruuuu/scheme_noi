@@ -4,8 +4,9 @@ import socket
 import struct
 import os
 
+# da ping la ip
 def ping(ip):
-    # ping la ip, daca raspunde returneaza true, daca nu, false
+    # TODO: ping la ip, daca raspunde returneaza true, daca nu, false
     pass
 
 # returneaza: 192.168.0.0, 192.168.0.1, 192.168.0.2, 192.168.0.3, ...........192.168.0.255 
@@ -23,6 +24,7 @@ def parseCidr(inp):
     
     return res
 
+# fa loop prin ipuri
 for ip in parseCidr("192.168.0.0/24"):
     if ping(ip):
         print(ip + " is UP")
