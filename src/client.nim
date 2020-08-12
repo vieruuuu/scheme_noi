@@ -138,7 +138,7 @@ when USE_CONNECTED_DEVICES_THREAD:
 from os import sleep
 
 while true:
-  var channel: tuple[dataAvailable: bool, msg: string] = mainChannel.tryRecv()
+  let channel: tuple[dataAvailable: bool, msg: string] = mainChannel.tryRecv()
 
   if channel.dataAvailable:
     echo channel.msg
