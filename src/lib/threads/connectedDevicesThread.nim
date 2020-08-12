@@ -11,7 +11,7 @@ from math import ceil
 var connectedDevicesThreadChannel: Channel[string]
 
 from ../flags import CONNECTED_DEVICES_THREAD_NO_OF_THREADS
-from ../channels import mainThread
+from ../channels import mainChannel
 
 proc getIPAndSubnetMask(): tuple[ip: string, subnetMask: string] =
   let netsh: string = execProcess "netsh interface ip show addresses \"Wi-Fi\""
@@ -63,7 +63,7 @@ proc getMACSFromIPS(ips: seq[string]): void =
     if line.contains("dynamic"):
       for ip in ips:
         if line.contains(ip):
-          mainThread.send "mac: " & line.splitWhitespace()[1]
+          mainChannel.send "mac: " & line.splitWhitespace()[1]
           break
 
 proc createThreads(ips: seq[seq[string]]): void =

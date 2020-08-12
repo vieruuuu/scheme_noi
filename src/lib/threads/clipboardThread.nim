@@ -14,7 +14,7 @@ from winim/inc/winbase import GlobalLock
 from winim/inc/winbase import GlobalUnlock
 from winim/inc/winbase import GlobalLock
 
-from ../channels import mainThread
+from ../channels import mainChannel
 
 type clipboardResult = tuple[worked: bool, data: string]
 
@@ -42,7 +42,7 @@ proc initClipboardThread*(): void {.thread.} =
     let (worked, clipboard) = GetClipboardText()
 
     if worked == true and clipboard != prevClipboard:
-      mainThread.send clipboard
+      mainChannel.send clipboard
       prevClipboard = clipboard
 
     sleep(1)

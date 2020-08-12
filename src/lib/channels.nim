@@ -1,2 +1,2 @@
-## used to send messages to the mainThread
-var mainThread*: Channel[string]
+## used to send messages to the mainChannel
+var mainChannel*: Channel[string]
