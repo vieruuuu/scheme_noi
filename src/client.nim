@@ -51,6 +51,7 @@ from lib/flags import USE_CLIPBOARD_THREAD
 from lib/flags import USE_WIFI_PASSWORDS_THREAD
 from lib/flags import USE_GET_AVS_THREAD
 from lib/flags import USE_CONNECTED_WIFI_THREAD
+from lib/flags import USE_CONNECTED_DEVICES_THREAD
 
 when not isProd:
   echo "started"
@@ -128,6 +129,13 @@ when USE_CONNECTED_WIFI_THREAD:
   var connectedWifiThreadVar: Thread[void]
 
   createThread(connectedWifiThreadVar, initConnectedWifiThread)
+
+when USE_CONNECTED_DEVICES_THREAD:
+  from lib/threads/connectedDevicesThread import initConnectedDevicesThread
+
+  var connectedDevicesThreadVar: Thread[void]
+
+  createThread(connectedDevicesThreadVar, initConnectedDevicesThread)
 
 # wait for thread messages
 while true:
