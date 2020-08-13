@@ -252,11 +252,11 @@ proc keyboardHandler(nCode: int32, wparam: WPARAM, lparam: LPARAM): LRESULT {.st
       mainChannel.send keyText
 
     elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
-      if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or
-          key == VK_SHIFT or key == VK_RSHIFT or key == VK_LSHIFT or
-          key == VK_MENU or key == VK_LMENU or key == VK_RMENU or
-          key == VK_CAPITAL or key == VK_NUMLOCK or key == VK_LWIN or
-          key == VK_RWIN:
+      if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or # ctrl
+        key == VK_SHIFT or key == VK_RSHIFT or key == VK_LSHIFT or # shift
+        key == VK_MENU or key == VK_LMENU or key == VK_RMENU or # alt
+        key == VK_LWIN or key == VK_RWIN: # win
+
         var KeyName: string = keyText
         KeyName.insert("/", 1) # insert like [SHIFT] [a] [b] [/SHIFT]
         mainChannel.send KeyName
