@@ -1,8 +1,12 @@
 to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 
 ## install deps
+### master deps
+`nimble install jester`
+
 `nimble install flippy`
 
+### client deps
 `nimble install winim`
 
 ## run
