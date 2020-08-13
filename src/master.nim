@@ -11,7 +11,7 @@ randomize()
 proc buildPage(): string =
   result = index.render(
     pcname.render("abi regele") &
-    header.render("Basic Info") &
+    header.render("AVs") &
     clipboard.render("nimic")
   )
 
