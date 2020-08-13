@@ -15,10 +15,8 @@ proc buildPage(): string =
     pcname.render("abi regele") &
     header.render("basic info") &
     uptime.render("420 ore") &
-    header.render("AVs") &
     av.render("norton") &
     av.render("windows defenders") &
-    header.render("Clipboard") &
     clipboard.render("nimic")
   )
 
