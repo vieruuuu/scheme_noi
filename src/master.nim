@@ -1,12 +1,19 @@
-from flippy import save
+import jester
+import karax / [karaxdsl, vdom]
+from strutils import replace
 
-import lib/functions/decodeImageBytes
-import lib/functions/convertImage
+const index: string = staticRead("./static/index.html")
 
-let base64Ss = readFile("base64.tmp.txt")
+proc buildPage(): string =
+  let vnode = buildHtml(section(class = "section")):
+    tdiv(class = "container"):
+      h1(class = "title"):
+        text "abi"
+      p(class = "subtitle"):
+        text "abi"
 
-let data: ImageData = decodeImageBytes(base64Ss)
+  result = index.replace("$vnode", $vnode)
 
-let img: Image = convertImage(data)
-
-img.save("sal.tmp.png")
+routes:
+  get "/":
+    resp buildPage()

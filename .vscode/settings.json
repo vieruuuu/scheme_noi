@@ -29,8 +29,12 @@
         "asdu",
         "booldefine",
         "karax",
+        "karaxdsl",
         "pecxstudios",
         "pptx",
+        "tdiv",
+        "vdom",
+        "vnode",
         "winmgmts",
         "wmploc",
         "xxtea"
