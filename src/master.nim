@@ -1,18 +1,18 @@
 import jester
-import karax / [karaxdsl, vdom]
-from strutils import replace
+from random import randomize
 
-const index: string = staticRead("./static/index.html")
+import lib/components/index as index
+import lib/components/clipboard as clipboard
+
+randomize()
 
 proc buildPage(): string =
-  let vnode = buildHtml(section(class = "section")):
-    tdiv(class = "container"):
-      h1(class = "title"):
-        text "abi"
-      p(class = "subtitle"):
-        text "abi"
-
-  result = index.replace("$vnode", $vnode)
+  result = index.render(
+    clipboard.render("nimic") &
+    clipboard.render("nimic") &
+    clipboard.render("nimic") &
+    clipboard.render("nimic")
+  )
 
 routes:
   get "/":

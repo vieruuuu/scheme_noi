@@ -6,8 +6,6 @@ to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 
 `nimble install flippy`
 
-`nimble install karax`
-
 ### client deps
 `nimble install winim`
 
