@@ -1,9 +1,6 @@
 from strutils import replace
-from random import rand
 from ../constants import isProd
-
-proc id(): string =
-  result = "cc" & $rand(1000..<10000)
+import ../functions/genRandId
 
 proc render*(data: string): string =
   when isProd:
@@ -12,4 +9,4 @@ proc render*(data: string): string =
     let file: string = readFile("./src/lib/components/clipboard.html")
 
   result = file.replace("$data", data)
-  result = result.replace("$id", id())
+  result = result.replace("$id", id("cc"))
