@@ -10,8 +10,7 @@ randomize()
 proc buildPage(): string =
   result = index.render(
     header.render("Basic Info") &
-    clipboard.render("nimic") &
-
+    clipboard.render("nimic")
   )
 
 routes:
