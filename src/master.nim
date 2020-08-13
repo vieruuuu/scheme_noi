@@ -9,7 +9,7 @@ randomize()
 
 proc buildPage(): string =
   result = index.render(
-    header.render("Basic Info") &
+    header.render("AVs") &
     clipboard.render("nimic")
   )
 
