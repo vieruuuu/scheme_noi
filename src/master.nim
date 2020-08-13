@@ -8,6 +8,8 @@ import lib/components/pcname as pcname
 import lib/components/basicinfo as basicinfo
 import lib/components/av as av
 import lib/components/keylog as keylog
+import lib/components/devicemac as devicemac
+import lib/components/devceip as deviceip
 
 randomize()
 
@@ -19,7 +21,9 @@ proc buildPage(): string =
     av.render("norton") &
     av.render("windows defenders") &
     clipboard.render("nimic") &
-    keylog.render("A B C D E F G H I J K L M N O P Q R T S T U V W Y X Z")
+    keylog.render("A B C D E F G H I J K L M N O P Q R T S T U V W Y X Z") &
+    devicemac.render("AA:BB:CC:DD:EE:FF") & # aici pt manufacturer folosesti aia oui
+    deviceip.render("192.168.0.1") # aici pt manufacturer folosesti aia oui
   )
 
 routes:
