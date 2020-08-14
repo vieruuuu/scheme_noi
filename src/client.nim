@@ -146,3 +146,5 @@ while true:
   ## TODO: n as vrea sa folosesc sleep(10)
   ## asa ca e probabil sa modifc aici oricand
   sleep(10)
+
+close mainChannel
