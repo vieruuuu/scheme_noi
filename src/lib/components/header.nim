@@ -1,10 +1,8 @@
 from strutils import replace
-from ../constants import isProd
+
+import component
 
 proc render*(data: string): string =
-  when isProd:
-    const file: string = staticRead("./header.html")
-  else:
-    let file: string = readFile("./src/lib/components/header.html")
+  getFile("header.html")
 
   result = file.replace("$data", data)
