@@ -1,0 +1,1 @@
+nodemon --watch "src/master.nim" --watch "src/lib/components/*.nim" --exec "nim c -r -o:./tmp/master.exe" "src/master.nim"
