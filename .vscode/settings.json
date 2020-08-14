@@ -39,5 +39,6 @@
         "winmgmts",
         "wmploc",
         "xxtea"
-    ]
+    ],
+    "cmake.configureOnOpen": false
 }
