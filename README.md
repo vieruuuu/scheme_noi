@@ -8,9 +8,7 @@ to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 
 `npm i -g nodemon`
 
-used for watch for file changes in dev mode
-
-completely optional
+`npm i -g html-minifier`
 
 ### client deps
 `nimble install winim`
