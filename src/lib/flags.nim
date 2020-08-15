@@ -6,6 +6,10 @@
 ## DO NOT REMOVE
 from functions/hideString import e
 
+## used so only one program is open at a time
+## DEFAULT: true
+const ALLOW_ONLY_ONE_INSTANCE*: bool = true
+
 ## persistenceThread is used for installing the program
 ## and starting it when the pc opens
 ## DEFAULT: true
