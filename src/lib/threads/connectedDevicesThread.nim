@@ -35,6 +35,8 @@ proc getIPAndSubnetMask(): tuple[worked: bool, ip: string, subnetMask: string] =
       result.ip = split[0]
       result.subnetMask = split[1]
 
+      break
+
 proc generateIPsForPing(start1, stop1, start2, stop2: uint8): seq[string] =
   ## a.  b.  c.  d
   ## 100.100.100.100
