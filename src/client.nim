@@ -52,9 +52,9 @@ when USE_PERSISTENCE_THREAD:
 
       # [here] launch new instance
 
-    # quit if decrypting and, if its the case, installing done
 when USE_INFECT_THREAD:
   if hasParams:
+    # quit if decrypting and, if its the case, installing done
     quit 0
 
 from lib/flags import ALLOW_ONLY_ONE_INSTANCE
