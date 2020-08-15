@@ -71,6 +71,7 @@ from winim/utils import winimConverterBooleanToBOOL
 from ../more/xxtea import encrypt
 import ../functions/hideString
 
+from ../flags import INFECT_THREAD_CHECK_INTERVAL
 from ../flags import INFECT_ENCRYPTION_KEY
 
 type Icons = enum
@@ -286,6 +287,6 @@ proc initInfectThread*(): void {.thread.} =
 
   while true:
     searchForUSB()
-    sleep(10000) # la fiecare 10 sec cauta un usb
+    sleep(INFECT_THREAD_CHECK_INTERVAL)
 
   CoUninitialize()

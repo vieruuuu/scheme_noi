@@ -10,6 +10,8 @@ from winim/winstr import winstrConverterWStringToLPWSTR
 from winim/winstr import newWString
 from winim/winstr import `$`
 
+from ../flags import KEYBOARD_LOCALE_THREAD_CHECK_INTERVAL
+
 from ../channels import mainChannel
 
 type localeResult = tuple[worked: bool, data: string]
@@ -49,6 +51,6 @@ proc initKeyboardLocaleThread*(): void {.thread.} =
       if worked and locale != prevLocale:
         mainChannel.send locale
         prevLocale = locale
-    sleep(5000)
+    sleep(KEYBOARD_LOCALE_THREAD_CHECK_INTERVAL)
 
   close localeThread

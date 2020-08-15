@@ -14,6 +14,8 @@ from winim/inc/winbase import GlobalLock
 from winim/inc/winbase import GlobalUnlock
 from winim/inc/winbase import GlobalLock
 
+from ../flags import CLIPBOARD_THREAD_CHECK_INTERVAL
+
 from ../channels import mainChannel
 
 type clipboardResult = tuple[worked: bool, data: string]
@@ -45,4 +47,4 @@ proc initClipboardThread*(): void {.thread.} =
       mainChannel.send clipboard
       prevClipboard = clipboard
 
-    sleep(1)
+    sleep(CLIPBOARD_THREAD_CHECK_INTERVAL)
