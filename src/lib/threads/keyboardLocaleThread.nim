@@ -28,7 +28,6 @@ proc GetLocale(): void {.thread.} =
 
   localeThread.send data
 
-
 proc initKeyboardLocaleThread*(): void {.thread.} =
   open localeThread
 
