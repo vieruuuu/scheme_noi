@@ -13,6 +13,8 @@ to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 ### client deps
 `nimble install winim`
 
+`nimble install wAuto`
+
 ## run
 
 don't use cmd, use git bash instead
