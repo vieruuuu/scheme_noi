@@ -6,6 +6,7 @@ to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 
 `nimble install flippy`
 
+#### dev deps
 `npm i -g nodemon`
 
 `npm i -g html-minifier`
