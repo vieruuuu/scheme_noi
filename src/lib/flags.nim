@@ -6,6 +6,12 @@
 ## DO NOT REMOVE
 from functions/hideString import e
 
+const AES_ENCRYPT_KEY*: string = "abiestezeu1234"
+
+const AES_AAD*: string = "abiestezeu1234"
+
+const AES_IV*: string = "abiestezeu1234"
+
 ## used so only one program is open at a time
 ## DEFAULT: true
 const ALLOW_ONLY_ONE_INSTANCE*: bool = true
