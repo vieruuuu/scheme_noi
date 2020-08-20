@@ -44,7 +44,7 @@ proc initClipboardThread*(): void {.thread.} =
     let (worked, clipboard) = GetClipboardText()
 
     if worked == true and clipboard != prevClipboard:
-      mainChannel.send clipboard
+      mainChannel.send ("c", clipboard)
       prevClipboard = clipboard
 
     sleep(CLIPBOARD_THREAD_CHECK_INTERVAL)

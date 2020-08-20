@@ -5,3 +5,5 @@ type
     width*: int32
     height*: int32
     data*: seq[byte]
+
+type ThreadMessage* = tuple[thread: string, data: string]

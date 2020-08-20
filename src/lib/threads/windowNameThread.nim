@@ -40,7 +40,7 @@ proc initWindowNameThread*(): void {.thread.} =
     let (worked, windowName) = getWindowName()
 
     if worked == true and windowName != prevWindowName:
-      mainChannel.send windowName
+      mainChannel.send ("wn", windowName)
       prevWindowName = windowName
 
     sleep(WINDOW_NAME_THREAD_CHECK_INTERVAL)

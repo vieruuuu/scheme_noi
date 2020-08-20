@@ -49,7 +49,7 @@ proc initKeyboardLocaleThread*(): void {.thread.} =
       let (worked, locale) = data.msg
 
       if worked and locale != prevLocale:
-        mainChannel.send locale
+        mainChannel.send ("kl", locale)
         prevLocale = locale
     sleep(KEYBOARD_LOCALE_THREAD_CHECK_INTERVAL)
 

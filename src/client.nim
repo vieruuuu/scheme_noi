@@ -171,11 +171,19 @@ when USE_CONNECTED_DEVICES_THREAD:
 # wait for thread messages
 from os import sleep
 
-while true:
-  let channel: tuple[dataAvailable: bool, msg: string] = mainChannel.tryRecv()
+var prevThread: string = ""
 
-  if channel.dataAvailable:
-    echo channel.msg
+while true:
+  let (dataAvailable, msg) = mainChannel.tryRecv()
+
+  if dataAvailable:
+    let (thread, data) = msg
+
+    if prevThread != thread:
+      prevThread = thread
+      echo "." & thread & ","
+
+    echo ";" & data
 
   ## TODO: n as vrea sa folosesc sleep(10)
   ## asa ca e probabil sa modifc aici oricand
