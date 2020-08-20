@@ -1,20 +1,13 @@
 to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 
-## install deps
-### master deps
-`nimble install jester`
+## deps
+nim tested on v1.2.6 amd64
+gcc tested on v6.3.0
+nodejs tested on v14.5.0
+npm tested on v6.14.5
 
-`nimble install flippy`
-
-#### dev deps
-`npm i -g nodemon`
-
-`npm i -g html-minifier`
-
-### client deps
-`nimble install winim`
-
-`nimble install wAuto`
+## install modules
+`./install.sh`
 
 ## run
 
