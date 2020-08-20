@@ -3,7 +3,11 @@ from strutils import parseInt
 
 from ../types import ImageData
 
-from ../more/base64 import b64decode
+from base64 import decode
+
+proc toByteSeq(data: string): seq[byte] =
+  result = newSeq[byte](data.len)
+  copyMem(result[0].addr, data[0].unsafeAddr, data.len)
 
 proc decodeImageBytes*(encoded: string): ImageData =
   let data: seq[string] = encoded.split(";")
@@ -12,6 +16,6 @@ proc decodeImageBytes*(encoded: string): ImageData =
 
   result.width = int32 parseint data[0]
   result.height = int32 parseInt data[1]
-  result.data = b64decode data[2]
+  result.data = toByteSeq decode data[2]
 
 export ImageData
