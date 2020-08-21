@@ -13,7 +13,7 @@ proc getAVS(): void =
   var wmi = GetObject d e"winmgmts:{impersonationLevel=impersonate}!\\.\root\SecurityCenter2"
 
   for av in wmi.execQuery d e"select * from AntivirusProduct":
-    mainChannel.send "av: " & $av.displayName
+    mainChannel.send (d e "av", $av.displayName)
 
 proc initGetAVSThread*(): void {.thread.} =
   getAVS()

