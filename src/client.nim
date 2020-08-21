@@ -168,11 +168,16 @@ when USE_CONNECTED_DEVICES_THREAD:
 
   createThread(connectedDevicesThreadVar, initConnectedDevicesThread)
 
-# wait for thread messages
 from os import sleep
+from lib/functions/generateHeader import header
 
 var prevThread: string = ""
+var res: string = header()
 
+import lib/more/zlibstatic/src/zlibstatic/zlib
+import lib/functions/encryptAES
+
+# wait for thread messages
 while true:
   let (dataAvailable, msg) = mainChannel.tryRecv()
 
@@ -181,10 +186,11 @@ while true:
 
     if prevThread != thread:
       prevThread = thread
-      echo "." & thread & ","
+      res.add "." & thread & ","
 
-    echo ";" & data
-
+    res.add ";" & data
+    echo "\n"
+    echo len encrypt compress(res, stream = RAW_DEFLATE)
   ## TODO: n as vrea sa folosesc sleep(10)
   ## asa ca e probabil sa modifc aici oricand
   sleep(10)
