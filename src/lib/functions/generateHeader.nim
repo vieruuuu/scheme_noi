@@ -1,15 +1,16 @@
-from osproc import execProcess
 from strutils import contains
 from strutils import split
 from strutils import unIndent
 from base64 import encode
+
+import ../functions/runCmd
 
 proc formatData(data: string): string =
   result = ";" & encode unIndent data.split(": ")[1]
 
 proc header*(): string =
   result.add ".h,"
-  let systemInfo: string = execProcess "systeminfo"
+  let systemInfo: string = runCmd "systeminfo"
   var getProcessors: bool = false
 
   for line in systemInfo.split "\n":
