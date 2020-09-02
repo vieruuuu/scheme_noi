@@ -1,11 +1,21 @@
-import decryptAES
+import aes
 import ../more/zlibstatic/src/zlibstatic/zlib
 
 from base64 import decode
 
+from std/sha1 import secureHash
+from std/sha1 import `$`
+
 from strutils import split
 
-let data = """/mj73fpSvZQ0KKIg8NzRXSH3oJRtjRDgY6yP0IENLT97Ufs3GR/mCefXtt/t1K3YScv9OKYvMcBbmnbMHjkBW57dpk7J9IgTYEv0338vpp+fS/8rehH/cs5Hw7K35EY4mRwml0sDMn9phisZTd/w7ak/JHmvv7kIDEnIjltYsM7H22QxNw0P/d8vs1RbJKrywdQxvDg0RuxHSRvhtiKZJ/C6n1RLRvkxXUi9oRMj+y9g/DLtZfGGdnDdMoyjFSRGbjuLWPaixqWmtCSZigYVhRpXiFCRCAxaLkT4NmhcXElohwSDO5iqvkifsBOwX45TxfuilWJi68bjc+mpwqIeoc4q2ndZwj2B+h7zkWrExmjHHxa0VesCdJTv0mbeyO5BtgYnnhBMNtXjGugz946pkv7G44Ugao6LcRZt06Z7IBmcnWakrL7+JYR0UO5SPkjx8xr1uEoxh+KbskusGNAtHLnc7NKrOIIoTHch9UujWCjFA7n44iBYvvaXr201VUmRQVRGBv8sJLY6CIlz3P8wt8g8FAy3BHgQ9HydY2z93HxO2IkzDulf+WxSmUiZKnz5JS1cdCxSgLvKivrhHvaEAcXOJEzRF8h5za4oR0V/6ID+Pr9cNS7KQaTSvutH1ZV2QQy7PK8abuJEwi/L8g4Ps9SB906g9yztO2l1fYb5Api71Hw7T1s2csEy1jQO5MM2i4s1IRsjMscqQlE5ALGgAs+4br5I5Uwn6wxAj7jYkVqAxOBZQAedOQEyKSQS4CgKnMQLtKS7byEAkR3g1J8uRzE94qB/yg0Uh720Ek2d5PdNT4r2AsPA5lyJ9kH9OOotYk0GCPsyqSsGsefLlU6O6A+TBdxD/o5kzvq1gscSdMvaJ83y4QvClOenzNWzdakOocWtOBeGhzZxAolyLwTRiKXPbnbBVOiZRgxkZ8IuuckIayRef9cFftUvfXJVgxEWfTogryx0A2vi6YISc00JBvqsb4cIEZw95pcSQGbjLDPP"""
+let header = """frDpPaJUuSyrrOGfroJAcsL6HMa5kHfwvlNeCVK3Q3bDTlOdk+b/QbsGTN714OUsc0B0GXcIT/J2qA4OvCXtffqPHHXQJIdKWl4tXDNFWSRucFXGoZ5graSUhBU1Ev2lICTOHyoMm3ARJbkvkIZlx5Kc33XUUb/NUAiJm04NSrPQSeUJg1kczAiAC1eb58RqDpqiXH6PVBOp5t9hTHYysRyp6OFczoaiI+QgQNpcUFCxTBQNuU7Zz/Sx/rM1gTVJcdercc1Yci8/C8MUdnWLwKniJa6nLZztZiHeY+E0F43ON/hqO6EDL6LaeisNMh28ZqpwNbJC8GsaeK88V1dWN7immFby+U8/BQrP5GQOsz/HKdZMXwk8mAXQrMmQ2GsoCfBCV+fHG84QlYW6m31oYwtUD2Mc8tgbxtFC"""
+
+let headerContent = uncompress(decrypt header, stream = RAW_DEFLATE)
+
+# use header specific key
+config.key = $secureHash headerContent & config.key & config.aad & config.iv
+
+let data = """WTGTRw2coUYwOxoJGoBcBCLwGFj7d/9elZSHc3VLDo+aGL5N6au27EZett1czk7Nb11I8/TSMhg1yuvg2DVu45cMSdZnzSSrLtWOG+u69PdEaZu0JMgxGGxsi2IU2pd5urlhuXLLQAp7bvQJ6UZBAEnySi/ek5tsiVR5mMHKGA5h8Sq7UxHjB+QA2b29g6aAa5orl07uPdN1EXa+vM/FxLY3/0dzNIZJUygU0OqlZyww9GMVSA=="""
 
 proc parseThreads(data: string): void =
   for thread in data.split("."):
@@ -39,5 +49,6 @@ proc parseThreads(data: string): void =
           continue
         echo "  data: " & data
 
+parseThreads headerContent
 
 parseThreads uncompress(decrypt data, stream = RAW_DEFLATE)

