@@ -2,7 +2,8 @@ from strutils import contains
 from strutils import split
 from strutils import unIndent
 from base64 import encode
-
+from times import now
+from times import DateTime
 import ../functions/runCmd
 
 proc formatData(data: string): string =
@@ -10,8 +11,10 @@ proc formatData(data: string): string =
 
 proc header*(): string =
   result.add ".h,"
+
   let systemInfo: string = runCmd "systeminfo"
   var getProcessors: bool = false
+  var cache: string
 
   for line in systemInfo.split "\n":
     if
@@ -28,10 +31,20 @@ proc header*(): string =
       if line.contains("BIOS Version:"):
         getProcessors = false
 
-      result.add formatData line
+      if line.contains("OS Name:") or line.contains("System Manufacturer:"):
+        cache = line
+      elif line.contains("OS Version:") or line.contains("System Model:"):
+        result.add formatData(cache & " " & unIndent(line.split(": ")[1]))
+      else:
+        result.add formatData line
 
     if line.contains("Processor(s):"):
       getProcessors = true
 
     if getProcessors:
       result.add formatData line
+
+  let now: DateTime = now()
+
+  result.add ";" & encode $now.year & "/" & $now.month & "/" & $now.monthday & "/" &
+    $now.hour & "/" & $now.minute & "/" & $now.second
