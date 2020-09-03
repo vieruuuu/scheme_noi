@@ -84,33 +84,34 @@
 
     function searchPages(page = 1) {
       getJson("/getPage/" + page, json => {
-        let completed = 0
-        const jsonLen = json.length
-
-        for (let i = 0; i < jsonLen; i++) {
-          const element = json[i];
-
-          if (searching) {
-            getText("/getHeader/" + element.id, text => {
-              completed += 1
-
-              dataEl.innerHTML += text
-
-              if (completed === jsonLen) {
-                if (searching) {
-                  searchPages(page + 1)
-                } else {
-                  hideProgress()
-                }
-              }
-            })
-          } else {
-            hideProgress()
-          }
-        }
-
+        searchSnippets(json, page)
       })
-    }  
+    }
+
+    function searchSnippets(json, page, i = 0) {
+      const element = json[i];
+
+      if (searching) {
+        getText("/getHeader/" + element.id, text => {
+
+          dataEl.innerHTML += text
+
+          console.log(text)
+
+          if (i === json.length - 1) {
+            if (searching) {
+              searchPages(page + 1)
+            } else {
+              hideProgress()
+            }
+          } else {
+            searchSnippets(json, page, i + 1)
+          }
+        })
+      } else {
+        hideProgress()
+      }
+    }
   </script>
 </body>
 

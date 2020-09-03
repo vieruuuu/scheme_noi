@@ -6,7 +6,7 @@
 ## DO NOT REMOVE
 from functions/hideString import e
 
-const AES_ENCRYPT_KEY*: string = e "noulabiestezeu1234"
+const AES_ENCRYPT_KEY*: string = e "noulabiestezeu12345678"
 
 const AES_AAD*: string = e "abiestezeu1234"
 

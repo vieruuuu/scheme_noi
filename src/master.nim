@@ -61,8 +61,9 @@ from lib/functions/parse import decryptData
 
 proc getHeader(id: string): string =
   try:
-    var data: string = decryptData parseJson(getSnippet id)["files"].getElems()[
-        0]["content"].getStr
+    let data: string = decryptData(
+      parseJson(getSnippet id)["files"].getElems()[0]["content"].getStr
+    )
 
     result = parseThreads(id, data)
   except:
