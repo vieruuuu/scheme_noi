@@ -1,5 +1,7 @@
 import aes
+import hideString
 import ../more/zlibstatic/src/zlibstatic/zlib
+from ../flags import AES_ENCRYPT_KEY
 
 from base64 import decode
 
@@ -50,3 +52,9 @@ proc parseThreads*(id: string, data: string): string =
 
 proc decryptData*(data: string): string =
   result = uncompress(decrypt data, stream = RAW_DEFLATE)
+
+proc initHeaderKey*(headerContent: string): void =
+  config.key = $secureHash headerContent & d(AES_ENCRYPT_KEY) & config.aad & config.iv
+
+proc clearHeaderKey*(): void =
+  config.key = d AES_ENCRYPT_KEY

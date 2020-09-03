@@ -13,7 +13,10 @@
     <div class="hero-body">
       <div class="container">
         <h1 class="title">
-          Search for instances
+          Header #$header
+        </h1>
+        <h1 class="title">
+          Search for snippets
         </h1>
         <h2 style="display: none;" id="stopping" class="subtitle">
           Stopping search
@@ -65,9 +68,7 @@
       progressBar.style.display = "block"
       dataEl.innerHTML = ""
 
-      getText("/clearHeaders", () => {
-        searchPages()
-      })
+      searchPages()
     }
 
     function stopSearch(params) {
@@ -94,7 +95,7 @@
       const element = json[i];
 
       if (searching) {
-        getText("/getHeader/" + element.id, text => {
+        getText("/getInstanceSnippet/$header/" + element.id, text => {
 
           dataEl.innerHTML += text
 
