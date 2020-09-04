@@ -2,7 +2,7 @@ import basicCardList
 
 proc render*(data: openArray[string]): string =
   result = basicCardList.render(
-    "Collected clipboard data", data,
+    "Collected wifi passwords", data,
     true,
     ["<li><pre>", "</pre></li>"]
   )

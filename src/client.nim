@@ -222,11 +222,13 @@ while true:
       sendThreadChannel.send finalData
       TICKS = 0
       res = ""
+      prevThread = ""
 
   if TICKS == SEND_INTERVAL:
     sendThreadChannel.send finalData
     TICKS = 0
     res = ""
+    prevThread = ""
 
   sleep(TICK_INTERVAL)
   TICKS += 1

@@ -96,8 +96,9 @@
 
       if (searching) {
         getText("/getInstanceSnippet/$header/" + element.id, text => {
-
-          dataEl.innerHTML += text
+          if (text !== "") {
+            dataEl.innerHTML = text + dataEl.innerHTML
+          }
 
           if (i === json.length - 1) {
             if (searching) {

