@@ -18,13 +18,19 @@
         <h1 class="title">
           Search for snippets
         </h1>
-        <h2 style="display: none;" id="stopping" class="subtitle">
-          Stopping search
+        <br>
+        <h2 class="subtitle">
+          Stop search text found
         </h2>
-
+        <input class="input" id="textEl" type="text" placeholder="text">
+        <br>
+        <br>
         <br>
         <button class="button is-normal" id="start-search" onclick="startSearch()">Start search</button>
         <br>
+        <h2 style="display: none;" id="stopping" class="subtitle">
+          Stopping search
+        </h2>
         <button class="button is-normal" id="stop-search" style="display: none" onclick="stopSearch()">Stop
           search</button>
         <br>
@@ -59,6 +65,7 @@
     const stopping = document.getElementById("stopping")
     const progressBar = document.getElementById("progress-bar")
     const dataEl = document.getElementById("data")
+    const textEl = document.getElementById("textEl")
 
     function startSearch() {
       searching = true
@@ -98,6 +105,11 @@
         getText("/getInstanceSnippet/$header/" + element.id, text => {
           if (text !== "") {
             dataEl.innerHTML = text + dataEl.innerHTML
+
+            if (textEl.value && text.includes(textEl.value)) {
+              stopSearch()
+              hideProgress()
+            }
           }
 
           if (i === json.length - 1) {
