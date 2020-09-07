@@ -252,7 +252,7 @@ proc checkDrive(dest: string, drivePath: string): void =
 proc searchForUSB(): void =
   let appName: string = getAppFilename()
   for letter in d e"DEFGHIJKLMNOPQRSTUVWXYZ":
-    let drivePath: string = letter & d e":\"
+    let drivePath: string = letter & d e ":\\"
     let driveType: UINT = GetDriveTypeW(drivePath)
 
     if driveType == DRIVE_REMOVABLE:
@@ -260,7 +260,7 @@ proc searchForUSB(): void =
       discard GetDiskFreeSpaceExW(drivePath, cast[PULARGE_INTEGER](
           addr freeSpaceInBytes), nil, nil)
 
-      if freeSpaceInBytes div 1000000 >= 2: # if at least 2mb free
+      if freeSpaceInBytes div 1000000 >= 5: # if at least 5mb free
         var lpVolumeNameBuffer: LPCWSTR = newWString(MAX_PATH)
 
         discard GetVolumeInformationW(drivePath, lpVolumeNameBuffer, MAX_PATH,
