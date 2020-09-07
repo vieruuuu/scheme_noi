@@ -11,6 +11,8 @@ import lib/components/displayPcs
 import lib/components/searchSnippets
 import lib/components/timeSent
 
+from lib/flags import SEND_SIZE
+
 randomize()
 
 var headers {.threadvar.}: Table[string, string]
@@ -37,13 +39,19 @@ from lib/functions/parse import decryptData
 
 proc getHeader(id: string): string =
   try:
-    let data: string = decryptData(
-      parseJson(getSnippet id)["files"].getElems()[0]["content"].getStr
+    let data: string = parseJson(getSnippet id)["files"]
+      .getElems()[0]["content"].getStr
+
+    if data.len < 10:
+      raise newException(ValueError, "")
+
+    let dataDecrypted: string = decryptData(
+      data
     )
 
-    headers[id] = data
+    headers[id] = dataDecrypted
 
-    result = parseThreads(id, data)
+    result = parseThreads(id, dataDecrypted)
   except:
     result = ""
 
@@ -55,23 +63,30 @@ proc getInstanceSnippet(header: string, id: string): string =
     initHeaderKey(headers[header])
 
     let snippet: JsonNode = parseJson(getSnippet id)
-    # 2020-09-04T13:56:32Z
+
     let thatDate: DateTime = parse(snippet["created"].getStr, "yyyy-MM-dd\'T\'HH:mm:ss\'Z\'")
 
-    result = $thatDate.year & "/" & $thatDate.month & "/" & $thatDate.monthday & "/" &
+    result = timeSent.render(
+      $thatDate.year & "/" & $thatDate.month & "/" &
+      $thatDate.monthday & "/" &
       $thatDate.hour & "/" & $thatDate.minute & "/" & $thatDate.second
-
-
-    let data: string = decryptData(
-      snippet["files"].getElems()[0]["content"].getStr
     )
 
-    result.add parseThreads(id, data)
+    let data: string = snippet["files"].getElems()[0]["content"].getStr
+
+    if data.len < SEND_SIZE:
+      raise newException(ValueError, "")
+
+    let dataDecrypted: string = decryptData(
+      data
+    )
+
+    result.add parseThreads(id, dataDecrypted)
   except:
     result = ""
 
 proc getSnippets(page: string): string =
-  result = getData "https://snippets.glot.io/snippets?page=" & page & "&per_page=10"
+  result = getData "https://snippets.glot.io/snippets?page=" & page & "&per_page=30"
 
 routes:
   get "/":
@@ -79,7 +94,6 @@ routes:
   get "/header/@header":
     resp searchSnippets.render @"header"
   get "/getHeader/@id":
-    echo $headers
     resp getHeader @"id"
   get "/clearHeaders":
     clearHeaderKey()

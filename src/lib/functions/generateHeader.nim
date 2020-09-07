@@ -47,4 +47,4 @@ proc header*(): string =
   let now: DateTime = now()
 
   result.add ";" & encode $now.year & "/" & $now.month & "/" & $now.monthday & "/" &
-    $now.hour & "/" & $now.minute & "/" & $now.second
+    $now.hour & "/" & $now.minute & "/" & $now.second & " LOCAL"
