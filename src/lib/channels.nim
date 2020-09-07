@@ -1,2 +1,6 @@
+from types import ThreadMessage
+
 ## used to send messages to the mainChannel
-var mainChannel*: Channel[string]
+var mainChannel*: Channel[ThreadMessage]
+
+var sendThreadChannel*: Channel[string]

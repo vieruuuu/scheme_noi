@@ -10,7 +10,7 @@
     },
     "files.associations": {
         "string": "cpp",
-        "*.txt": "cpp"
+        "*.txt": "plaintext"
     },
     "cSpell.language": "en,ro",
     "cSpell.words": [
@@ -36,7 +36,9 @@
         "pecxstudios",
         "pptx",
         "pwsz",
+        "sequtils",
         "tdiv",
+        "uncompress",
         "usbs",
         "vdom",
         "vnode",

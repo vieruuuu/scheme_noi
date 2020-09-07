@@ -1,8 +1,4 @@
-import infoCard as infoCard
+import basicCardList
 
-proc render*(av: string): string =
-  result = infoCard.render(
-    "Antivirus",
-    [av],
-    "is-warning"
-  )
+proc render*(data: openArray[string]): string =
+  result = basicCardList.render("Installed antivirus software", data, false)
