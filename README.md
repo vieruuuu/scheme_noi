@@ -3,7 +3,9 @@ to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 ## deps
 nim tested on v1.2.6 amd64
 
-gcc tested on v6.3.0
+[mingw64](https://nim-lang.org/download/mingw64.7z) added to path
+
+[mingw32](https://nim-lang.org/download/mingw32.7z) installed under `C:\mingw32`
 
 nodejs tested on v14.5.0
 
