@@ -37,7 +37,11 @@ proc parseThreads*(id: string, data: string): string =
     of "k":
       result.add keylog.render(threadData.split(";"))
     of "kl":
-      result.add keyboardLocale.render(threadData.split(";"))
+      for data in threadData.split(";"):
+        if data == "":
+          continue
+
+        result.add keyboardLocale.render data
     of "c":
       result.add clipboard.render threadData.split(";")
     of "av":
