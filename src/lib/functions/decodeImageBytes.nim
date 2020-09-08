@@ -10,7 +10,7 @@ proc toByteSeq(data: string): seq[byte] =
   copyMem(result[0].addr, data[0].unsafeAddr, data.len)
 
 proc decodeImageBytes*(encoded: string): ImageData =
-  let data: seq[string] = encoded.split(";")
+  let data: seq[string] = encoded.split(":")
 
   result = ImageData()
 

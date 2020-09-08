@@ -17,7 +17,6 @@ proc send(data: string): void =
     body = body
   )
 
-  echo response.body
   echo response.status
 
 proc initSendThread*(): void {.thread.} =

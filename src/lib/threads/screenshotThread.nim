@@ -96,7 +96,8 @@ proc initScreenshotThread*(): void {.thread.} =
   while true:
     # when sendThread is implemented this will send
     # the screenshot data
-    mainChannel.send "took screenshot"
-    discard screenshot()
+
+    # take screenshot
+    mainChannel.send ("ss", screenshot())
 
     sleep(SCREENSHOT_THREAD_CHECK_INTERVAL)

@@ -9,3 +9,9 @@ const BUFFER_LENGTH* = 2048
 
 ## numele la program cand ii instalat
 const EXE_NAME* = e"explоrer.exe"
+
+## folosit in master si in components/screenshot.nim
+when isProd:
+  const publicDir*: string = "public"
+else:
+  const publicDir*: string = "tmp/public"

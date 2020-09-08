@@ -2,6 +2,7 @@ import jester
 import httpclient
 import json
 import tables
+import os
 
 from random import randomize
 
@@ -11,7 +12,7 @@ import lib/components/displayPcs
 import lib/components/searchSnippets
 import lib/components/timeSent
 
-from lib/flags import SEND_SIZE
+from lib/constants import publicDir
 
 randomize()
 
@@ -72,13 +73,8 @@ proc getInstanceSnippet(header: string, id: string): string =
       $thatDate.hour & "/" & $thatDate.minute & "/" & $thatDate.second
     )
 
-    let data: string = snippet["files"].getElems()[0]["content"].getStr
-
-    if data.len < SEND_SIZE:
-      raise newException(ValueError, "")
-
     let dataDecrypted: string = decryptData(
-      data
+      snippet["files"].getElems()[0]["content"].getStr
     )
 
     result.add parseThreads(id, dataDecrypted)
@@ -88,9 +84,15 @@ proc getInstanceSnippet(header: string, id: string): string =
 proc getSnippets(page: string): string =
   result = getData "https://snippets.glot.io/snippets?page=" & page & "&per_page=30"
 
+if not existsDir publicDir:
+  createDir publicDir
+
 routes:
   get "/":
     resp displayPcs.render()
+  get "/img/@name":
+    let blob = readFile(publicDir / @"name")
+    resp Http200, blob, "image/png"
   get "/header/@header":
     resp searchSnippets.render @"header"
   get "/getHeader/@id":

