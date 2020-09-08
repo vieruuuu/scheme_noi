@@ -1,6 +1,7 @@
 from os import `/`
 from base64 import decode
 from strutils import replace
+from ../functions/genRandId import id
 
 from ../constants import isProd
 
@@ -32,3 +33,5 @@ proc genList*(data: openArray[string], decode = false, separators: array[2,
     result.add separators[0] & decodedEl & separators[1]
 
   result.add "</ul>"
+
+export id

