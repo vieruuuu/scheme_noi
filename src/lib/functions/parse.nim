@@ -3,8 +3,6 @@ import hideString
 import ../more/zlibstatic/src/zlibstatic/zlib
 from ../flags import AES_ENCRYPT_KEY
 
-from base64 import decode
-
 from std/sha1 import secureHash
 from std/sha1 import `$`
 
@@ -29,6 +27,17 @@ proc parseThreads*(id: string, data: string): string =
     let threadData: string = threadSplit[1]
 
     echo threadName
+    ## current threads
+    ## c
+    ## cd
+    ## cw
+    ## av
+    ## kl
+    ## k
+    ## ss
+    ## wp
+    ## wn
+    ## sd
     case threadName
     of "h":
       result = headerCard.render(id, threadData.split(";"))
