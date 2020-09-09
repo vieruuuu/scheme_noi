@@ -10,8 +10,6 @@ import component
 proc render*(data: openArray[string]): string =
   getFile("keylog.html")
 
-  echo data
-
   var finalData: string = "<div class=\"tags\">"
 
   ## sursa: http://www.kbdedit.com/manual/low_level_vk_list.html

