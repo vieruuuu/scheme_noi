@@ -1,5 +1,3 @@
-## TODO: FINISH THIS
-
 from os import sleep
 
 from winim/inc/windef import DWORD
