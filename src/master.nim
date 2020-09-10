@@ -60,7 +60,6 @@ import times
 
 proc getInstanceSnippet(header: string, id: string): string =
   try:
-
     initHeaderKey(headers[header])
 
     let snippet: JsonNode = parseJson(getSnippet id)

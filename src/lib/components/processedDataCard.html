@@ -1,0 +1,35 @@
+<div class="column is-one-third">
+  <div class="card">
+    <header class="card-header">
+      <p class="card-header-title">
+        $name
+      </p>
+    </header>
+    <div class="card-content">
+      <div id="$id-raw" style="display: none" class="content">
+        $data
+      </div>
+      <div id="$id-processed" class="content">
+        $dataProcessed
+      </div>
+    </div>
+    <footer class="card-footer">
+      <a onclick="showF('$id-raw');hide('$id-raw-view');showF('$id-raw-hide')" id="$id-raw-view"
+        class="card-footer-item">
+        View raw data
+      </a>
+      <a onclick="hide('$id-raw');showF('$id-raw-view');hide('$id-raw-hide')" id="$id-raw-hide" style="display: none"
+        class="card-footer-item">
+        Hide raw data
+      </a>
+      <a onclick="showF('$id-processed');hide('$id-processed-view');showF('$id-processed-hide')" id="$id-processed-view"
+        style="display: none" style="display: none" class="card-footer-item">
+        View processed data
+      </a>
+      <a onclick="hide('$id-processed');showF('$id-processed-view');hide('$id-processed-hide')" id="$id-processed-hide"
+        class="card-footer-item">
+        Hide processed data
+      </a>
+    </footer>
+  </div>
+</div>

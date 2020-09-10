@@ -1,8 +1,13 @@
+## TODO: instabil, trb sa vad care i faza
+
 from strutils import split
 from strutils import contains
 from strutils import parseUInt
 from strutils import unIndent
 from strutils import splitWhitespace
+from strutils import toUpperAscii
+
+from base64 import encode
 
 import ../functions/runCmd
 
@@ -75,7 +80,10 @@ proc getMACSFromIPS(ips: seq[string]): void =
     if line.contains d e"dynamic":
       for ip in ips:
         if line.contains(ip):
-          mainChannel.send (d e "cd", line.splitWhitespace()[1])
+          mainChannel.send (
+            d e "cd",
+            encode line.splitWhitespace()[1].toUpperAscii
+          )
           break
 
 proc createThreads(ips: seq[seq[string]]): void =
@@ -99,7 +107,7 @@ proc initConnectedDevicesThread*(): void {.thread.} =
     var ips: seq[string]
 
     case subnetMask
-    of d e"24":
+    of d e "24":
       ips = generateIPsForPing(ipPart2, ipPart2, 0, 255)
 
     let assignedIPs: seq[seq[string]] = assignIPSToThread ips

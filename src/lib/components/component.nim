@@ -1,6 +1,8 @@
 from os import `/`
 from base64 import decode
 from strutils import replace
+from strutils import join
+from strutils import split
 from ../functions/genRandId import id
 
 from ../constants import isProd
@@ -35,3 +37,4 @@ proc genList*(data: openArray[string], decode = false, separators: array[2,
   result.add "</ul>"
 
 export id
+export replace, join, split
