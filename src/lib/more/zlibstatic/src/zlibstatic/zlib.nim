@@ -67,7 +67,7 @@ type
     ZLIB_STREAM,
     GZIP_STREAM
 
-  ZlibStreamError* = object of Exception
+  ZlibStreamError* = object of CatchableError
 
 {.deprecated: [TInternalState: InternalState, TAllocfunc: Allocfunc,
               TFreeFunc: FreeFunc, TZStream: ZStream, TZStreamRec: ZStreamRec].}
