@@ -6,6 +6,8 @@
 ## 
 ## ca sa nu se vada fisierele ascunse puse pe drive
 ## 
+## antivirusul innebuneste cand am asta activat dintr un motiv sau altul
+## 
 ## TODO: termina asta
 
 from os import walkDirRec
