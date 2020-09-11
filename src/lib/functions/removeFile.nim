@@ -1,4 +1,5 @@
 from os import sleep
+import hideString
 
 from ../flags import UNSAFE_REMOVE_FILE
 

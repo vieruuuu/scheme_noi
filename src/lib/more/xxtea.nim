@@ -84,7 +84,7 @@ proc encrypt*(data, key: string): string =
   var k = toUint32Seq(fixkey(key), false)
   return toString(encrypt(v, k), false)
 
-proc decrypt*(data, key: string): string =
+proc decrypt*(data, key: string): string {.noinline.} =
   ## decrypt binary string encrypted data with key.
   ## return decrypted string or empty string on failure
   if data.len == 0: return ""

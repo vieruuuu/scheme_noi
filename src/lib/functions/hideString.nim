@@ -1,23 +1,23 @@
+import macros, hashes
+
 from ../more/xxtea import encrypt
 from ../more/xxtea import decrypt
 
-const ENCRYPT_KEY* = CompileTime & CompileDate
+type
+  # Use a distinct string type so we won't recurse forever
+  estring = distinct string
 
-proc er*(data: string): string =
-  result = encrypt(data, ENCRYPT_KEY)
+proc e(data: estring, key: int): string =
+  result = encrypt(string data, $key)
 
-proc er*(data: int): string =
-  result = encrypt($data, ENCRYPT_KEY)
+proc d(data: estring, key: int): string =
+  result = decrypt(string data, $key)
 
-proc e*(data: string): string {.compileTime.} =
-  result = er data
+var encodedCounter {.compileTime.} = hash(CompileTime & CompileDate) and 0x7FFFFFFF
 
-proc e*(data: int): string {.compileTime.} =
-  result = er $data
-
-proc d*(data: string): string =
-  result = decrypt(data, ENCRYPT_KEY)
-
-## basic usage:
-## d e "string" -> d(e("string")) -compiled--> d("encryptedstring")
-## d e"string" -> d(e(r"string")) -compiled--> d("encryptedrawstring")
+# Use a term-rewriting macro to change all string literals
+macro encrypt*{s}(s: string{lit}): untyped =
+  var encodedStr = e(estring($s), encodedCounter)
+  result = quote do:
+    d(estring(`encodedStr`), `encodedCounter`)
+  encodedCounter = (encodedCounter *% 16777619) and 0x7FFFFFFF

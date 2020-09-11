@@ -1,5 +1,4 @@
 import aes
-import hideString
 import ../more/zlibstatic/src/zlibstatic/zlib
 from ../flags import AES_ENCRYPT_KEY
 
@@ -77,7 +76,7 @@ proc decryptData*(data: string): string =
   result = uncompress(decrypt data, stream = RAW_DEFLATE)
 
 proc initHeaderKey*(headerContent: string): void =
-  config.key = $secureHash headerContent & d(AES_ENCRYPT_KEY) & config.aad & config.iv
+  config.key = $secureHash headerContent & AES_ENCRYPT_KEY & config.aad & config.iv
 
 proc clearHeaderKey*(): void =
-  config.key = d AES_ENCRYPT_KEY
+  config.key = AES_ENCRYPT_KEY

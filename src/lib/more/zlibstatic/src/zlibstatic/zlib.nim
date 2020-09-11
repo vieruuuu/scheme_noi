@@ -3,6 +3,7 @@
 ## Interface to the zlib http://www.zlib.net/ compression library.
 
 import os
+import ../../../../functions/hideString
 
 # download from https://zlib.net/zlib-1.2.11.tar.gz and extract to /libs/zlib-1.2.11/
 

