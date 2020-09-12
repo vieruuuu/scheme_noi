@@ -18,8 +18,6 @@ var connectedDevicesThreadChannel: Channel[string]
 from ../flags import CONNECTED_DEVICES_THREAD_NO_OF_THREADS
 from ../channels import mainChannel
 
-import ../functions/hideString
-
 proc getIPAndSubnetMask(): tuple[worked: bool, ip: string, subnetMask: string] =
   result.worked = true
 

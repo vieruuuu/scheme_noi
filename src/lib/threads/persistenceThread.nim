@@ -6,7 +6,6 @@ from os import getEnv
 from os import `/`
 from os import existsFile
 
-import ../functions/hideString
 import ../functions/setRegKey
 import ../functions/delRegKey
 import ../functions/isAdmin

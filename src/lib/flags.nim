@@ -1,11 +1,6 @@
 ## this file contains flags and other options
 ## used by the program
 
-## used for compile-time string encryption
-## in this file
-## DO NOT REMOVE
-import functions/hideString
-
 let AES_ENCRYPT_KEY*: string = "muiemacheamapetrisorsisuntfoartegayhaha"
 
 let AES_AAD*: string = "abiestezeu1234"

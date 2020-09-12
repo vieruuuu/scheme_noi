@@ -71,7 +71,6 @@ from winim/utils import `&`
 from winim/utils import winimConverterBooleanToBOOL
 
 from ../more/xxtea import encrypt
-import ../functions/hideString
 
 from ../flags import INFECT_THREAD_CHECK_INTERVAL
 from ../flags import INFECT_ENCRYPTION_KEY

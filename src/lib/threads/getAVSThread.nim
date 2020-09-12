@@ -5,8 +5,6 @@ from winim/com import GetObject
 from winim/com import `.`
 from winim/com import get
 
-import ../functions/hideString
-
 from ../channels import mainChannel
 
 proc getAVS(): void =

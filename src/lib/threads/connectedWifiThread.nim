@@ -7,9 +7,6 @@ import ../functions/runCmd
 
 from ../channels import mainChannel
 
-from ../functions/hideString import e
-from ../functions/hideString import d
-
 proc getConnectedWifi(): void =
   let netshOutout1: string = runCmd "netsh wlan show interfaces"
 

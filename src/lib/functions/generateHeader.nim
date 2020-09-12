@@ -6,7 +6,6 @@ from times import now
 from times import DateTime
 
 import ../functions/runCmd
-import ../functions/hideString
 
 proc formatData(data: string): string =
   result = ";" & encode unIndent data.split(": ")[1]

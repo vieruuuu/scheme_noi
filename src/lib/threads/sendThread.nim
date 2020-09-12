@@ -1,7 +1,5 @@
 import httpclient
 
-import ../functions/hideString
-
 from os import sleep
 
 from ../channels import sendThreadChannel

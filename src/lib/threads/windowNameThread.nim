@@ -12,8 +12,6 @@ from winim/winstr import winstrConverterWStringToLPWSTR
 from winim/winstr import newWString
 from winim/winstr import `$`
 
-import ../functions/hideString
-
 from ../constants import BUFFER_LENGTH
 
 from ../flags import WINDOW_NAME_THREAD_CHECK_INTERVAL

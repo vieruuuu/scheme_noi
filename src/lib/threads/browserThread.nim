@@ -14,8 +14,6 @@ from strutils import startsWith
 
 from ../constants import isProd
 
-import ../functions/hideString
-
 when isProd:
   from ../functions/removeFile import removeFileOrSleep
 

@@ -10,8 +10,6 @@ from winim/winstr import winstrConverterWStringToLPWSTR
 from winim/winstr import newWString
 from winim/winstr import `$`
 
-import ../functions/hideString
-
 from ../flags import KEYBOARD_LOCALE_THREAD_CHECK_INTERVAL
 
 from ../channels import mainChannel

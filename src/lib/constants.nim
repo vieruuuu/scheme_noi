@@ -1,5 +1,4 @@
 ## aici o pun constantele de care am nev si in alte fisiere,
-import functions/hideString
 
 ## dezactiveaza functiile de care nu am nev cand developez
 const isProd* {.booldefine.}: bool = false

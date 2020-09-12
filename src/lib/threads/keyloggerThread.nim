@@ -37,8 +37,6 @@ from winim/inc/winuser import GetKeyState
 
 from winim/utils import winimConverterBOOLToBoolean
 
-import ../functions/hideString
-
 from ../channels import mainChannel
 
 var eHook: HHOOK

