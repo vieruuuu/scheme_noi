@@ -1,2 +1,2 @@
-nimble install jester winim wAuto flippy nimcrypto
+nimble install jester winim wAuto flippy nimcrypto -y
 npm i -g html-minifier nodemon
