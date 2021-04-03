@@ -1,7 +1,7 @@
-from flippy import Image
-from flippy import flipVertical
-from flippy import getRgba
-from flippy import putRgba
+from ../more/flippy import Image
+from ../more/flippy import flipVertical
+from ../more/flippy import getRgba
+from ../more/flippy import putRgba
 from ../types import ImageData
 
 proc convertImage*(img: ImageData): Image =

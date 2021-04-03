@@ -3,7 +3,7 @@ from std/sha1 import `$`
 
 from os import `/`
 
-import flippy
+import ../more/flippy
 
 import basicCard
 

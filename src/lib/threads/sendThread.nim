@@ -1,4 +1,8 @@
-import httpclient
+from puppy import Request
+from puppy import Response
+from puppy import parseUrl
+from puppy import Header
+from puppy import fetch
 
 from os import sleep
 
@@ -6,19 +10,17 @@ from ../channels import sendThreadChannel
 from ../flags import SEND_THREAD_TRY_INTERVAL
 
 proc send(data: string): void =
-  let client: HttpClient = newHttpClient()
-
-  client.headers = newHttpHeaders({"Content-Type": "application/json"})
-
-  let body: string = "{\"public\": true,\"files\": [{\"content\": \"" & data & "\"}]}"
-
-  let response = client.request(
-     "https://snippets.glot.io/snippets",
-    httpMethod = HttpPost,
-    body = body
+  let req: Request = Request(
+    url: parseUrl("https://snippets.glot.io/snippets"),
+    verb: "POST",
+    headers: @[Header(key: "Content-Type", value: "application/json")],
+    body: "{\"public\": true, \"language\": \"cpp\", \"title\": \"ceva\", \"files\": [{\"name\": \"name\", \"content\": \"" &
+        data & "\"}]}"
   )
 
-  echo response.status
+  let res: Response = fetch(req)
+
+  echo res.code
 
 proc initSendThread*(): void {.thread.} =
 
@@ -31,6 +33,7 @@ proc initSendThread*(): void {.thread.} =
       while not worked:
         try:
           send msg
+
           worked = true
         except:
           sleep SEND_THREAD_TRY_INTERVAL

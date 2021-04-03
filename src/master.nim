@@ -31,7 +31,7 @@ proc getData(url: string): string =
   result = response.body
 
 proc getSnippet(id: string): string =
-  result = getData "https://snippets.glot.io/snippets/" & id
+  result = getData "https://glot.io/api/snippets/" & id
 
 from lib/functions/parse import parseThreads
 from lib/functions/parse import initHeaderKey
@@ -61,10 +61,10 @@ import times
 proc getInstanceSnippet(header: string, id: string): string =
   try:
     initHeaderKey(headers[header])
-
     let snippet: JsonNode = parseJson(getSnippet id)
 
-    let thatDate: DateTime = parse(snippet["created"].getStr, "yyyy-MM-dd\'T\'HH:mm:ss\'Z\'")
+
+    let thatDate: DateTime = parse(snippet["created"].getStr, "yyyy-MM-dd'T'HH:mm:ss'.'ffffff'Z'")
 
     result = timeSent.render(
       $thatDate.year & "/" & $thatDate.month & "/" &
@@ -75,6 +75,8 @@ proc getInstanceSnippet(header: string, id: string): string =
     let dataDecrypted: string = decryptData(
       snippet["files"].getElems()[0]["content"].getStr
     )
+
+    echo dataDecrypted
 
     result.add parseThreads(id, dataDecrypted)
   except:
