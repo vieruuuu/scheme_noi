@@ -1,22 +1,24 @@
 to enable or disable features tweak [flags.nim](src/lib/flags.nim)
 
 ## deps
-nim tested on v1.2.6 amd64
+
+[nim](https://nim-lang.org/) 1.2.8 amd64
 
 [mingw64](https://nim-lang.org/download/mingw64.7z) added to path
 
 [mingw32](https://nim-lang.org/download/mingw32.7z) installed under `C:\mingw32`
 
-nodejs tested on v14.5.0
+[nodejs](https://nodejs.org/en/) v14.16.0
 
-npm tested on v6.14.5
+npm 6.14.11
 
 ## install modules
+
 `./install.sh`
 
 ## run
 
-don't use cmd, use git bash instead
+download [git bash](https://git-scm.com/downloads) to run the scripts
 
 `./c.sh` run client dev mode
 
